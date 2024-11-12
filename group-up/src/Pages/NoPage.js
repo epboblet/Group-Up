@@ -1,13 +1,11 @@
-import logo from '../logo.svg';
 import '../App.css';
 
-function NoPage() {
+const NoPage = () =>  {
     return (
         <>
-            <h1>
+            <h1 className='body-content'>
                 No Page Found
             </h1>
-            <img src={logo} className="App-logo" alt="logo" />
         </>
     );
 }
