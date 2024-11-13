@@ -34,7 +34,7 @@ export const NavBar = () => {
                     account_circle
                 </span>
                 <p className={!isNavShown ? "hidden" : ""}>
-                    <Link to="/profile" className='nav-link'>Home</Link>
+                    <Link to="/profile" className='nav-link'>Profile</Link>
                 </p>
             </div>
             <div className='nav-item' onClick={() => {navigate('/explore')}}>

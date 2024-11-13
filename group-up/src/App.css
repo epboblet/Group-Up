@@ -1,15 +1,17 @@
 :root.light {
   --text-color: black;
-  --background-color: white;
+  --primary: white;
+  --secondary: gray;
 }
 
 :root.dark {
   --text-color: white;
-  --background-color: black;
+  --primary: black;
+  --secondary: gray;
 }
 
 body {
-  background-color: var(--background-color);
+  background-color: var(--primary);
   color: var(--text-color);
 }
 
@@ -17,12 +19,10 @@ body {
 #nav {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  flex-grow: 1;
 }
 
 .nav-out {
-  background-color: gray;
+  background-color: var(--secondary);
   width: 20em;
   height: 100vh;
   position: fixed;
@@ -30,7 +30,7 @@ body {
 }
 
 .nav-in {
-  background-color: gray;
+  background-color: var(--secondary);
   width: 4em;
   height: 100vh;
   position: fixed;
@@ -43,6 +43,7 @@ body {
   align-items: center;
   height: 3.5em;
   margin-top: 3.5em;
+  cursor:pointer;
 }
 
 .nav-item:hover {
@@ -56,12 +57,13 @@ body {
   vertical-align: middle;
   line-height: normal;
   padding-left: 5px;
+  cursor: pointer;
 }
 
 .nav-link {
   all: unset;
   user-select: none;
-  cursor: default;
+  cursor: pointer;
   font-size: 2em;
   padding-left: 5px;
 }
