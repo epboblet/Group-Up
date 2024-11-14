@@ -1,3 +1,9 @@
+/* #region root */
+
+:root {
+  --content-width: 50vw;
+}
+
 :root.light {
   --text-color: black;
   --primary: white;
@@ -10,10 +16,91 @@
   --secondary: gray;
 }
 
+/* #endregion */
+
 body {
   background-color: var(--primary);
   color: var(--text-color);
+  user-select: none;
 }
+
+.body-header {
+  width: var(--content-width);
+  text-align:left;
+  margin: auto;
+  padding: 0.5em;
+}
+
+.body-content {
+  background-color: gray;
+  padding: 1em;
+  width: var(--content-width);
+  text-align:center;
+  margin: auto;
+}
+
+.heading {
+  display: inline-block;
+  width: 100%;
+}
+
+#project-list {
+  align-items: center;
+  justify-content: center;
+}
+
+#about {
+  font-size: 1.5em;
+}
+
+/* #region Project Card */
+
+.project-card {
+  background-color: gray;
+  padding: 0.5em;
+  padding-top: 0;
+  width: var(--content-width);
+  text-align:center;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+.profile-icon {
+  border-radius: 50%;
+  height: 2em;
+  width: 2em;
+  object-fit: cover;
+  vertical-align: middle;
+  line-height: normal;
+}
+
+.card-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.project-image {
+  width: 90%;
+}
+
+.user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+}
+
+.username {
+  padding-left: 0.5em;
+}
+
+.open-project {
+  cursor: pointer;
+}
+
+/* #endregion */
 
 /* #region NavBar */
 #nav {
@@ -51,18 +138,17 @@ body {
 }
 
 .nav-icon {
-  user-select: none;
   font-size: 3em;
   display: inline-block;
   vertical-align: middle;
   line-height: normal;
   padding-left: 5px;
+  padding-right: 5px;
   cursor: pointer;
 }
 
 .nav-link {
   all: unset;
-  user-select: none;
   cursor: pointer;
   font-size: 2em;
   padding-left: 5px;
@@ -70,6 +156,15 @@ body {
 
 .nav-spacer {
   height: 100em;
+}
+
+.top {
+  position: fixed;
+  display: inline-block;
+  background-color: gray;
+  right: 1vw;
+  bottom: 1vh;
+  text-align: center;
 }
 
 /* #endregion */
@@ -85,7 +180,8 @@ body {
 }
 
 .App-icon {
-  height: 5vmin;
+  float: right;
+  height: 5em;
   pointer-events: none;
 }
 
@@ -123,12 +219,6 @@ body {
 
 .hidden {
   display: none;
-}
-
-.body-content {
-  width: 33vw;
-  text-align: center;
-  margin: auto;
 }
 
 .debug {

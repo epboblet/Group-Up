@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Spacer } from './Spacer';
 
 export const NavBar = () => {
     const [isNavShown, setIsNavShown] = useState(false);
@@ -53,7 +54,7 @@ export const NavBar = () => {
                     <Link to="/messages" className='nav-link'>Messages</Link>
                 </p>
             </div>
-            <div className='nav-spacer'></div>
+            <Spacer height={100} unit={"em"}/>
             <div className='nav-item' onClick={() => {changeTheme()}}>
                 <span className="material-symbols-outlined nav-icon light-dark">
                 {isLightMode ? "dark_mode" : "light_mode"}
@@ -64,6 +65,11 @@ export const NavBar = () => {
             </div>
         </nav>
     }
+        <div className='top' onClick={() => {window.scrollTo(0,0)}}>
+            <span className="material-symbols-outlined nav-icon">
+                arrow_upward
+            </span>
+        </div>
     </>
   )
 }
