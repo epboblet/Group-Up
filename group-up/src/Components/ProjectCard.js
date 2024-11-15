@@ -14,7 +14,8 @@ export const ProjectCard = ({project}) => {
         </div>
         <div className='card-content'>
             <h2>{project.name}</h2>
-            <p>
+            <h3>{project.type}</h3>
+            <p className='project-description'>
                 {project.description}
             </p>
             <img src={project.image} className='project-image'/>

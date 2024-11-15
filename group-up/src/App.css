@@ -85,6 +85,12 @@ body {
   width: 90%;
 }
 
+.project-description {
+  width: 90%;
+  margin: auto;
+  padding-bottom: 1em;
+}
+
 .user {
   display: flex;
   flex-direction: row;

@@ -45,6 +45,7 @@ const projects = [{
         profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
     },
     name: "Tower of Babel",
+    type: "Building",
     description: `So were going to build this city right? 
     στο κέντρο της πόλης θα είναι αυτός ο γιγάντιος πύργος. 
     уый тыххæй хъæудзæн бирæ кусæг. 
@@ -62,6 +63,7 @@ const projects = [{
         profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
     },
     name: "Planting a Bunch of Trees",
+    type: "Tree",
     description: `TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
     TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
     TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
