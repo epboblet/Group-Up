@@ -1,4 +1,3 @@
-import logo from '../logo.svg';
 import '../App.css';
 import ProjectCard from '../Components/ProjectCard';
 import { Spacer } from '../Components/Spacer';
@@ -6,9 +5,6 @@ import { Spacer } from '../Components/Spacer';
 const Home = () => {
     return (
         <>
-            <div className='heading'>
-                <img src={logo} className='App-icon'></img>
-            </div>
             <div id='about'>    
                 <h1 className='body-header'>
                     About Group-Up
