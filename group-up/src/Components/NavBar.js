@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Spacer } from './Spacer';
 
 export const NavBar = () => {
@@ -14,6 +14,24 @@ export const NavBar = () => {
         document.documentElement.className = theme == "light" ? "dark" : "light";
         setIsLightMode(document.documentElement.className == "light");
     }
+
+    useEffect(() => {
+        const onScroll = () => {
+            let scrollToTop = document.querySelector("#scroll-to-top")
+            if(window.scrollY==0 && !scrollToTop.classList.contains("hidden")){
+                scrollToTop.classList.add("hidden");
+            }
+            else if(scrollToTop.classList.contains("hidden")) {
+                scrollToTop.classList.remove("hidden");
+            }
+        };
+          
+        window.addEventListener('scroll', onScroll);
+        
+        return () => {
+          window.removeEventListener('scroll', onScroll);
+        }
+      }, []);
 
   return (
     <>
@@ -65,7 +83,7 @@ export const NavBar = () => {
             </div>
         </nav>
     }
-        <div className='top' onClick={() => {window.scrollTo(0,0)}}>
+        <div className='top hidden' onClick={() => {window.scrollTo(0,0)}} id='scroll-to-top'>
             <span className="material-symbols-outlined nav-icon">
                 arrow_upward
             </span>

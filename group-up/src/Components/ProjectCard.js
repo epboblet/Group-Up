@@ -1,4 +1,5 @@
 import React from 'react';
+import { Spacer } from './Spacer';
 
 export const ProjectCard = ({project}) => {
   return (
@@ -14,7 +15,7 @@ export const ProjectCard = ({project}) => {
         </div>
         <div className='card-content'>
             <h2>{project.name}</h2>
-            <h3>{project.type}</h3>
+            <h3>Project Type: {project.type}</h3>
             <p className='project-description'>
                 {project.description}
             </p>
