@@ -231,3 +231,10 @@ body {
 .debug {
   border: 1px solid red;
 }
+
+/* #region Animations */
+@keyframes flyout {
+  from {width: 4em;}
+  to {width: 20em;}
+}
+/* #endregion */
