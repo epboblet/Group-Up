@@ -8,12 +8,14 @@
   --text-color: black;
   --primary: white;
   --secondary: gray;
+  --tertiary: #61dafb;
 }
 
 :root.dark {
   --text-color: white;
   --primary: black;
   --secondary: gray;
+  --tertiary: #61dafb;
 }
 
 /* #endregion */
@@ -141,7 +143,7 @@ body {
 }
 
 .nav-item:hover {
-  color: #61dafb;
+  color: var(--tertiary);
 }
 
 .nav-icon {
@@ -168,7 +170,7 @@ body {
 .top {
   position: fixed;
   display: inline-block;
-  background-color: gray;
+  background-color: var(--secondary);
   right: 1vw;
   bottom: 1vh;
   text-align: center;

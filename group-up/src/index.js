@@ -25,7 +25,7 @@ root.render(
             <Route path='/Group-Up' element={<Home />} />
             <Route path='/react' element={<App />} />
             <Route path='/profile' element={<Login />} />
-            <Route path="*" element={<NoPage />} />
+            <Route path="*" element={<App />} />
           </Route>
       </Routes>
     </BrowserRouter>
