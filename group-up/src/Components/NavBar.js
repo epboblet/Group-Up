@@ -2,7 +2,8 @@ import React from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Spacer } from './Spacer';
-import logo from '../logo.svg';
+import logo from '../Group-Up Logo.svg';
+import logoLight from '../Group-Up Logo Light.svg';
 
 export const NavBar = () => {
     const [isNavShown, setIsNavShown] = useState(false);
@@ -36,11 +37,11 @@ export const NavBar = () => {
 
   return (
     <>
-            <div className='heading'>
-                <img src={logo} className='App-icon' onClick={() => {navigate('/Group-Up')}}></img>
-            </div>
+            {/* <div className='heading'> */}
+                <img src={isLightMode ? logo : logoLight} className='App-icon' onClick={() => {navigate('/Group-Up')}}></img>
+            {/* </div> */}
     {
-        <nav id="nav" className={isNavShown ? "nav-out" : "nav-in"}>
+        <nav id="nav" className={`nav${isNavShown ? " open" : ""}`} classList={["nav"]}>
             <span className="material-symbols-outlined nav-icon" onClick={() => {setIsNavShown(!isNavShown)}}>
                 menu
             </span>
@@ -48,7 +49,7 @@ export const NavBar = () => {
                 <span className="material-symbols-outlined nav-icon">
                     home
                 </span>
-                <p className={!isNavShown ? "hidden" : ""}>
+                <p>
                     <Link to="/Group-Up" className='nav-link'>Home</Link>
                 </p>
             </div>
@@ -56,7 +57,7 @@ export const NavBar = () => {
                 <span className="material-symbols-outlined nav-icon">
                     account_circle
                 </span>
-                <p className={!isNavShown ? "hidden" : ""}>
+                <p>
                     <Link to="/profile" className='nav-link'>Profile</Link>
                 </p>
             </div>
@@ -64,7 +65,7 @@ export const NavBar = () => {
                 <span className="material-symbols-outlined nav-icon">
                     search
                 </span>
-                <p className={!isNavShown ? "hidden" : ""}>
+                <p>
                     <Link to="/explore" className='nav-link'>Explore</Link>
                 </p>
             </div>
@@ -72,7 +73,7 @@ export const NavBar = () => {
                 <span className="material-symbols-outlined nav-icon">
                     mail
                 </span>
-                <p className={!isNavShown ? "hidden" : ""}>
+                <p>
                     <Link to="/messages" className='nav-link'>Messages</Link>
                 </p>
             </div>
@@ -81,7 +82,7 @@ export const NavBar = () => {
                 <span className="material-symbols-outlined nav-icon light-dark">
                 {isLightMode ? "dark_mode" : "light_mode"}
                 </span>
-                <p className={!isNavShown ? "hidden" : ""}>
+                <p>
                     <a className='nav-link'>{isLightMode ? "Dark Mode" : "Light Mode"}</a>
                 </p>
             </div>

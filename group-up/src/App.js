@@ -3,10 +3,15 @@ import axios from 'axios';
 import './App.css';
 
 const apiCall = () => {
-  axios.get('http://www.7timer.info/bin/api.pl?lon=113.17&lat=23.09&product=astro&output=xml').then((data) => {
+  axios.post('http://localhost:8081/update', 
+  {test: "test"}
+  ).then((data) => {
     //this console.log will be in our frontend console
     console.log(data)
   })
+  .catch((error) => {
+    console.log(error);
+  });
 }
 
 function App() {

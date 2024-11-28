@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Spacer } from './Spacer';
 
 export const ProjectCard = ({project}) => {
+    const [fullScreen, setFullscreen] = useState(false);
   return (
-    <div className='project-card'>
+    <div className={`project-card ${fullScreen ? 'fullscreen' : ''}`}>
         <div className='card-head'>
             <div className='user'>
                 <img src={project.user.profileIcon} className='profile-icon'/>
                 <p className='username'>{project.user.username}</p>
             </div>
-            <span className="material-symbols-outlined open-project">
-                open_in_full
-            </span>
         </div>
         <div className='card-content'>
-            <h2>{project.name}</h2>
-            <h3>Project Type: {project.type}</h3>
-            <p className='project-description'>
-                {project.description}
-            </p>
+            <div className='card-text'>
+                <h2>{project.name}</h2>
+                <h3>Project Type: {project.type}</h3>
+                <p className='project-description'>
+                    {project.description}
+                </p>
+            </div>
             <img src={project.image} className='project-image'/>
         </div>
     </div>

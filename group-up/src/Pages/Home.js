@@ -1,8 +1,58 @@
 import '../App.css';
 import ProjectCard from '../Components/ProjectCard';
 import { Spacer } from '../Components/Spacer';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Home = () => {
+    const [projects, setProjects] = useState([{
+        id: 1,
+        user: {
+            id: 1,
+            username: "Nimrod",
+            profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
+        },
+        name: "Tower of Babel",
+        type: "Building",
+        description: `So were going to build this city right? 
+        στο κέντρο της πόλης θα είναι αυτός ο γιγάντιος πύργος. 
+        уый тыххæй хъæудзæн бирæ кусæг. 
+        つまり、本物のチームプレーヤーが何人か必要になるということです。
+        אם אינך יכול לעבוד כחלק מצוות אל תטרח אפילו להגיש מועמדות. 
+        Ta wieża prawdopodobnie sięgnie nieba. 
+        Tenho a certeza de que Deus apreciará todo o nosso trabalho árduo.`,
+        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Pieter_Bruegel_the_Elder_-_The_Tower_of_Babel_%28Vienna%29_-_Google_Art_Project_-_edited.jpg/500px-Pieter_Bruegel_the_Elder_-_The_Tower_of_Babel_%28Vienna%29_-_Google_Art_Project_-_edited.jpg',
+    },
+    {
+        id: 2,
+        user: {
+            id: 2,
+            username: "Arbor",
+            profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
+        },
+        name: "Planting a Bunch of Trees",
+        type: "Tree",
+        description: `TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
+        TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
+        TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
+        TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, `,
+        image: 'https://www.snexplores.org/wp-content/uploads/2020/04/1030_LL_trees.png',
+    }
+    ]);
+
+    useEffect(() => {
+        axios.get('http://localhost:8081/test')
+        .then((res) => {
+            //this console.log will be in our frontend console
+            if(res != null) {
+                setProjects(prevProjects => [...prevProjects, res.data]);
+                console.log(projects);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+          });
+    }, [])
     return (
         <>
             <div id='about'>    
@@ -18,7 +68,7 @@ const Home = () => {
             </div>
             <Spacer height={150} unit={"px"}/>
             <div id='project-list'>
-                <h1 className='body-header'>
+                <h1 className='body-header sticky'>
                     Featured Projects
                 </h1>
                 {
@@ -32,40 +82,5 @@ const Home = () => {
         </>
     );
 }
-
-const projects = [{
-    id: 1,
-    user: {
-        id: 1,
-        username: "Nimrod",
-        profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
-    },
-    name: "Tower of Babel",
-    type: "Building",
-    description: `So were going to build this city right? 
-    στο κέντρο της πόλης θα είναι αυτός ο γιγάντιος πύργος. 
-    уый тыххæй хъæудзæн бирæ кусæг. 
-    つまり、本物のチームプレーヤーが何人か必要になるということです。
-    אם אינך יכול לעבוד כחלק מצוות אל תטרח אפילו להגיש מועמדות. 
-    Ta wieża prawdopodobnie sięgnie nieba. 
-    Tenho a certeza de que Deus apreciará todo o nosso trabalho árduo.`,
-    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Pieter_Bruegel_the_Elder_-_The_Tower_of_Babel_%28Vienna%29_-_Google_Art_Project_-_edited.jpg/500px-Pieter_Bruegel_the_Elder_-_The_Tower_of_Babel_%28Vienna%29_-_Google_Art_Project_-_edited.jpg',
-},
-{
-    id: 2,
-    user: {
-        id: 2,
-        username: "Arbor",
-        profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
-    },
-    name: "Planting a Bunch of Trees",
-    type: "Tree",
-    description: `TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
-    TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
-    TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
-    TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, `,
-    image: 'https://www.snexplores.org/wp-content/uploads/2020/04/1030_LL_trees.png',
-}
-]
 
 export default Home;
