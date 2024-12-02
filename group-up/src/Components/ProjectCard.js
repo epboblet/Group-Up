@@ -13,8 +13,8 @@ export const ProjectCard = ({project}) => {
         </div>
         <div className='card-content'>
             <div className='card-text'>
-                <h2>{project.name}</h2>
-                <h3>Project Type: {project.type}</h3>
+                <h2 className='project-title'>{project.name}</h2>
+                <h3 className='project-type'>{project.type}</h3>
                 <p className='project-description'>
                     {project.description}
                 </p>

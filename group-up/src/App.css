@@ -1,26 +1,32 @@
 /* #region Root */
 :root {
-  --content-width: 50vw;
+  --content-width: 70vw;
   font-family: 'Prompt', sans-serif;
   --blue: #c3e9f4;
   --green: #315d44;
   --yellow: #ffe9a6;
   --pink: #f8b8bc;
   --white: #fffcfa;
+  --white-darken: #e6e3e1;
   --black: #3b3b38;
+  --black-darken: #272724;
 }
 
 :root.light {
-  --text-color: var(--black);
+  --body-text-color: var(--black);
+  --content-text-color: var(--white);
   --background: var(--white);
-  --foreground: var(--blue);
-  --accent: var(--pink);
+  --background2: var(--white-darken);
+  --foreground: var(--green);
+  --accent: var(--yellow);
   --svg-filter: none;
 }
 
 :root.dark {
-  --text-color: var(--white);
+  --body-text-color: var(--white);
+  --content-text-color: var(--white);
   --background: var(--black);
+  --background2: var(--black-darken);
   --foreground: var(--green);
   --accent: var(--yellow);
 }
@@ -28,27 +34,39 @@
 /* #endregion */
 
 /* #region Page */
-body {
+html {
+  background-color: var(--background2);
+}
+
+#root {
   background-color: var(--background);
-  color: var(--text-color);
+  height: 100vh;
+}
+
+body {
+  color: var(--body-text-color);
   font-family: 'Prompt', sans-serif;
   user-select: none;
-  margin: 0;
-  padding: 0;
+}
+
+h1 {
+  color: var(--foreground);
+  z-index: 3;
 }
 
 .body-header {
   top: 0;
   width: var(--content-width);
-  text-align:left;
+  text-align:center;
   margin: auto;
   padding: 0.5em;
-  background-color: var(--background);
+  font-size: 3em;
+
 }
 
 .body-content {
   background-color: var(--foreground);
-  color: var(--text-color);
+  color: var(--content-text-color);
   padding: 1em;
   width: var(--content-width);
   text-align:center;
@@ -59,35 +77,117 @@ body {
   display: inline-block;
   width: 100%;
 }
+/* #endregion */
 
+/* #region About */
+#about-container {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  width: 100%;
+  background-image: linear-gradient(var(--background) 90%, var(--background2) 100%);
+}
+
+#about {
+  font-size: 2em;
+  margin: auto;
+  width: 80%;
+  height: 110vh;
+  display: flex;
+  justify-content: space-between; /* Space out the content and graphics */
+  align-items: center; 
+}
+
+.about-content {
+  display: inline-block;
+  width: 60%;
+  height: 100vh;
+}
+
+.about-graphic {
+  display: inline-block;
+  width: 40%;
+  position: relative;
+}
+
+.graphic {
+  height: 10em;
+  width: 10em;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 60%;
+  position: absolute;
+}
+
+.graphic.blue {
+  background-color: var(--blue);
+  top: -10em;
+  left: 1em;
+  z-index: 3;
+}
+
+.graphic.yellow {
+  background-color: var(--yellow);
+  top: -10em;
+  left: 6em;
+  z-index: 1;
+}
+
+.graphic.pink {
+  background-color: var(--pink);
+  top: -5em;
+  left: 1em;
+  z-index: 2;
+}
+
+.accent-1 {
+  height: 15em;
+  width: 15em;
+  border-radius: 50%;
+  position: absolute;
+  filter: blur(40px);
+  background-color: var(--blue);
+  z-index: 1;
+  top: 40em;
+  right: -5em;
+}
+
+.accent-2 {
+  height: 10em;
+  width: 10em;
+  border-radius: 50%;
+  position: absolute;
+  filter: blur(60px);
+  background-color: var(--pink);
+  z-index: 1;
+  top: 1em;
+  left: 1em;
+}
+/* #endregion */
+
+/* #region Project */
 #project-list {
   align-items: center;
   justify-content: center;
 }
 
-#about {
-  font-size: 1.5em;
+#project-container {
+  background-color: var(--background2);
+  background-blend-mode: darken;
+  padding-top: 10px;
 }
 
-.sticky {
-  position: sticky;
-  top: 0;
-}
-/* #endregion */
-
-/* #region Project Card */
 .project-card {
-  background-color: var(--foreground);
-  color: var(--text-color);
+  background-color: var(--background);
+  color: var(--body-text-color);
   padding: 0.5em;
   padding-top: 0;
   width: var(--content-width);
   text-align:center;
   margin: auto;
-  margin-bottom: 20px;
-  transition: height 1s, width 1s;
-  height: 90vh;
-  border: 5px solid var(--accent);
+  margin-bottom: 50px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
 }
 
 .project-card.fullscreen {
@@ -114,7 +214,6 @@ body {
   justify-content: space-between;
   padding-left: 8px;
   padding-right: 8px;
-  border-bottom: 5px solid var(--accent);
 }
 
 .project-image {
@@ -122,13 +221,34 @@ body {
   width: 90%;
   max-width: 80%;
   max-height: 80%;
-  border: 5px solid var(--accent);
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  object-fit: contain;
 }
 
 .project-description {
   width: 90%;
   margin: auto;
   padding-bottom: 1em;
+}
+
+.project-title {
+  font-size: 2em;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+.project-type {
+  background-color: var(--blue);
+  display: inline-block;
+  font-size: 1.25em;
+  border-radius: 5px;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  padding: 3px;
+  color: var(--black);
 }
 
 .user {
@@ -152,7 +272,8 @@ body {
 #nav {
   display: flex;
   flex-direction: column;
-  color: var(--text-color);
+  color: var(--content-text-color);
+  z-index: 999;
 }
 
 .nav-out {
@@ -169,7 +290,7 @@ body {
   height: 100vh;
   position: fixed;
   top: 0;
-  transition: width 1s;
+  transition: width 0.7s;
 }
 
 .nav.open {
@@ -223,7 +344,7 @@ body {
   position: fixed;
   display: inline-block;
   background-color: var(--foreground);
-  color: var(--text-color);
+  color: var(--content-text-color);
   right: 1vw;
   bottom: 1vh;
   text-align: center;
@@ -246,7 +367,7 @@ body {
   float: right;
   height: 6em;
   cursor: pointer;
-  fill: var(--text-color);
+  fill: var(--body-text-color);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -281,8 +402,33 @@ body {
 
 /* #endregion */
 
+button {
+  all: unset;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.button-main {
+  background-color: var(--foreground);
+  padding: 15px;
+  border-radius: 25px;
+  color: var(--white);
+}
+
+.button-secondary {
+  border: 5px solid var(--foreground);
+  padding: 10px;
+  border-radius: 25px;
+  color: var(--green);
+}
+
 .hidden {
   display: none;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
 }
 
 .debug {

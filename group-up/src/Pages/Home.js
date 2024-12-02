@@ -55,29 +55,44 @@ const Home = () => {
     }, [])
     return (
         <>
-            <div id='about'>    
-                <h1 className='body-header'>
-                    About Group-Up
-                </h1>
-                <p className='body-content'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, pariatur ad quasi sit sed corporis et a laboriosam eligendi velit cum soluta sequi adipisci perferendis laborum necessitatibus doloremque facilis magni.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, pariatur ad quasi sit sed corporis et a laboriosam eligendi velit cum soluta sequi adipisci perferendis laborum necessitatibus doloremque facilis magni.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, pariatur ad quasi sit sed corporis et a laboriosam eligendi velit cum soluta sequi adipisci perferendis laborum necessitatibus doloremque facilis magni.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, pariatur ad quasi sit sed corporis et a laboriosam eligendi velit cum soluta sequi adipisci perferendis laborum necessitatibus doloremque facilis magni.
-                </p>
+            <span className='accent-1'></span>
+            <span className='accent-2'></span>
+            <div id='about-container'>
+                <div id='about'>
+                    <div className='about-content'>
+                        <h1>
+                            CULTIVATING COMMUNITY
+                        </h1>
+                        <p>
+                            Group Up is a platform made by creatives, for creatives. 
+                            It brings unique ideas to fruition by allowing people to discover projects in their community, 
+                            as well as providing them with a space to organize and collaborate with others.
+                        </p>
+                        <div>
+                            <button className='button-secondary'>EXPLORE PROJECTS</button>
+                            <button className='button-main'>SIGN IN</button>
+                        </div>
+                    </div>
+                    <div className='about-graphic'>
+                        <div className='graphic blue'></div>
+                        <div className='graphic yellow'></div>
+                        <div className='graphic pink'></div>
+                    </div>
+                </div>
             </div>
-            <Spacer height={150} unit={"px"}/>
-            <div id='project-list'>
-                <h1 className='body-header sticky'>
-                    Featured Projects
-                </h1>
-                {
-                    projects.map((e) => {
-                        return(
-                            <ProjectCard project={e}/>
-                        )
-                    })
-                }
+            <div id='project-container'>
+                <div id='project-list'>
+                    <h1 className='body-header'>
+                        CHECK  THESE  OUT!
+                    </h1>
+                    {
+                        projects.map((e) => {
+                            return(
+                                <ProjectCard project={e}/>
+                            )
+                        })
+                    }
+                </div>
             </div>
         </>
     );
