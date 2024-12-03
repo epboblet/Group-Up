@@ -1,6 +1,5 @@
 import '../App.css';
 import ProjectCard from '../Components/ProjectCard';
-import { Spacer } from '../Components/Spacer';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -55,15 +54,13 @@ const Home = () => {
     }, [])
     return (
         <>
-            <span className='accent-1'></span>
-            <span className='accent-2'></span>
             <div id='about-container'>
                 <div id='about'>
                     <div className='about-content'>
-                        <h1>
+                        <h1 id='about-heading'>
                             CULTIVATING COMMUNITY
                         </h1>
-                        <p>
+                        <p id='about-body'>
                             Group Up is a platform made by creatives, for creatives. 
                             It brings unique ideas to fruition by allowing people to discover projects in their community, 
                             as well as providing them with a space to organize and collaborate with others.

@@ -7,7 +7,7 @@
   --yellow: #ffe9a6;
   --pink: #f8b8bc;
   --white: #fffcfa;
-  --white-darken: #e6e3e1;
+  --white-darken: #f1e9e4;
   --black: #3b3b38;
   --black-darken: #272724;
 }
@@ -82,37 +82,42 @@ h1 {
 /* #region About */
 #about-container {
   display: flex;
-  justify-content: center;
-  align-items: center; 
-  width: 100%;
+  height: 110vh;
+  width: 100vw;
   background-image: linear-gradient(var(--background) 90%, var(--background2) 100%);
 }
 
 #about {
   font-size: 2em;
-  margin: auto;
+  margin: 0 auto;
   width: 80%;
-  height: 110vh;
   display: flex;
-  justify-content: space-between; /* Space out the content and graphics */
-  align-items: center; 
+}
+
+#about-heading {
+  position: relative;
+  z-index: 3;
+  font-size: 9vh;
+  margin-top: 0;
+}
+
+#about-body {
+  font-size: 3vh;
 }
 
 .about-content {
   display: inline-block;
   width: 60%;
-  height: 100vh;
 }
 
 .about-graphic {
   display: inline-block;
-  width: 40%;
   position: relative;
 }
 
 .graphic {
-  height: 10em;
-  width: 10em;
+  height: 30vh;
+  width: 30vh;
   border-radius: 50%;
   display: inline-block;
   opacity: 60%;
@@ -121,22 +126,20 @@ h1 {
 
 .graphic.blue {
   background-color: var(--blue);
-  top: -10em;
-  left: 1em;
+  top: 5vh;
   z-index: 3;
 }
 
 .graphic.yellow {
   background-color: var(--yellow);
-  top: -10em;
-  left: 6em;
+  top: 5vh;
+  left: 15vh;
   z-index: 1;
 }
 
 .graphic.pink {
   background-color: var(--pink);
-  top: -5em;
-  left: 1em;
+  top: 20vh;
   z-index: 2;
 }
 
@@ -148,8 +151,7 @@ h1 {
   filter: blur(40px);
   background-color: var(--blue);
   z-index: 1;
-  top: 40em;
-  right: -5em;
+  overflow: hidden;
 }
 
 .accent-2 {
@@ -160,8 +162,7 @@ h1 {
   filter: blur(60px);
   background-color: var(--pink);
   z-index: 1;
-  top: 1em;
-  left: 1em;
+  overflow: hidden;
 }
 /* #endregion */
 
@@ -365,7 +366,7 @@ h1 {
 .App-icon {
   padding: 10px;
   float: right;
-  height: 6em;
+  height: 10vh;
   cursor: pointer;
   fill: var(--body-text-color);
 }
@@ -406,6 +407,7 @@ button {
   all: unset;
   margin-right: 15px;
   cursor: pointer;
+  font-size: 3vh;
 }
 
 .button-main {
