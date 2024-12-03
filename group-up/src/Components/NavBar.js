@@ -49,31 +49,31 @@ export const NavBar = () => {
                 <span className="material-symbols-outlined nav-icon">
                     home
                 </span>
-                <Link to="/Group-Up" className={`${isNavShown ? "nav-link" : "hidden"}`}>Home</Link>
+                <Link to="/Group-Up" className={`nav-link ${isNavShown ? "" : "hidden"}`}>Home</Link>
             </div>
             <div className='nav-item' title='Profile' onClick={() => {navigate('/profile')}}>
                 <span className="material-symbols-outlined nav-icon">
                     account_circle
                 </span>
-                <Link to="/profile" className={`${isNavShown ? "nav-link" : "hidden"}`}>Profile</Link>
+                <Link to="/profile" className={`nav-link ${isNavShown ? "" : "hidden"}`}>Profile</Link>
             </div>
             <div className='nav-item' title='Explore' onClick={() => {navigate('/explore')}}>
                 <span className="material-symbols-outlined nav-icon">
                     search
                 </span>
-                <Link to="/explore" className={`${isNavShown ? "nav-link" : "hidden"}`}>Explore</Link>
+                <Link to="/explore" className={`nav-link ${isNavShown ? "" : "hidden"}`}>Explore</Link>
             </div>
             <div className='nav-item' title='Messages' onClick={() => {navigate('/messages')}}>
                 <span className="material-symbols-outlined nav-icon">
                     mail
                 </span>
-                <Link to="/messages" className={`${isNavShown ? "nav-link" : "hidden"}`}>Messages</Link>
+                <Link to="/messages" className={`nav-link ${isNavShown ? "" : "hidden"}`}>Messages</Link>
             </div>
             <div className='nav-item' title='Theme' onClick={() => {changeTheme()}}>
                 <span className="material-symbols-outlined nav-icon light-dark">
                 {isLightMode ? "dark_mode" : "light_mode"}
                 </span>
-                <a className={`${isNavShown ? "nav-link" : "hidden"}`}>{isLightMode ? "Dark Mode" : "Light Mode"}</a>
+                <a className={`nav-link ${isNavShown ? "" : "hidden"}`}>{isLightMode ? "Dark Mode" : "Light Mode"}</a>
             </div>
         </nav>
     }

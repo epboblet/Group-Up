@@ -10,6 +10,7 @@
   --white-darken: #f1e9e4;
   --black: #3b3b38;
   --black-darken: #272724;
+  --possible-image-border: #262323;
 }
 
 :root.light {
@@ -334,10 +335,9 @@ h1 {
   cursor: pointer;
   font-size: 2em;
   padding-left: 5px;
-  display: block;
-  overflow: hidden;
+  opacity: 100;
   width: 100%;
-  transition: width 0.7s;
+  transition: width 0.8s, visibility 0.7s, opacity 0.6s;
 }
 
 .nav-spacer {
@@ -429,8 +429,9 @@ button {
 }
 
 .hidden {
+  opacity: 0;
   width: 0;
-  display: none;
+  transition: width 0.7s, opacity 0.7s;
 }
 
 .sticky {
