@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/Group-Up/static/css/main.4081f405.css",
-    "main.js": "/Group-Up/static/js/main.3c1338b0.js",
+    "main.js": "/Group-Up/static/js/main.b181a9c3.js",
     "static/js/453.66bb3d9a.chunk.js": "/Group-Up/static/js/453.66bb3d9a.chunk.js",
     "static/media/Group-Up Logo Light.svg": "/Group-Up/static/media/Group-Up Logo Light.5607b2fc3405c1da501ca1ab140124aa.svg",
     "static/media/Group-Up Logo.svg": "/Group-Up/static/media/Group-Up Logo.1536ea24faf9b8bb3164781946b7a66f.svg",
     "static/media/logo.svg": "/Group-Up/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/Group-Up/index.html",
     "main.4081f405.css.map": "/Group-Up/static/css/main.4081f405.css.map",
-    "main.3c1338b0.js.map": "/Group-Up/static/js/main.3c1338b0.js.map",
+    "main.b181a9c3.js.map": "/Group-Up/static/js/main.b181a9c3.js.map",
     "453.66bb3d9a.chunk.js.map": "/Group-Up/static/js/453.66bb3d9a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4081f405.css",
-    "static/js/main.3c1338b0.js"
+    "static/js/main.b181a9c3.js"
   ]
 }
