@@ -49,42 +49,31 @@ export const NavBar = () => {
                 <span className="material-symbols-outlined nav-icon">
                     home
                 </span>
-                <p>
-                    <Link to="/Group-Up" className='nav-link'>Home</Link>
-                </p>
+                <Link to="/Group-Up" className={`${isNavShown ? "nav-link" : "hidden"}`}>Home</Link>
             </div>
             <div className='nav-item' onClick={() => {navigate('/profile')}}>
                 <span className="material-symbols-outlined nav-icon">
                     account_circle
                 </span>
-                <p>
-                    <Link to="/profile" className='nav-link'>Profile</Link>
-                </p>
+                <Link to="/profile" className={`${isNavShown ? "nav-link" : "hidden"}`}>Profile</Link>
             </div>
             <div className='nav-item' onClick={() => {navigate('/explore')}}>
                 <span className="material-symbols-outlined nav-icon">
                     search
                 </span>
-                <p>
-                    <Link to="/explore" className='nav-link'>Explore</Link>
-                </p>
+                <Link to="/explore" className={`${isNavShown ? "nav-link" : "hidden"}`}>Explore</Link>
             </div>
             <div className='nav-item' onClick={() => {navigate('/messages')}}>
                 <span className="material-symbols-outlined nav-icon">
                     mail
                 </span>
-                <p>
-                    <Link to="/messages" className='nav-link'>Messages</Link>
-                </p>
+                <Link to="/messages" className={`${isNavShown ? "nav-link" : "hidden"}`}>Messages</Link>
             </div>
-            <Spacer height={100} unit={"em"}/>
             <div className='nav-item' onClick={() => {changeTheme()}}>
                 <span className="material-symbols-outlined nav-icon light-dark">
                 {isLightMode ? "dark_mode" : "light_mode"}
                 </span>
-                <p>
-                    <a className='nav-link'>{isLightMode ? "Dark Mode" : "Light Mode"}</a>
-                </p>
+                <a className={`${isNavShown ? "nav-link" : "hidden"}`}>{isLightMode ? "Dark Mode" : "Light Mode"}</a>
             </div>
         </nav>
     }

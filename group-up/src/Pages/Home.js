@@ -2,8 +2,10 @@ import '../App.css';
 import ProjectCard from '../Components/ProjectCard';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+    const navigate = useNavigate();
     const [projects, setProjects] = useState([{
         id: 1,
         user: {
@@ -18,8 +20,7 @@ const Home = () => {
         уый тыххæй хъæудзæн бирæ кусæг. 
         つまり、本物のチームプレーヤーが何人か必要になるということです。
         אם אינך יכול לעבוד כחלק מצוות אל תטרח אפילו להגיש מועמדות. 
-        Ta wieża prawdopodobnie sięgnie nieba. 
-        Tenho a certeza de que Deus apreciará todo o nosso trabalho árduo.`,
+        Ta wieża prawdopodobnie sięgnie nieba.`,
         image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Pieter_Bruegel_the_Elder_-_The_Tower_of_Babel_%28Vienna%29_-_Google_Art_Project_-_edited.jpg/500px-Pieter_Bruegel_the_Elder_-_The_Tower_of_Babel_%28Vienna%29_-_Google_Art_Project_-_edited.jpg',
     },
     {
@@ -34,7 +35,7 @@ const Home = () => {
         description: `TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
         TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
         TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
-        TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, `,
+        TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES! `,
         image: 'https://www.snexplores.org/wp-content/uploads/2020/04/1030_LL_trees.png',
     }
     ]);
@@ -69,7 +70,7 @@ const Home = () => {
                         </p>
                         <div>
                             <button className='button-secondary'>EXPLORE PROJECTS</button>
-                            <button className='button-main'>SIGN IN</button>
+                            <button className='button-main' onClick={() => {navigate('/profile')}}>SIGN IN</button>
                         </div>
                     </div>
                     <div className='about-graphic'>

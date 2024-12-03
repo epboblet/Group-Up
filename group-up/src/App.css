@@ -102,7 +102,7 @@ h1 {
   position: relative;
   z-index: 3;
   font-size: 9vh;
-  margin-top: 0;
+  margin: 0;
 }
 
 #about-body {
@@ -283,14 +283,6 @@ h1 {
   z-index: 999;
 }
 
-.nav-out {
-  background-color: var(--foreground);
-  width: 20em;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-}
-
 .nav {
   background-color: var(--foreground);
   width: 4em;
@@ -308,11 +300,14 @@ h1 {
   display: flex;
   width: auto;
   align-items: center;
-  height: 12em;
-  margin-top: 3.5em;
+  margin-top: 1em;
+  height: 4em;
   cursor: pointer;
-  overflow: hidden;
   white-space: nowrap;
+}
+
+.nav-item:last-child {
+  margin-top: auto;
 }
 
 .nav-item:hover {
@@ -341,6 +336,8 @@ h1 {
   padding-left: 5px;
   display: block;
   overflow: hidden;
+  width: 100%;
+  transition: width 0.7s;
 }
 
 .nav-spacer {
@@ -432,6 +429,7 @@ button {
 }
 
 .hidden {
+  width: 0;
   display: none;
 }
 
