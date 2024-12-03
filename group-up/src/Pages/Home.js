@@ -54,7 +54,9 @@ const Home = () => {
     }, [])
     return (
         <>
+            <span className='accent-blue'></span>
             <div id='about-container'>
+                <span className='accent-pink'></span>
                 <div id='about'>
                     <div className='about-content'>
                         <h1 id='about-heading'>

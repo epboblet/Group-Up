@@ -1,7 +1,7 @@
 /* #region Root */
 :root {
-  --content-width: 70vw;
   font-family: 'Prompt', sans-serif;
+  --content-width: 70vw;
   --blue: #c3e9f4;
   --green: #315d44;
   --yellow: #ffe9a6;
@@ -20,6 +20,7 @@
   --foreground: var(--green);
   --accent: var(--yellow);
   --svg-filter: none;
+  --headings: var(--green);
 }
 
 :root.dark {
@@ -29,6 +30,7 @@
   --background2: var(--black-darken);
   --foreground: var(--green);
   --accent: var(--yellow);
+  --headings: var(--white);
 }
 
 /* #endregion */
@@ -50,8 +52,9 @@ body {
 }
 
 h1 {
-  color: var(--foreground);
+  color: var(--headings);
   z-index: 3;
+  letter-spacing: 0.1em;
 }
 
 .body-header {
@@ -85,6 +88,7 @@ h1 {
   height: 110vh;
   width: 100vw;
   background-image: linear-gradient(var(--background) 90%, var(--background2) 100%);
+  overflow: hidden;
 }
 
 #about {
@@ -102,6 +106,8 @@ h1 {
 }
 
 #about-body {
+  position: relative;
+  z-index: 3;
   font-size: 3vh;
 }
 
@@ -143,26 +149,26 @@ h1 {
   z-index: 2;
 }
 
-.accent-1 {
-  height: 15em;
-  width: 15em;
+.accent-blue {
+  height: 15vh;
+  width: 15vw;
   border-radius: 50%;
   position: absolute;
   filter: blur(40px);
   background-color: var(--blue);
   z-index: 1;
-  overflow: hidden;
 }
 
-.accent-2 {
-  height: 10em;
-  width: 10em;
+.accent-pink {
+  height: 15vh;
+  width: 15vw;
   border-radius: 50%;
-  position: absolute;
+  position: relative;
   filter: blur(60px);
   background-color: var(--pink);
   z-index: 1;
-  overflow: hidden;
+  top: 70vh;
+  left: 90vw;
 }
 /* #endregion */
 
@@ -343,6 +349,7 @@ h1 {
 
 .top {
   position: fixed;
+  z-index: 3;
   display: inline-block;
   background-color: var(--foreground);
   color: var(--content-text-color);
@@ -412,16 +419,16 @@ button {
 
 .button-main {
   background-color: var(--foreground);
-  padding: 15px;
+  padding: 25px;
   border-radius: 25px;
   color: var(--white);
 }
 
 .button-secondary {
-  border: 5px solid var(--foreground);
-  padding: 10px;
+  border: 5px solid var(--headings);
+  padding: 20px;
   border-radius: 25px;
-  color: var(--green);
+  color: var(--headings);
 }
 
 .hidden {
