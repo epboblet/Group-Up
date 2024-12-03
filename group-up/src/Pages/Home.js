@@ -69,7 +69,7 @@ const Home = () => {
                             as well as providing them with a space to organize and collaborate with others.
                         </p>
                         <div>
-                            <button className='button-secondary'>EXPLORE PROJECTS</button>
+                            <button className='button-secondary' onClick={() => {navigate('/explore')}}>EXPLORE PROJECTS</button>
                             <button className='button-main' onClick={() => {navigate('/profile')}}>SIGN IN</button>
                         </div>
                     </div>
