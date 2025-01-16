@@ -1,7 +1,7 @@
 /* #region Root */
 :root {
   font-family: 'Prompt', sans-serif;
-  --content-width: 70vw;
+  --content-width: 55vw;
   --blue: #c3e9f4;
   --green: #315d44;
   --yellow: #ffe9a6;
@@ -182,7 +182,7 @@ h1 {
 #project-container {
   background-color: var(--background2);
   background-blend-mode: darken;
-  padding-top: 10px;
+  padding-top: 1vh;
 }
 
 .project-card {
@@ -193,7 +193,7 @@ h1 {
   width: var(--content-width);
   text-align:center;
   margin: auto;
-  margin-bottom: 50px;
+  margin-bottom: 5vh;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 15px;
 }
@@ -208,8 +208,8 @@ h1 {
 
 .profile-icon {
   border-radius: 50%;
-  height: 2em;
-  width: 2em;
+  height: 2.8em;
+  width: 2.8em;
   object-fit: cover;
   vertical-align: middle;
   line-height: normal;
@@ -225,12 +225,13 @@ h1 {
 }
 
 .project-image {
-  height: 90%;
-  width: 90%;
-  max-width: 80%;
-  max-height: 80%;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+  height: auto;
+  width: auto;
+  max-width: 90%;
+  min-width: 0%;
+  max-height: 70vh;
+  min-height: 0%;
+  border: 1px solid var(--background2);
   border-radius: 4px;
   padding: 5px;
   object-fit: contain;
@@ -240,6 +241,8 @@ h1 {
   width: 90%;
   margin: auto;
   padding-bottom: 1em;
+  padding-top: 1em;
+  border-top: 1px solid var(--black);
 }
 
 .project-title {
@@ -255,7 +258,7 @@ h1 {
   border-radius: 5px;
   margin-top: 0;
   margin-bottom: 0.5em;
-  padding: 3px;
+  padding: 0.15em 0.5em;
   color: var(--black);
 }
 
@@ -264,14 +267,44 @@ h1 {
   flex-direction: row;
   align-items: center;
   cursor: pointer;
+  padding-top: 1em;
+}
+
+.names {
+  display: flex;
+  flex-direction: column;
+}
+
+.display-name {
+  padding-left: 0.5em;
+  margin: 0;
+  text-align: left;
 }
 
 .username {
   padding-left: 0.5em;
+  font-size: 0.75em;
+  color: slategray;
+  margin: 0;
+  text-align: left;
 }
 
 .open-project {
   cursor: pointer;
+}
+
+.message-area {
+  border: 1px solid red;
+}
+
+.message {
+  all: unset;
+  border: 1px solid blue;
+  width: 90%
+}
+
+.send {
+  border: 1px solid yellow;
 }
 
 /* #endregion */

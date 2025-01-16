@@ -8,8 +8,14 @@ export const ProjectCard = ({project}) => {
         <div className='card-head'>
             <div className='user'>
                 <img src={project.user.profileIcon} className='profile-icon'/>
-                <p className='username'>{project.user.username}</p>
+                <div className='names'>
+                    <p className='display-name'>{project.user.displayName}</p>
+                    <p className='username'>@{project.user.username}</p>
+                </div>
             </div>
+            <span className="material-symbols-outlined open-project">
+                open_in_full
+            </span>
         </div>
         <div className='card-content'>
             <div className='card-text'>
