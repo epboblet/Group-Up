@@ -21,13 +21,16 @@ import bodyParser from 'body-parser';
 
 const app = express();
 const port = 8081;
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true, // Allow credentials (cookies)
+  }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
 //Open database
 const dbPromise = open({
-    filename: './database/group-Up.sqlite',
+    filename: './database/group-Up_dev.sqlite',
     driver: sqlite3.Database
 })
 
@@ -104,7 +107,7 @@ app.get("/login", (req,res) =>{
     res.render("login", {layout:false});
 })
 
-//Start server on port 8080
+//Start server on port 8081
 app.listen(port, () =>{
     console.log(`Server started on port: ${port}`);
 })
@@ -117,7 +120,6 @@ const grantAuthToken = async(user_id)=>{
     //Insert token and user id into authtokens table
     await db.run('INSERT INTO authtokens (token, user_id) VALUES (?, ?);', tokenString, user_id);
     return tokenString;
-
 }
 
 //Lookup user based on auth token 
@@ -142,26 +144,34 @@ app.post("/login", async(req, res)=>{
 
       //If there is an empty field than return error and render login
       if((!username) || (!password)){
-        return res.render("login", { error: "All fields required" });
+        res.status(401);
+        return res.send({ message: "All fields required" });
     }
     
     try{
         //Query database to see if username exists
         const result = await db.get('SELECT * FROM users WHERE username=?;', username); 
+
         if(!result){
-            throw 'Error: username or password incorrect' //Return error message if user isn't found
+            res.status(401);
+            return res.send({message: 'Username or password incorrect'}); //Return error message if user isn't found
         }
+
         //Check if passwords match
         const passwordMatch = await bcrypt.compare(password, result.password);
         if(!passwordMatch){
-            throw 'Error: username or password incorrect' //Return error message if password is incorrect
-         }
+            res.status(401);
+            return res.send({message: 'Username or password incorrect'}) //Return error message if password is incorrect
+        }
+
         const token = await grantAuthToken(result.user_id);
+
         res.cookie('authToken',token); //Set cookie with token 
-        res.redirect('/'); //Redirect user to homepage after login is succesful 
+        res.status(200);
+        return res.send({message: "yipee"}); //Redirect user to homepage after login is succesful 
 
     }catch(e){
-        return res.render('login', { error: e});
+        return res.send({ message: e});
     }
 
     });
@@ -177,11 +187,18 @@ app.post("/register", async(req, res)=>{
 
     //If there is an empty field than return error 
     if((!username) || (!password) || (!confirmPass)){
-        return res.render("register", { error: "All fields required" });
+        res.status(401);
+        
+        return res.send({
+            message: "All fields required"
+        })
     }
 
     if(password !== confirmPass){
-        return res.render("register", { error: "Passwords must match" });
+        res.status(401);
+        return res.send({
+            message: "Passwords must match"
+        })
     }
 
     //Query database to see if username exists
@@ -189,14 +206,17 @@ app.post("/register", async(req, res)=>{
 
     if(result){
         //If username already exists then render to login 
-        return res.render("login", { error: "Error: user already exists" });
+        res.status(401);
+        return res.send({ 
+            message: "User already exists" 
+        });
     }else{
         //If username does not exist then insert into database
         db.run("INSERT INTO users (username, password) VALUES(?, ?)", username, passwordHash);
         const createdAccount = await db.get("SELECT * FROM users WHERE username=?;", username);
         const token = await grantAuthToken(createdAccount.user_id);
         res.cookie('authToken', token);
-        res.redirect("/");
+        return res.send({message: "yipee"});
     }
 
 })

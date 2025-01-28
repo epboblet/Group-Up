@@ -17,7 +17,7 @@ export const Login = () => {
       console.log(res);
     })
     .catch((err) => {
-      let message = err?.response?.data?.error;
+      let message = err?.response?.data?.message;
       message ??= "An error occured while attempting to register";
 
       setErrorMessage(message);
@@ -36,7 +36,7 @@ export const Login = () => {
       }
     })
     .catch((err) => {
-      let message = err?.response?.data?.error;
+      let message = err?.response?.data?.message;
       message ??= "An error occured while attempting to log in";
       console.log(message);
 
