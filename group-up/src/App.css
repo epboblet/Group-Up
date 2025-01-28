@@ -361,6 +361,7 @@ h1 {
   padding-right: 5px;
   cursor: pointer;
   padding-bottom: 5px;
+  text-overflow: clip;
 }
 
 .nav-link {
@@ -371,6 +372,9 @@ h1 {
   opacity: 100;
   width: 100%;
   transition: width 0.8s, visibility 0.7s, opacity 0.6s;
+  text-overflow: clip;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .nav-spacer {
@@ -439,6 +443,10 @@ h1 {
 }
 
 /* #endregion */
+
+.error {
+  color: red;
+}
 
 button {
   all: unset;

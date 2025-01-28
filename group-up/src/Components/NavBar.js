@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Spacer } from './Spacer';
 import logo from '../Group-Up Logo.svg';
 import logoLight from '../Group-Up Logo Light.svg';
 
@@ -38,14 +37,14 @@ export const NavBar = () => {
   return (
     <>
             {/* <div className='heading'> */}
-                <img src={isLightMode ? logo : logoLight} className='App-icon' onClick={() => {navigate('/Group-Up')}}></img>
+                <img src={isLightMode ? logo : logoLight} className='App-icon' onClick={() => {navigate('/')}}></img>
             {/* </div> */}
     {
         <nav id="nav" className={`nav${isNavShown ? " open" : ""}`} classList={["nav"]}>
             <span className="material-symbols-outlined nav-icon" onClick={() => {setIsNavShown(!isNavShown)}}>
                 menu
             </span>
-            <div className='nav-item' title='Home' onClick={() => {navigate('/Group-Up')}}>
+            <div className='nav-item' title='Home' onClick={() => {navigate('/')}}>
                 <span className="material-symbols-outlined nav-icon">
                     home
                 </span>

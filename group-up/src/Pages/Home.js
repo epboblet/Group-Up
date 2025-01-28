@@ -45,7 +45,6 @@ const Home = () => {
     useEffect(() => {
         axios.get('http://localhost:8081/test')
         .then((res) => {
-            //this console.log will be in our frontend console
             if(res != null) {
                 setProjects(prevProjects => [...prevProjects, res.data]);
                 console.log(projects);
@@ -72,7 +71,7 @@ const Home = () => {
                         </p>
                         <div>
                             <button className='button-secondary' onClick={() => {navigate('/explore')}}>EXPLORE PROJECTS</button>
-                            <button className='button-main' onClick={() => {navigate('/profile')}}>SIGN IN</button>
+                            <button className='button-main' onClick={() => {navigate('/login')}}>SIGN IN</button>
                         </div>
                     </div>
                     <div className='about-graphic'>

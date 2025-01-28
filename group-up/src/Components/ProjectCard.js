@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Spacer } from './Spacer';
 
 export const ProjectCard = ({project}) => {
     const [fullScreen, setFullscreen] = useState(false);

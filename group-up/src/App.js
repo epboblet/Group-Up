@@ -1,39 +1,42 @@
-import logo from './logo.svg';
 import axios from 'axios';
+import Home from './Pages/Home';
+import NoPage from './Pages/NoPage';
+import Layout from './Pages/Layout';
+import Login from './Pages/Login';
+import Profile from './Pages/Profile';
+import { Routes, Route } from "react-router-dom";
 import './App.css';
-
-const apiCall = () => {
-  axios.post('http://localhost:8081/update', 
-  {test: "test"}
-  ).then((data) => {
-    //this console.log will be in our frontend console
-    console.log(data)
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-}
+import Messages from './Pages/Messages';
+import Explore from './Pages/Explore';
+import { ProtectedRoute } from './Components/ProtectedRoute';
+import Project from './Pages/Project';
 
 function App() {
   return (
-    <div className="App">
-      <button onClick={apiCall}>Call API</button>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path='/explore' element={<Explore />} />
+          <Route path='/project/:id' element={<Project />} />
+          <Route path='/login' element={<Login />} />
+
+          <Route path='/profile' element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route path='/messages' element={
+              <ProtectedRoute>
+                <Messages />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route path="*" element={<NoPage />} />
+        </Route>
+    </Routes>
+  )
 }
 
 export default App;
