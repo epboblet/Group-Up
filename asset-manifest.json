@@ -1,18 +1,17 @@
 {
   "files": {
-    "main.css": "/Group-Up/static/css/main.6a63e7bd.css",
-    "main.js": "/Group-Up/static/js/main.3b8f49b7.js",
+    "main.css": "/Group-Up/static/css/main.f6d124a8.css",
+    "main.js": "/Group-Up/static/js/main.f0e7c43e.js",
     "static/js/453.66bb3d9a.chunk.js": "/Group-Up/static/js/453.66bb3d9a.chunk.js",
     "static/media/Group-Up Logo Light.svg": "/Group-Up/static/media/Group-Up Logo Light.5607b2fc3405c1da501ca1ab140124aa.svg",
     "static/media/Group-Up Logo.svg": "/Group-Up/static/media/Group-Up Logo.1536ea24faf9b8bb3164781946b7a66f.svg",
-    "static/media/logo.svg": "/Group-Up/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/Group-Up/index.html",
-    "main.6a63e7bd.css.map": "/Group-Up/static/css/main.6a63e7bd.css.map",
-    "main.3b8f49b7.js.map": "/Group-Up/static/js/main.3b8f49b7.js.map",
+    "main.f6d124a8.css.map": "/Group-Up/static/css/main.f6d124a8.css.map",
+    "main.f0e7c43e.js.map": "/Group-Up/static/js/main.f0e7c43e.js.map",
     "453.66bb3d9a.chunk.js.map": "/Group-Up/static/js/453.66bb3d9a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6a63e7bd.css",
-    "static/js/main.3b8f49b7.js"
+    "static/css/main.f6d124a8.css",
+    "static/js/main.f0e7c43e.js"
   ]
 }
