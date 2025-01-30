@@ -1,20 +1,25 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useLogin } from '../Context/LoginContext';
+import { useNavigate } from 'react-router';
 
 export const Login = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const {setIsLoggedIn} = useLogin();
+  const navigate = useNavigate();
 
   const registerUser = () => {
     axios.post('http://localhost:8081/register', {
       username: document.getElementById("username").value,
       password: document.getElementById("password").value,
       confirmPass: document.getElementById("confirmPassword").value,
-    })
+    }, {withCredentials: true})
     .then((res) => {
-      console.log(res);
+      if(res.status == 200) {
+        setIsLoggedIn(true);
+        navigate(-1);
+      }
     })
     .catch((err) => {
       let message = err?.response?.data?.message;
@@ -33,6 +38,7 @@ export const Login = () => {
       console.log(res);
       if(res.status == 200) {
         setIsLoggedIn(true);
+        navigate(-1);
       }
     })
     .catch((err) => {

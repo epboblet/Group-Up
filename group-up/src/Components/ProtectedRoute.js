@@ -1,4 +1,4 @@
-import { Route, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useLogin } from '../Context/LoginContext';
 import { useEffect } from "react";
 
@@ -17,5 +17,5 @@ export const ProtectedRoute = ({children, ...rest}) => {
         return null;  // Or you can return a loader if you want
     }
 
-    return {children};
+    return <>{children}</>;
 };
