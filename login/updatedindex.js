@@ -107,7 +107,6 @@ const lookupUserFromAuthToken = async(authToken)=>{
 
 //Login 
 app.post("/login", async(req, res)=>{
-    const db = await dbPromise;
     const username = req.body.username; //Get username from form
     const password = req.body.password; //Get password from form 
 
@@ -180,20 +179,48 @@ app.get("/logout", async(req, res) =>{
 })
 
 
-//Profile page route
+//Get Profile page route
 
 app.get("/profile/:username", async (req, res) => {
     const db = await dbPromise;
     const username = req.params.username;
 
+     //Retrieve user based on username
     const user = await db.get("SELECT user_id, username FROM users where username = ?", username);
+    
+    //If user not found return 404
     if (!user){
         return res.status(404).send("User not found");
     }
-
+    //Ger users profile details
     const profile = await db.get("SELECT name, bio, skills, picture FROM profiles WHERE user_id = ?", user.user_id);
 
+    //Send the retrieved profile data as the response
     return res.send(profile);
 })
+
+//Edit/Update Profile page
+app.post("/profile/:username", async (req, res) => {
+    const db = await dbPromise;
+    const username = req.params.username;
+
+    //Retrieve user based on username
+    const user = await db.get("SELECT user_id, username FROM users where username = ?", username);
+    
+    //If user not found return 404
+    if(!user){
+        return res.status(404).send("User not found");
+    }
+
+    //Get updated profile details
+    const {name, bio, skills, picture } = req.body;
+
+    //Update the profile details in the database for the user
+    await db.run("UPDATE profile SET name = ?, bio = ?, skills = ?, picture = ? WHERE user_id = ?",
+        name, bio, skills, picture, user.user_id);
+
+        res.redirect(`/profile/${username}`);
+
+});
 
 
