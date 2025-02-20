@@ -187,6 +187,25 @@ app.get("/logout", async(req, res) =>{
 
 
 //Get Profile page route
+app.get("/profile", async (req, res) => {
+    const db = await dbPromise;
+    const username = req.body.username;
+
+     //Retrieve user based on username
+    const user = await db.get("SELECT user_id, username FROM users where username = ?", username);
+    
+    //If user not found return 404
+    if (!user){
+        return res.status(404).send("User not found");
+    }
+    //Ger users profile details
+    const profile = await db.get("SELECT name, bio, skills, photo FROM profile WHERE user_id = ?", user.user_id);
+
+    //Send the retrieved profile data as the response
+    return res.send(profile);
+})
+
+
 app.get("/profile/:username", async (req, res) => {
     const db = await dbPromise;
     const username = req.params.username;
