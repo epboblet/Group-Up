@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Home from './Pages/Home';
 import NoPage from './Pages/NoPage';
 import Layout from './Pages/Layout';
@@ -13,29 +12,29 @@ import Project from './Pages/Project';
 
 function App() {
   return (
-    <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path='/explore' element={<Explore />} />
-          <Route path='/project/:id' element={<Project />} />
-          <Route path='/login' element={<Login />} />
+      <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path='/explore' element={<Explore />} />
+            <Route path='/project/:id' element={<Project />} />
+            <Route path='/login' element={<Login />} />
 
-          <Route path='/profile' element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-          <Route path='/messages' element={
-              <ProtectedRoute>
-                <Messages />
-              </ProtectedRoute>
-            }
-          />
+            <Route path='/profile' element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route path='/messages' element={
+                <ProtectedRoute>
+                  <Messages />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route path="*" element={<NoPage />} />
-        </Route>
-    </Routes>
+            <Route path="*" element={<NoPage />} />
+          </Route>
+      </Routes>
   )
 }
 

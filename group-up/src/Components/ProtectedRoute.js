@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { useLogin } from '../Context/LoginContext';
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export const ProtectedRoute = ({children, ...rest}) => {
-    const {isLoggedIn} = useLogin();
+    const isLoggedIn = useSelector(state => state.user.value);
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(isLoggedIn);
         if (!isLoggedIn) {
             navigate("/login");
         }

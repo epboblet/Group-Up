@@ -20,6 +20,12 @@ import {v4 as uuidv4} from 'uuid';
 
 const app = express();
 const port = 8080;
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true, // Allow credentials (cookies)
+  }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
 
 //Open database
 const dbPromise = open({
@@ -139,6 +145,7 @@ app.post("/login", async(req, res)=>{
 
 //Register
 app.post("/register", async(req, res)=>{
+    console.log("test")
     const db = await dbPromise;
     const username = req.body.username; //Get username from form
     const password = req.body.password; //Get password from form 
@@ -180,7 +187,6 @@ app.get("/logout", async(req, res) =>{
 
 
 //Get Profile page route
-
 app.get("/profile/:username", async (req, res) => {
     const db = await dbPromise;
     const username = req.params.username;
@@ -193,7 +199,7 @@ app.get("/profile/:username", async (req, res) => {
         return res.status(404).send("User not found");
     }
     //Ger users profile details
-    const profile = await db.get("SELECT name, bio, skills, picture FROM profiles WHERE user_id = ?", user.user_id);
+    const profile = await db.get("SELECT name, bio, skills, photo FROM profile WHERE user_id = ?", user.user_id);
 
     //Send the retrieved profile data as the response
     return res.send(profile);

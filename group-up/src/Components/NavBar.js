@@ -6,17 +6,24 @@ import logoLight from '../Group-Up Logo Light.svg';
 
 export const NavBar = () => {
     const [isNavShown, setIsNavShown] = useState(false);
-    const [isLightMode, setIsLightMode] = useState(document.documentElement.className == "light");
+    let theme = localStorage.getItem("lightTheme");
+    theme ??= "light";
+    const [isLightMode, setIsLightMode] = useState((theme == "light") ? true : false);
     const navigate = useNavigate();
 
     const changeTheme = () => {
         let theme = document.documentElement.className;
         theme ??= "dark";
-        document.documentElement.className = theme == "light" ? "dark" : "light";
+        localStorage.setItem("lightTheme", (theme == "light") ? "dark" : "light");
+        document.documentElement.className = (theme == "light") ? "dark" : "light";
         setIsLightMode(document.documentElement.className == "light");
     }
 
     useEffect(() => {
+        let theme = localStorage.getItem("lightTheme");
+        theme ??= "light";
+        document.documentElement.className = theme;
+
         const onScroll = () => {
             let scrollToTop = document.querySelector("#scroll-to-top")
             if(window.scrollY==0 && !scrollToTop.classList.contains("hidden")){

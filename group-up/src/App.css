@@ -276,13 +276,13 @@ h1 {
 }
 
 .display-name {
-  padding-left: 0.5em;
+  padding-left: 0.5rem;
   margin: 0;
   text-align: left;
 }
 
 .username {
-  padding-left: 0.5em;
+  padding-left: 0.5rem;
   font-size: 0.75em;
   color: slategray;
   margin: 0;
@@ -442,6 +442,75 @@ h1 {
   }
 }
 
+/* #endregion */
+
+/* #region Profie */
+.profile-picture {
+  border-radius: 50%;
+  object-fit: cover;
+  vertical-align: middle;
+  line-height: normal;
+  width: 8em;
+  height: 8em;
+}
+
+#header {
+  width: 100vw;
+  background-color: var(--background2);
+}
+
+#user {
+  padding-top: 10vh;
+  width: 85%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  padding-top: 1em;
+  padding-left: 5%;
+  padding-bottom: 1em;
+}
+
+#user-info {
+  float: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.info {
+  margin: 0;
+  padding-left: 1rem;
+}
+
+#body {
+  width: 80%;
+  margin: auto;
+}
+
+#about-user {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: auto;
+}
+
+#about-user-content {
+  background-color: var(--background2);
+  padding: 1em;
+  font-size: large;
+}
+
+.heading {
+  margin-bottom: 0;
+}
+
+#user-projects {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: auto;
+}
 /* #endregion */
 
 .error {

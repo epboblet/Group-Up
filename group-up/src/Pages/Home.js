@@ -6,53 +6,68 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const navigate = useNavigate();
-    const [projects, setProjects] = useState([{
-        id: 1,
-        user: {
-            id: 1,
-            displayName: "Nimrod",
-            username: "nimrod",
-            profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
-        },
-        name: "Tower of Babel",
-        type: "Building",
-        description: `So were going to build this city right? 
-        στο κέντρο της πόλης θα είναι αυτός ο γιγάντιος πύργος. 
-        уый тыххæй хъæудзæн бирæ кусæг. 
-        つまり、本物のチームプレーヤーが何人か必要になるということです。
-        אם אינך יכול לעבוד כחלק מצוות אל תטרח אפילו להגיש מועמדות.
-        Ta wieża prawdopodobnie sięgnie nieba.`,
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Pieter_Bruegel_the_Elder_-_The_Tower_of_Babel_%28Vienna%29_-_Google_Art_Project_-_edited.jpg/500px-Pieter_Bruegel_the_Elder_-_The_Tower_of_Babel_%28Vienna%29_-_Google_Art_Project_-_edited.jpg',
-    },
-    {
-        id: 2,
-        user: {
-            id: 2,
-            displayName: "Tree Lover",
-            username: "arbor",
-            profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
-        },
-        name: "Planting a Bunch of Trees",
-        type: "Tree",
-        description: `TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
-        TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
-        TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, 
-        TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES, TREES! `,
-        image: 'https://www.snexplores.org/wp-content/uploads/2020/04/1030_LL_trees.png',
-    },
-    ]);
+    const [projects, setProjects] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8081/test')
-        .then((res) => {
-            if(res != null) {
-                setProjects(prevProjects => [...prevProjects, res.data]);
-                console.log(projects);
+        const abortController = new AbortController();
+
+        const fetchInfo = async () => {
+            try {
+                axios.get('http://localhost:8081/test', {
+                    signal: abortController.signal,
+                })
+                .then((res) => {
+                    if(res != null) {
+                        console.log(res.data.projects);
+                        setProjects(prevProjects => [...prevProjects, ...res.data.projects]);
+                        console.log(projects);
+                    }
+                })
+                .catch((error) => {
+                    if (error.name !== "CanceledError") {
+                        console.log(error);
+                    }
+                });
             }
-        })
-        .catch((error) => {
-            console.log(error);
-          });
+            catch (error) {
+                if (error.name !== "CanceledError") {
+                    console.log(error);
+                }
+            }
+        }
+
+        //testing for get routes
+        const test = async () => {
+            //replace the value of this variable with the testing route
+            let route = 'test'
+            try {
+                axios.get('http://localhost:8080/'+route, {
+                    signal: abortController.signal,
+                })
+                .then((res) => {
+                    if(res != null) {
+                        console.log('this is the testing route');
+                        console.log(res.data);
+                    }
+                })
+                .catch((error) => {
+                    if (error.name !== "CanceledError") {
+                        console.log(error);
+                    }
+                });
+            }
+            catch (error) {
+                if (error.name !== "CanceledError") {
+                    console.log(error);
+                }
+            }
+        }
+
+        fetchInfo();
+
+        test();
+
+        return () => abortController.abort();
     }, [])
     return (
         <>

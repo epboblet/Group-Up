@@ -1,24 +1,26 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useLogin } from '../Context/LoginContext';
 import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import {login} from '../state/slice/userSlice';
+
 
 export const Login = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const {setIsLoggedIn} = useLogin();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const registerUser = () => {
-    axios.post('http://localhost:8081/register', {
+    axios.post('http://localhost:8080/register', {
       username: document.getElementById("username").value,
       password: document.getElementById("password").value,
       confirmPass: document.getElementById("confirmPassword").value,
     }, {withCredentials: true})
     .then((res) => {
       if(res.status == 200) {
-        setIsLoggedIn(true);
-        navigate(-1);
+        dispatch(login());
+        navigate("/");
       }
     })
     .catch((err) => {
@@ -30,15 +32,14 @@ export const Login = () => {
   }
 
   const loginUser = () => {
-    axios.post('http://localhost:8081/login', {
+    axios.post('http://localhost:8080/login', {
       username: document.getElementById("username").value,
       password: document.getElementById("password").value,
     }, {withCredentials: true})
     .then((res) => {
-      console.log(res);
       if(res.status == 200) {
-        setIsLoggedIn(true);
-        navigate(-1);
+        dispatch(login());
+        navigate("/");
       }
     })
     .catch((err) => {
