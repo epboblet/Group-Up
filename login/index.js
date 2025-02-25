@@ -282,3 +282,81 @@ app.get("/logout", async(req, res) =>{
     res.redirect("/login")
 })
 
+//Get Profile page route
+
+app.get("/profile", async (req, res) => {
+    const db = await dbPromise;
+    const username = req.username;
+
+     //Retrieve user based on username
+    const user = await db.get("SELECT user_id, username FROM users where username = ?", username);
+    
+    //If user not found return 404
+    if (!user){
+        return res.status(404).send("User not found");
+    }
+    //Get users profile details
+    const profile = await db.get("SELECT name, bio, skills, photo FROM profile WHERE user_id = ?", user.user_id);
+
+    if (!profile){
+        return res.status(404).send("User not found");
+    }
+
+    profile.username = user.username;
+
+    //Send the retrieved profile data as the response
+    return res.send(profile);
+})
+
+app.get("/profile/:username", async (req, res) => {
+    const db = await dbPromise;
+    const username = req.params.username;
+
+     //Retrieve user based on username
+    const user = await db.get("SELECT user_id, username FROM users where username = ?", username);
+    
+    //If user not found return 404
+    if (!user){
+        return res.status(404).send("User not found");
+    }
+    //Get users profile details
+    const profile = await db.get("SELECT name, bio, skills, photo FROM profile WHERE user_id = ?", user.user_id);
+
+    if (!profile){
+        return res.status(404).send("User not found");
+    }
+
+    profile.username = user.username;
+
+    //Send the retrieved profile data as the response
+    return res.send(profile);
+})
+
+//Edit/Update Profile page
+app.post("/profile/:username", async (req, res) => {
+    const db = await dbPromise;
+    const username = req.params.username;
+
+    //Retrieve user based on username
+    const user = await db.get("SELECT user_id, username FROM users where username = ?", username);
+    
+    //If user not found return 404
+    if(!user){
+        return res.status(404).send("User not found");
+    }
+
+    //Get updated profile details
+    const {name, bio, skills, photo } = req.body;
+
+    //Update the profile details in the database for the user
+    await db.run("UPDATE profile SET name = ?, bio = ?, skills = ?, photo = ? WHERE user_id = ?",
+        name, bio, skills, photo, user.user_id);
+    
+
+        res.redirect(`/profile/${username}`);
+
+})
+
+
+
+
