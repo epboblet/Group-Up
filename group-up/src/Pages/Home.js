@@ -13,8 +13,9 @@ const Home = () => {
 
         const fetchInfo = async () => {
             try {
-                axios.get('http://localhost:8081/test', {
+                axios.get('http://localhost:8080/test', {
                     signal: abortController.signal,
+                    withCredentials: true,
                 })
                 .then((res) => {
                     if(res != null) {
@@ -24,37 +25,8 @@ const Home = () => {
                     }
                 })
                 .catch((error) => {
-                    if (error.name !== "CanceledError") {
-                        console.log(error);
-                    }
-                });
-            }
-            catch (error) {
-                if (error.name !== "CanceledError") {
                     console.log(error);
-                }
-            }
-        }
-
-        //testing for get routes
-        const test = async () => {
-            //replace the value of this variable with the testing route
-            let route = 'test'
-            try {
-                axios.get('http://localhost:8080/'+route, {
-                    signal: abortController.signal,
-                })
-                .then((res) => {
-                    if(res != null) {
-                        console.log('this is the testing route');
-                        console.log(res.data);
-                    }
-                })
-                .catch((error) => {
-                    if (error.name !== "CanceledError") {
-                        console.log(error);
-                    }
-                });
+                  });
             }
             catch (error) {
                 if (error.name !== "CanceledError") {
@@ -64,8 +36,6 @@ const Home = () => {
         }
 
         fetchInfo();
-
-        test();
 
         return () => abortController.abort();
     }, [])

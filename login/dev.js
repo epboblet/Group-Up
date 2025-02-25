@@ -21,12 +21,6 @@ import bodyParser from 'body-parser';
 
 const app = express();
 const port = 8080;
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true, // Allow credentials (cookies)
-  }));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
 
 //Open database
 const dbPromise = open({
@@ -38,6 +32,11 @@ const dbPromise = open({
 app.use(express.static('public'));
 app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true, // Allow credentials (cookies)
+  }));
+app.use(bodyParser.json())
 
 //Set up handlebards as view engine
 app.engine('handlebars', engine());
@@ -47,18 +46,21 @@ app.set('views', './views');
 //Middleware function
 app.use(async(req, res, next) => {
     const { authToken } = req.cookies;
+    console.log(authToken);
 
     if(!authToken){ //if no authtoken then go to next route 
+        console.log("here")
         return next();
     }
+
     try{
         const user = await lookupUserFromAuthToken(authToken);
         req.user = user; //Attach user opject to request 
-        console.log(req.user);
+        console.log("middleware user: " + user);
+        return next();
     }catch(e){
-        next(e);
+        return next(e);
     }
-    next();
 })
 
 //Render homepage
@@ -77,6 +79,10 @@ app.get("/", async(req,res) =>{
 
 // sends data to the website
 app.get("/test", async(req,res) =>{
+    console.log("test");
+    const user = req.user;
+    console.log(user);
+
     res.send({
             projects : [
                 {
@@ -187,6 +193,7 @@ const lookupUserFromAuthToken = async(authToken)=>{
 
 //Login 
 app.post("/login", async(req, res)=>{
+    console.log("post login")
     const db = await dbPromise;
     const username = req.body.username; //Get username from form
     const password = req.body.password; //Get password from form 
@@ -228,6 +235,7 @@ app.post("/login", async(req, res)=>{
 
 //Register
 app.post("/register", async(req, res)=>{
+    console.log("post register")
     const db = await dbPromise;
     const username = req.body.username; //Get username from form
     const password = req.body.password; //Get password from form 
@@ -274,6 +282,7 @@ app.post("/register", async(req, res)=>{
 
 //If user clicks logout then redirect to login 
 app.post("/logout", async(req, res) =>{
+    console.log("logout")
     res.cookie("authToken", "");
     res.status(200);
     res.send({message: "logged out"});
