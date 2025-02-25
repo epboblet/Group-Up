@@ -45,10 +45,11 @@ app.set('views', './views');
 
 //Middleware function
 app.use(async(req, res, next) => {
-    const { authToken } = req.cookies;
+    const  authToken  = req.cookies.authToken;
 
     if(!authToken){ //if no authtoken then go to next route 
-        return next();
+        next();
+        return;
     }
     try{
         const user = await lookupUserFromAuthToken(authToken);
