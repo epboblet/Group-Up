@@ -266,6 +266,10 @@ app.post("/register", async(req, res)=>{
         //If username does not exist then insert into database
         db.run("INSERT INTO users (username, password) VALUES(?, ?)", username, passwordHash);
         const createdAccount = await db.get("SELECT * FROM users WHERE username=?;", username);
+
+        //Update: Insert default profile for user
+        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year) VALUES (?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "default.jpg", "", "");
+        
         const token = await grantAuthToken(createdAccount.user_id);
         res.cookie('authToken', token);
         res.redirect("/");
@@ -296,7 +300,8 @@ app.get("/profile", async (req, res) => {
         return res.status(404).send("User not found");
     }
     //Get users profile details
-    const profile = await db.get("SELECT name, bio, skills, photo FROM profile WHERE user_id = ?", user.user_id);
+    const profile = await db.get("SELECT name, bio, skills, photo, major, year FROM profile WHERE user_id = ?", user.user_id);
+
 
     if (!profile){
         return res.status(404).send("User not found");
@@ -320,7 +325,7 @@ app.get("/profile/:username", async (req, res) => {
         return res.status(404).send("User not found");
     }
     //Get users profile details
-    const profile = await db.get("SELECT name, bio, skills, photo FROM profile WHERE user_id = ?", user.user_id);
+    const profile = await db.get("SELECT name, bio, skills, photo, major, year FROM profile WHERE user_id = ?", user.user_id);
 
     if (!profile){
         return res.status(404).send("User not found");
@@ -349,8 +354,8 @@ app.post("/profile/:username", async (req, res) => {
     const {name, bio, skills, photo } = req.body;
 
     //Update the profile details in the database for the user
-    await db.run("UPDATE profile SET name = ?, bio = ?, skills = ?, photo = ? WHERE user_id = ?",
-        name, bio, skills, photo, user.user_id);
+     await db.run("UPDATE profile SET name = ?, bio = ?, skills = ?, photo = ?, major = ?, year = ? WHERE user_id = ?",
+        name, bio, skills, photo, major, year, user.user_id);
     
 
         res.redirect(`/profile/${username}`);
