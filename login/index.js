@@ -275,7 +275,7 @@ app.post("/register", async(req, res)=>{
         res.redirect("/");
     }
 
-})
+});
 
 
 
@@ -284,7 +284,7 @@ app.post("/register", async(req, res)=>{
 app.get("/logout", async(req, res) =>{
     res.clearCookie("authToken");
     res.redirect("/login")
-})
+});
 
 //Get Profile page route
 
@@ -311,7 +311,7 @@ app.get("/profile", async (req, res) => {
 
     //Send the retrieved profile data as the response
     return res.send(profile);
-})
+});
 
 app.get("/profile/:username", async (req, res) => {
     const db = await dbPromise;
@@ -335,7 +335,7 @@ app.get("/profile/:username", async (req, res) => {
 
     //Send the retrieved profile data as the response
     return res.send(profile);
-})
+});
 
 //Edit/Update Profile page
 app.post("/profile/:username", async (req, res) => {
@@ -354,13 +354,59 @@ app.post("/profile/:username", async (req, res) => {
     const {name, bio, skills, photo } = req.body;
 
     //Update the profile details in the database for the user
-     await db.run("UPDATE profile SET name = ?, bio = ?, skills = ?, photo = ?, major = ?, year = ? WHERE user_id = ?",
-        name, bio, skills, photo, major, year, user.user_id);
+     await db.run("UPDATE profile bio = ?, skills = ?, photo = ?, major = ?, year = ? WHERE user_id = ?",
+       bio, skills, photo, major, year, user.user_id);
     
 
         res.redirect(`/profile/${username}`);
 
-})
+});
+
+//Creating a new post
+app.post("/createposts", async (req,res) => {
+    if(!req.user){
+        return res.status(404).send("User not found");
+    }
+    const db = await dbPromise;
+    const user_id = req.user.user_id; //get user_id from logged in user
+    const {title, content, photo } = req.body;
+
+    await db.run("INSERT INTO posts (user_id, title, content, photo) VALUES (?, ?, ?, ?)",user_id,"", "", "default.jpg");
+
+    res.redirect(`/profile/${req.user.username}`);
+});
+
+app.get("/posts/:post_id", async (req, res) => {
+    const db = await dbPromise;
+    const post_id = req.params.post_id;
+
+    //Query database
+    const post = await db.get("SELECT * FROM posts where post_id = ?", post_id);
+
+    if(!post){
+        return res.status(404).send("Post not found");
+    }
+    res.send(post);
+
+});
+
+//Edit and update post
+app.get("edit-post/:post_id", async (req, res) => {
+    const db = await dbPromise;
+    const post_id = req.params.post_id;
+
+    //Query database for post details
+    const post = await db.get("SELECT * FROM posts WHERE post_id = ?", post_id);
+
+    if(!post){
+        return res.status(404).send("Post not found");
+    }
+
+    await db.run("UPDATE posts SET title = ?, content = ?, photo = ? WHERE post_id = ?",title, content, photo, post_id);
+
+    res.redirect(`/post/${ post_id }`);
+
+});
 
 
 
