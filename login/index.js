@@ -412,6 +412,15 @@ app.get("edit-post/:post_id", async (req, res) => {
 
 });
 
+//Retrieve all posts
+app.get("/posts", async (req, res) => {
+    const db = await dbPromise;
+
+    //Get posts from database
+    const posts = await db.all("SELECT * FROM posts");
+
+    res.send(posts);
+});
 
 
 
