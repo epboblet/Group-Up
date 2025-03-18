@@ -200,8 +200,7 @@ app.post("/login", async(req, res)=>{
 
     //If there is an empty field than return error and render login
     if((!username) || (!password)){
-    res.status(401);
-    return res.send({ message: "All fields required" });
+    return res.status(401).send({ message: "All fields required" });
     }
     
     try{
@@ -209,15 +208,13 @@ app.post("/login", async(req, res)=>{
         const result = await db.get('SELECT * FROM users WHERE username=?;', username); 
 
         if(!result){
-            res.status(401);
-            return res.send({message: 'Username or password incorrect'}); //Return error message if user isn't found
+            return res.status(401).send({message: 'Username or password incorrect'}); //Return error message if user isn't found
         }
 
         //Check if passwords match
         const passwordMatch = await bcrypt.compare(password, result.password);
         if(!passwordMatch){
-            res.status(401);
-            return res.send({message: 'Username or password incorrect'}) //Return error message if password is incorrect
+            return res.status(401).send({message: 'Username or password incorrect'}) //Return error message if password is incorrect
         }
 
         const token = await grantAuthToken(result.user_id);

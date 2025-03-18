@@ -30,7 +30,7 @@ app.use(bodyParser.json())
 
 //Open database
 const dbPromise = open({
-    filename: './database/group-Up.sqlite',
+    filename: './database/Newgroup-Up.sqlite',
     driver: sqlite3.Database
 })
 
@@ -46,9 +46,9 @@ app.set('views', './views');
 
 //Middleware function
 app.use(async(req, res, next) => {
-    console.log('Cookies:', req.cookies);
+    // console.log('Cookies:', req.cookies);
     const { authToken } = req.cookies;
-    console.log(authToken);
+    // console.log(authToken);
 
     if(!authToken){ //if no authtoken then go to next route 
         return next();
@@ -79,7 +79,6 @@ app.get("/", async(req,res) =>{
 // sends data to the website
 app.get("/test", async(req,res) =>{
     const user = req.user;
-    console.log("User: " + user.user_id);
 
     res.send({
             projects : [
@@ -141,19 +140,20 @@ app.get("/test", async(req,res) =>{
                     name: "b",
                     type: "b",
                     description: `b`,
-                    image: 'https://www.shutterstock.com/image-illustration/hell-inferno-metaphor-souls-entering-600nw-2214585577.jpg',
+                    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Thomas_Bresson_-_Hym%C3%A9nopt%C3%A8re_sur_une_fleur_de_pissenlit_%28by%29.jpg/2560px-Thomas_Bresson_-_Hym%C3%A9nopt%C3%A8re_sur_une_fleur_de_pissenlit_%28by%29.jpg',
                 },
             ],
             users: [
                 {
                     user: {
                         id: 1,
-                        displayName: "Nimrod",
+                        name: "Nimrod",
                         username: "nimrod",
-                        profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg",
+                        photo: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg",
                         major: "Hunting",
                         year: "2154",
-                        about: "Woah I really love stuff, big fan of stuff. I also really enjoy long sentences that fill out the about section of the profile so that I can see how stuff looks on the page.",
+                        bio: "Woah I really love stuff, big fan of stuff. I also really enjoy long sentences that fill out the about section of the profile so that I can see how stuff looks on the page.",
+                        skills: "",
                         projectIDs: [ 1 ],
                     },
                 }
@@ -164,7 +164,6 @@ app.get("/test", async(req,res) =>{
 
 // recieves data from the website
 app.post("/update", async(req,res) =>{
-    console.log(req.body);
     res.status(200);
 })
 
@@ -197,8 +196,8 @@ const lookupUserFromAuthToken = async(authToken)=>{
     const db = await dbPromise;
     //Query database to find token 
     const token = await db.get('SELECT * FROM authtokens WHERE token=?;', authToken);
-    console.log(token);
-    console.log(authToken);
+    // console.log(token);
+    // console.log(authToken);
     //Get username and id based on token 
     const user = await db.get('SELECT user_id, username FROM users WHERE user_id=?;',token.user_id);
     return user;
@@ -211,29 +210,30 @@ app.post("/login", async(req, res)=>{
     const db = await dbPromise;
     const username = req.body.username; //Get username from form
     const password = req.body.password; //Get password from form 
+    console.log(req.body);
 
       //If there is an empty field than return error and render login
       if((!username) || (!password)){
-        return res.render("login", { error: "All fields required" });
+        return res.status(401).send({ message: "All fields required" });
     }
     
     try{
         //Query database to see if username exists
         const result = await db.get('SELECT * FROM users WHERE username=?;', username); 
         if(!result){
-            throw 'Error: username or password incorrect' //Return error message if user isn't found
+            return res.status(401).send({message: 'Username or password incorrect'});
         }
         //Check if passwords match
         const passwordMatch = await bcrypt.compare(password, result.password);
         if(!passwordMatch){
-            throw 'Error: username or password incorrect' //Return error message if password is incorrect
-         }
+            return res.status(401).send({message: 'Username or password incorrect'});
+        }
         const token = await grantAuthToken(result.user_id);
         res.cookie('authToken',token); //Set cookie with token 
-        res.redirect('/'); //Redirect user to homepage after login is succesful 
+        return res.status(200).send({message: "yipee"}); //Redirect user to homepage after login is succesful 
 
     }catch(e){
-        return res.render('login', { error: e});
+        return res.send({ message: e});
     }
 
     });
@@ -249,30 +249,35 @@ app.post("/register", async(req, res)=>{
 
     //If there is an empty field than return error 
     if((!username) || (!password) || (!confirmPass)){
-        return res.render("register", { error: "All fields required" });
+        return res.send({ error: "All fields required" });
     }
 
     if(password !== confirmPass){
-        return res.render("register", { error: "Passwords must match" });
+        return res.send({ error: "Passwords must match" });
     }
 
     //Query database to see if username exists
-    const result = await db.get('SELECT * FROM users WHERE username=?;', username); 
+    const result = await db.get('SELECT * FROM users WHERE username=?;', username);
 
     if(result){
         //If username already exists then render to login 
-        return res.render("login", { error: "Error: user already exists" });
+        return res.send({ error: "Error: user already exists" });
     }else{
         //If username does not exist then insert into database
         db.run("INSERT INTO users (username, password) VALUES(?, ?)", username, passwordHash);
         const createdAccount = await db.get("SELECT * FROM users WHERE username=?;", username);
 
         //Update: Insert default profile for user
-        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year) VALUES (?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "default.jpg", "", "");
-        
+        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year) VALUES (?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "default.jpg", "", "")
+        .then(res => {
+            //logs the number of changes made to the db
+            //this is for making sure something was added
+            console.log(res.changes)
+        })
+    
         const token = await grantAuthToken(createdAccount.user_id);
         res.cookie('authToken', token);
-        res.redirect("/");
+        return res.status(200).send({message: "yipee"});
     }
 
 });
@@ -281,15 +286,15 @@ app.post("/register", async(req, res)=>{
 
 //If user clicks logout then redirect to login 
 app.get("/logout", async(req, res) =>{
+    console.log("logout")
     res.clearCookie("authToken");
-    res.redirect("/login")
 });
 
 //Get Profile page route
 
 app.get("/profile", async (req, res) => {
     const db = await dbPromise;
-    const username = req.username;
+    const username = req.user.username;
 
      //Retrieve user based on username
     const user = await db.get("SELECT user_id, username FROM users where username = ?", username);
@@ -337,9 +342,9 @@ app.get("/profile/:username", async (req, res) => {
 });
 
 //Edit/Update Profile page
-app.post("/profile/:username", async (req, res) => {
+app.post("/profile", async (req, res) => {
     const db = await dbPromise;
-    const username = req.params.username;
+    const username = req.user.username;
 
     //Retrieve user based on username
     const user = await db.get("SELECT user_id, username FROM users where username = ?", username);
@@ -350,15 +355,14 @@ app.post("/profile/:username", async (req, res) => {
     }
 
     //Get updated profile details
-    const {name, bio, skills, photo } = req.body;
+    const {name, bio, skills, photo, major, year } = req.body;
 
     //Update the profile details in the database for the user
-     await db.run("UPDATE profile bio = ?, skills = ?, photo = ?, major = ?, year = ? WHERE user_id = ?",
+     await db.run("UPDATE profile SET bio = ?, skills = ?, photo = ?, major = ?, year = ? WHERE user_id = ?",
        bio, skills, photo, major, year, user.user_id);
     
 
-        res.redirect(`/profile/${username}`);
-
+        res.status(200).send("Profile Updated");
 });
 
 //Creating a new post

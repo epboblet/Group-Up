@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 
 export const ProtectedRoute = ({children, ...rest}) => {
     const isLoggedIn = useSelector(state => state.user.value);
+    console.log(isLoggedIn);
     const navigate = useNavigate();
 
     useEffect(() => {

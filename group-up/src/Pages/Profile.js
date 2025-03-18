@@ -2,23 +2,29 @@ import axios from 'axios';
 import '../App.css';
 import { useDispatch } from 'react-redux';
 import {logout} from '../state/slice/userSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import NoPage from './NoPage';
 
 
 
 const Profile = () =>  {
+    const {id} = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [user, setUser] = useState({displayName: "", username: "", major: "", year: "", about: "", projects: []}); 
+    const [user, setUser] = useState({name: "", username: "", major: "", year: "", bio: "", skills: "", photo: ""});
+    const [editing, setEditing] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const abortController = new AbortController();
+        console.log(id);
 
         const fetchInfo = async () => {
             try {
-                axios.get('http://localhost:8080/test/', {
+                axios.get('http://localhost:8080/test', {
                     signal: abortController.signal,
+                    withCredentials: true,
                 })
                 .then((res) => {
                     if(res != null) {
@@ -36,16 +42,24 @@ const Profile = () =>  {
                     console.log(error);
                 }
             }
+            finally {
+                setLoading(false);
+            }
         }
 
-        const fetchInfo2 = async () => {
+        const getUser = async () => {
+            const url = id ? 'http://localhost:8080/profile/' + id : 'http://localhost:8080/profile/';
             try {
-                axios.get('http://localhost:8080/profile/a', {
+                axios.get(url, {
                     signal: abortController.signal,
+                    withCredentials: true,
                 })
                 .then((res) => {
                     if(res != null) {
-                        console.log(res);
+                        if(!res.data.bio) {
+                            res.data.bio = "This user has not added a bio.";
+                        }
+                        setUser(res.data);
                     }
                 })
                 .catch((error) => {
@@ -59,21 +73,35 @@ const Profile = () =>  {
                     console.log(error);
                 }
             }
+            console.log(user);
         }
 
-        fetchInfo();
-        fetchInfo2();
+        // fetchInfo();
+        getUser();
 
         return () => abortController.abort();
     }, [])
 
+    const updateName = (e) => {
+        setUser({
+            ...user,
+            name: e.target.value
+        });
+    }
+
+    const updateBio = (e) => {
+        setUser({
+            ...user,
+            bio: e.target.value
+        });
+    }
+
     const logOutUser = () => {
-        axios.post('http://localhost:8081/logout', {
+        axios.get('http://localhost:8080/logout', {
         }, {withCredentials: true})
         .then((res) => {
           if(res.status == 200) {
             dispatch(logout());
-            navigate('/')
             console.log(res.data?.message);
           }
         })
@@ -82,25 +110,58 @@ const Profile = () =>  {
         })
       }
 
+      const editUser = () => {
+        axios.post('http://localhost:8080/profile', user, 
+        {withCredentials: true})
+        .catch((err) => {
+            console.log(err);
+        })
+      }
+
+      if(!user.username && !loading) {
+        return <NoPage />
+      }
+
     return (
         <>
             <div id='header'>
                 <div id='user'>
                     <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg" className='profile-picture'/>
                     <div id='user-info'>
-                        <h1 className="info">{user.displayName}</h1>
+                        {
+                            editing ?
+                            <input type='text' defaultValue={user.name} onChange={updateName}></input> :
+                            <h1 className="info">{user.name}</h1>
+                        }
                         <h2 className="info">@{user.username}</h2>
-                        <h2 className="info">{user.major} - {user.year}</h2>
+                        {/* this line shows the major if there is one and then shows the "- year" if they also added a year */}
+                        {user.major && <h2 className="info">{user.major}{(user.major && user.year) && " - " + user.year}</h2>}
                     </div>
+                    {
+                        !id && (
+                            editing ?
+                            <span class="material-symbols-outlined save-profile" onClick={() => {
+                                editUser()
+                                setEditing(!editing)
+                            }}>save_as</span> :
+                            <>
+                                <span class="material-symbols-outlined edit-profile" onClick={() => setEditing(!editing)}>edit_square</span>
+                                <div className='button-logout' onClick={() => logOutUser()}>
+                                    Logout
+                                </div>
+                            </>
+                        )
+                    }
                 </div>
             </div>
             <div id='body'>
                 <div id='about-user'>
                     <h1 className='heading'>About</h1>
-                    <p id='about-user-content'>
-                        Woah I really love stuff, big fan of stuff. I also really enjoy long sentences that fill out the about section of the profile 
-                        so that I can see how stuff looks on the page.
-                    </p>
+                    {
+                        editing ?
+                        <textarea id='about-user-edit' defaultValue={user.bio} onChange={updateBio}></textarea> :
+                        <p id='about-user-content'>{user.bio}</p>
+                    }
                 </div>
 
                 <div id="user-projects">

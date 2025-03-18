@@ -470,6 +470,7 @@ h1 {
   padding-top: 1em;
   padding-left: 5%;
   padding-bottom: 1em;
+  position: relative;
 }
 
 #user-info {
@@ -511,6 +512,18 @@ h1 {
   width: 70%;
   margin: auto;
 }
+
+.edit-profile {
+  position: absolute;
+  right: 0;
+  font-size: 2em;
+}
+
+.save-profile {
+  position: absolute;
+  right: 0;
+  font-size: 2em;
+}
 /* #endregion */
 
 .error {
@@ -536,6 +549,17 @@ button {
   padding: 20px;
   border-radius: 25px;
   color: var(--headings);
+}
+
+.button-logout {
+  background-color: red;
+  color: white;
+  padding: 0.25em;
+  border-radius: 10%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 8px;
 }
 
 .hidden {

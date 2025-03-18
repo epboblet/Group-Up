@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const ProjectCard = ({project}) => {
     const [fullScreen, setFullscreen] = useState(false);
+    const navigate = useNavigate();
   return (
     <div className={`project-card ${fullScreen ? 'fullscreen' : ''}`}>
         <div className='card-head'>
-            <div className='user'>
+            <div className='user' onClick={() => navigate('/profile/'+project.user.username)}>
                 <img src={project.user.profileIcon} className='profile-icon'/>
                 <div className='names'>
                     <p className='display-name'>{project.user.displayName}</p>

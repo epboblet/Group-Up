@@ -25,6 +25,9 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
+            <Route path='/profile/:id' element={<Profile />}/>
+
             <Route path='/messages' element={
                 <ProtectedRoute>
                   <Messages />
