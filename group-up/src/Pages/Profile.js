@@ -42,9 +42,6 @@ const Profile = () =>  {
                     console.log(error);
                 }
             }
-            finally {
-                setLoading(false);
-            }
         }
 
         const getUser = async () => {
@@ -72,6 +69,9 @@ const Profile = () =>  {
                 if (error.name !== "CanceledError") {
                     console.log(error);
                 }
+            }
+            finally {
+                setLoading(false);
             }
             console.log(user);
         }
@@ -102,6 +102,7 @@ const Profile = () =>  {
         .then((res) => {
           if(res.status == 200) {
             dispatch(logout());
+            navigate('/');
             console.log(res.data?.message);
           }
         })
@@ -118,7 +119,9 @@ const Profile = () =>  {
         })
       }
 
-      if(!user.username && !loading) {
+      console.log("username " + loading + ";");
+
+      if(user.username == "" && !loading) {
         return <NoPage />
       }
 

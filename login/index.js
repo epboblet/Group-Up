@@ -288,6 +288,7 @@ app.post("/register", async(req, res)=>{
 app.get("/logout", async(req, res) =>{
     console.log("logout")
     res.clearCookie("authToken");
+    res.status(200).send({message: "logged Out"})
 });
 
 //Get Profile page route
