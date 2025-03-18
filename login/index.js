@@ -279,7 +279,6 @@ app.post("/register", async(req, res)=>{
 
 
 
-
 //If user clicks logout then redirect to login 
 app.get("/logout", async(req, res) =>{
     res.clearCookie("authToken");
