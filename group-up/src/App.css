@@ -248,7 +248,8 @@ h1 {
 .project-title {
   font-size: 2em;
   margin-top: 0;
-  margin-bottom: 0.5em;
+  margin-bottom: 0;
+  cursor: pointer;
 }
 
 .project-type {
@@ -256,7 +257,7 @@ h1 {
   display: inline-block;
   font-size: 1.25em;
   border-radius: 5px;
-  margin-top: 0;
+  margin-top: 0.8em;
   margin-bottom: 0.5em;
   padding: 0.15em 0.5em;
   color: var(--black);

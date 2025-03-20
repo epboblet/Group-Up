@@ -3,10 +3,31 @@ import ProjectCard from '../Components/ProjectCard';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPosts } from '../state/slice/postsSlice';
 
 const Home = () => {
     const navigate = useNavigate();
-    const [projects, setProjects] = useState([]);
+    const dispatch = useDispatch();
+    const [projects, setProjects] = useState([{
+        id: 5,
+        user: {
+            id: 1,
+            displayName: "Nimrod",
+            username: "nimrod",
+            profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
+        },
+        name: "Tower of Babel",
+        type: "",
+        description: `So were going to build this city right? 
+        στο κέντρο της πόλης θα είναι αυτός ο γιγάντιος πύργος. 
+        уый тыххæй хъæудзæн бирæ кусæг. 
+        つまり、本物のチームプレーヤーが何人か必要になるということです。
+        אם אינך יכול לעבוד כחלק מצוות אל תטרח אפילו להגיש מועמדות.
+        Ta wieża prawdopodobnie sięgnie nieba.`,
+        image: '',
+    }]);
+    const posts = useSelector(state => state.posts.value);
 
     useEffect(() => {
         const abortController = new AbortController();
@@ -19,14 +40,36 @@ const Home = () => {
                 })
                 .then((res) => {
                     if(res != null) {
-                        console.log(res.data.projects);
+                        dispatch(setPosts(res.data.projects));
                         setProjects(prevProjects => [...prevProjects, ...res.data.projects]);
-                        console.log(projects);
                     }
                 })
                 .catch((error) => {
                     console.log(error);
-                  });
+                });
+            }
+            catch (error) {
+                if (error.name !== "CanceledError") {
+                    console.log(error);
+                }
+            }
+        }
+
+        const fetchPosts = async () => {
+            try {
+                axios.get('http://localhost:8080/posts', {
+                    signal: abortController.signal,
+                    withCredentials: true,
+                })
+                .then((res) => {
+                    if(res != null) {
+                        console.log(res.data);
+                        dispatch(setPosts(res.data));
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             }
             catch (error) {
                 if (error.name !== "CanceledError") {
@@ -36,6 +79,7 @@ const Home = () => {
         }
 
         fetchInfo();
+        fetchPosts();
 
         return () => abortController.abort();
     }, [])
@@ -67,6 +111,7 @@ const Home = () => {
                 </div>
             </div>
             <div id='project-container'>
+                <button onClick={() => {navigate('/create-post')}}>Create Post</button>
                 <div id='project-list'>
                     <h1 className='body-header'>
                         CHECK  THESE  OUT!

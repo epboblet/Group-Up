@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import NoPage from './NoPage';
 
 
-
 const Profile = () =>  {
     const {id} = useParams();
     const dispatch = useDispatch();
@@ -19,30 +18,6 @@ const Profile = () =>  {
     useEffect(() => {
         const abortController = new AbortController();
         console.log(id);
-
-        const fetchInfo = async () => {
-            try {
-                axios.get('http://localhost:8080/test', {
-                    signal: abortController.signal,
-                    withCredentials: true,
-                })
-                .then((res) => {
-                    if(res != null) {
-                        setUser(res.data.users[0].user);
-                    }
-                })
-                .catch((error) => {
-                    if (error.name !== "CanceledError") {
-                        console.log(error);
-                    }
-                });
-            }
-            catch (error) {
-                if (error.name !== "CanceledError") {
-                    console.log(error);
-                }
-            }
-        }
 
         const getUser = async () => {
             const url = id ? 'http://localhost:8080/profile/' + id : 'http://localhost:8080/profile/';
@@ -76,7 +51,6 @@ const Profile = () =>  {
             console.log(user);
         }
 
-        // fetchInfo();
         getUser();
 
         return () => abortController.abort();
@@ -119,7 +93,6 @@ const Profile = () =>  {
         })
       }
 
-      console.log("username " + loading + ";");
 
       if(user.username == "" && !loading) {
         return <NoPage />

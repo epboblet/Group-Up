@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage
 import userSlice from './slice/userSlice';
+import postsSlice from './slice/postsSlice';
 
 // Set up persist config
 const persistConfig = {
@@ -15,6 +16,7 @@ const persistedReducer = persistReducer(persistConfig, userSlice);
 const store = configureStore({
   reducer: {
     user: persistedReducer, // Persist the user slice
+    posts: postsSlice,
   },
 });
 

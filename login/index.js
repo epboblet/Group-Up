@@ -26,7 +26,11 @@ app.use(cors({
     credentials: true,
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+//this lets express serve images
+//'/image' sets the route (e.g. localhost:8080/image/tree.jpg)
+app.use('/image', express.static('images'));
 
 //Open database
 const dbPromise = open({
@@ -369,15 +373,15 @@ app.post("/profile", async (req, res) => {
 //Creating a new post
 app.post("/createposts", async (req,res) => {
     if(!req.user){
-        return res.status(404).send("User not found");
+        return res.status(404).send({message: "User not found"});
     }
     const db = await dbPromise;
     const user_id = req.user.user_id; //get user_id from logged in user
     const {title, content, photo } = req.body;
 
-    await db.run("INSERT INTO posts (user_id, title, content, photo) VALUES (?, ?, ?, ?)",user_id,"", "", "default.jpg");
+    await db.run("INSERT INTO posts (user_id, title, content, photo) VALUES (?, ?, ?, ?)",user_id, title, content, "default.jpg");
 
-    res.redirect(`/profile/${req.user.username}`);
+    res.status(200).send({message: 'Post added to the database'});
 });
 
 app.get("/posts/:post_id", async (req, res) => {

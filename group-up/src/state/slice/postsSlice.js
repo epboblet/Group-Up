@@ -8,12 +8,11 @@ const postsSlice = createSlice({
     name: "posts",
     initialState,
     reducers: {
-        getPosts: (state) => {
-            console.log("used login")
-            state.value = [];
+        setPosts: (state, action) => {
+            state.value = action.payload;
         },
     }
 });
 
-export const {getPosts} = postsSlice.actions;
+export const {setPosts} = postsSlice.actions;
 export default postsSlice.reducer;

@@ -9,6 +9,7 @@ import Messages from './Pages/Messages';
 import Explore from './Pages/Explore';
 import { ProtectedRoute } from './Components/ProtectedRoute';
 import Project from './Pages/Project';
+import CreatePost from './Pages/CreatePost';
 
 function App() {
   return (
@@ -22,6 +23,13 @@ function App() {
             <Route path='/profile' element={
                 <ProtectedRoute>
                   <Profile />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path='/create-post' element={
+                <ProtectedRoute>
+                  <CreatePost />
                 </ProtectedRoute>
               }
             />
