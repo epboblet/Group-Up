@@ -310,7 +310,7 @@ app.get("/profile", async (req, res) => {
         return res.status(404).send("User not found");
     }
     //Get users profile details
-    const profile = await db.get("SELECT name, bio, skills, photo, major, year FROM profile WHERE user_id = ?", user.user_id);
+    const profile = await db.get("SELECT name, displayname, bio, skills, photo, major, year FROM profile WHERE user_id = ?", user.user_id);
 
 
     if (!profile){
@@ -335,7 +335,7 @@ app.get("/profile/:username", async (req, res) => {
         return res.status(404).send("User not found");
     }
     //Get users profile details
-    const profile = await db.get("SELECT name, bio, skills, photo, major, year FROM profile WHERE user_id = ?", user.user_id);
+    const profile = await db.get("SELECT name, displayname, bio, skills, photo, major, year FROM profile WHERE user_id = ?", user.user_id);
 
     if (!profile){
         return res.status(404).send("User not found");
@@ -361,11 +361,11 @@ app.post("/profile", async (req, res) => {
     }
 
     //Get updated profile details
-    const {name, bio, skills, photo, major, year } = req.body;
+    const {name, displayname, bio, skills, photo, major, year } = req.body;
 
     //Update the profile details in the database for the user
-     await db.run("UPDATE profile SET bio = ?, skills = ?, photo = ?, major = ?, year = ? WHERE user_id = ?",
-       bio, skills, photo, major, year, user.user_id);
+     await db.run("UPDATE profile SET displayname = ?, bio = ?, skills = ?, photo = ?, major = ?, year = ? WHERE user_id = ?",
+      displayname, bio, skills, photo, major, year, user.user_id);
     
 
         res.status(200).send("Profile Updated");
@@ -378,9 +378,11 @@ app.post("/createposts", async (req,res) => {
     }
     const db = await dbPromise;
     const user_id = req.user.user_id; //get user_id from logged in user
+    const username = req.user.username;
+    const profile = await 
     const {title, content, photo } = req.body;
 
-    await db.run("INSERT INTO posts (user_id, title, content, photo) VALUES (?, ?, ?, ?)",user_id, title, content, "/image/post/no-image.jpg");
+    await db.run("INSERT INTO posts (user_id, username, displayname, title, content, photo) VALUES (?, ?, ?, ?, ?, ?)",user_id, username, displayname, title, content, "default.jpg");
 
     res.status(200).send({message: 'Post added to the database'});
 });
@@ -426,6 +428,3 @@ app.get("/posts", async (req, res) => {
 
     res.send(posts);
 });
-
-
-
