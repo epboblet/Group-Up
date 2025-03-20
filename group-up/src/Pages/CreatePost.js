@@ -28,7 +28,7 @@ const CreatePost = () =>  {
             <div className='body-content'>
                 <form onSubmit={submitPost}>
                     <label for="title">Title: </label>
-                    <input name='title'></input>
+                    <input name='title' required></input>
                     <br/>
                     <label for="content">Description:</label>
                     <br/>

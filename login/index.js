@@ -29,8 +29,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //this lets express serve images
-//'/image' sets the route (e.g. localhost:8080/image/tree.jpg)
-app.use('/image', express.static('images'));
+//'/image' sets the root route 
+//default icon is at 'localhost:8080/image/profile/default.jpg'
+app.use('/image', express.static('image'));
 
 //Open database
 const dbPromise = open({
@@ -272,7 +273,7 @@ app.post("/register", async(req, res)=>{
         const createdAccount = await db.get("SELECT * FROM users WHERE username=?;", username);
 
         //Update: Insert default profile for user
-        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year) VALUES (?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "default.jpg", "", "")
+        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year) VALUES (?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "/image/profile/default.jpg", "", "")
         .then(res => {
             //logs the number of changes made to the db
             //this is for making sure something was added
@@ -379,7 +380,7 @@ app.post("/createposts", async (req,res) => {
     const user_id = req.user.user_id; //get user_id from logged in user
     const {title, content, photo } = req.body;
 
-    await db.run("INSERT INTO posts (user_id, title, content, photo) VALUES (?, ?, ?, ?)",user_id, title, content, "default.jpg");
+    await db.run("INSERT INTO posts (user_id, title, content, photo) VALUES (?, ?, ?, ?)",user_id, title, content, "/image/post/no-image.jpg");
 
     res.status(200).send({message: 'Post added to the database'});
 });
