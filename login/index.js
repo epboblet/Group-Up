@@ -288,7 +288,6 @@ app.post("/register", async(req, res)=>{
 });
 
 
-
 //If user clicks logout then redirect to login 
 app.get("/logout", async(req, res) =>{
     console.log("logout")
@@ -297,7 +296,6 @@ app.get("/logout", async(req, res) =>{
 });
 
 //Get Profile page route
-
 app.get("/profile", async (req, res) => {
     const db = await dbPromise;
     const username = req.user.username;
@@ -311,7 +309,6 @@ app.get("/profile", async (req, res) => {
     }
     //Get users profile details
     const profile = await db.get("SELECT name, displayname, bio, skills, photo, major, year FROM profile WHERE user_id = ?", user.user_id);
-
 
     if (!profile){
         return res.status(404).send("User not found");
@@ -379,7 +376,7 @@ app.post("/createposts", async (req,res) => {
     const db = await dbPromise;
     const user_id = req.user.user_id; //get user_id from logged in user
     const username = req.user.username;
-    const profile = await 
+    const displayname = await db.get("SELECT displayname FROM profile where user_id = ?", user_id);
     const {title, content, photo } = req.body;
 
     await db.run("INSERT INTO posts (user_id, username, displayname, title, content, photo) VALUES (?, ?, ?, ?, ?, ?)",user_id, username, displayname, title, content, "default.jpg");
