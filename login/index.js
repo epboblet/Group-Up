@@ -376,10 +376,10 @@ app.post("/createposts", async (req,res) => {
     const db = await dbPromise;
     const user_id = req.user.user_id; //get user_id from logged in user
     const username = req.user.username;
-    const displayname = await db.get("SELECT displayname FROM profile where user_id = ?", user_id);
+    const profile = await db.get("SELECT displayname, photo FROM profile where user_id = ?", user_id);
     const {title, content, photo } = req.body;
 
-    await db.run("INSERT INTO posts (user_id, username, displayname, title, content, photo) VALUES (?, ?, ?, ?, ?, ?)", user_id, username, displayname.displayname, title, content, "default.jpg");
+    await db.run("INSERT INTO posts (user_id, username, displayname, photo, title, content, photo) VALUES (?, ?, ?, ?, ?, ?, ?)", user_id, username, profile.displayname, profile.photo, title, content, "default.jpg");
 
     res.status(200).send({message: 'Post added to the database'});
 });
