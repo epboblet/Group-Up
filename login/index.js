@@ -379,7 +379,7 @@ app.post("/createposts", async (req,res) => {
     const displayname = await db.get("SELECT displayname FROM profile where user_id = ?", user_id);
     const {title, content, photo } = req.body;
 
-    await db.run("INSERT INTO posts (user_id, username, displayname, title, content, photo) VALUES (?, ?, ?, ?, ?, ?)",user_id, username, displayname, title, content, "default.jpg");
+    await db.run("INSERT INTO posts (user_id, username, displayname, title, content, photo) VALUES (?, ?, ?, ?, ?, ?)", user_id, username, displayname.displayname, title, content, "default.jpg");
 
     res.status(200).send({message: 'Post added to the database'});
 });

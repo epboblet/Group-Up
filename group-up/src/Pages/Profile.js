@@ -11,7 +11,7 @@ const Profile = () =>  {
     const {id} = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [user, setUser] = useState({name: "", username: "", major: "", year: "", bio: "", skills: "", photo: ""});
+    const [user, setUser] = useState({displayname: "", username: "", major: "", year: "", bio: "", skills: "", photo: ""});
     const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(true);
 
@@ -59,7 +59,7 @@ const Profile = () =>  {
     const updateName = (e) => {
         setUser({
             ...user,
-            name: e.target.value
+            displayname: e.target.value
         });
     }
 
@@ -86,6 +86,7 @@ const Profile = () =>  {
       }
 
       const editUser = () => {
+        console.log(user);
         axios.post('http://localhost:8080/profile', user, 
         {withCredentials: true})
         .catch((err) => {
@@ -106,8 +107,8 @@ const Profile = () =>  {
                     <div id='user-info'>
                         {
                             editing ?
-                            <input type='text' defaultValue={user.name} onChange={updateName}></input> :
-                            <h1 className="info">{user.name}</h1>
+                            <input type='text' defaultValue={user.displayname} onChange={updateName}></input> :
+                            <h1 className="info">{user.displayname}</h1>
                         }
                         <h2 className="info">@{user.username}</h2>
                         {/* this line shows the major if there is one and then shows the "- year" if they also added a year */}
