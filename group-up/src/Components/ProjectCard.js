@@ -19,6 +19,13 @@ export const ProjectCard = ({project, loggedIn}) => {
         });
     }
 
+    const truncate = (string) => {
+        if(string.length > 500 && !(string.length < 550)) {
+            return string.substring(0, 500).trimEnd() + "...";
+        }
+        return string;
+    }
+
     const updateDescription = (e) => {
         setDisplayProject({
             ...displayProject,
@@ -83,7 +90,7 @@ export const ProjectCard = ({project, loggedIn}) => {
                 {
                     editing ?
                     <textarea defaultValue={displayProject.description} onChange={updateDescription}></textarea> :
-                    <p className='project-description'>{displayProject.description}</p>
+                    <p className='project-description'>{truncate(displayProject.description)}</p>
                 }
             </div>
             {displayProject?.image && <img src={displayProject.image} className='project-image'/>}
