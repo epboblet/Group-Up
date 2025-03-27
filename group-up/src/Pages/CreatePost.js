@@ -1,7 +1,9 @@
 import axios from 'axios';
 import '../App.css';
+import { useState } from 'react';
 
 const CreatePost = () =>  {
+    const [message, setMessage] = useState({text: "", type: ""});
     const submitPost = (e) => {
         e.preventDefault();
 
@@ -15,8 +17,18 @@ const CreatePost = () =>  {
             content: content,
             photo: null,
         }, {withCredentials: true})
+        .then((res) => {
+            if(res.status == 200) {
+                setMessage({text: res?.data?.message, type: "success"});
+                e.target.reset();
+            }
+            else {
+                setMessage({text: res?.data?.message, type: "error"});
+            }
+            
+        })
         .catch((err) => {
-            let message = err?.response?.data?.message;
+            setMessage({text: err?.message, type: "error"});
         })
     }
 
@@ -26,6 +38,9 @@ const CreatePost = () =>  {
                 Create Post
             </h1>
             <div className='body-content'>
+            {
+                message.text != "" && <p className={message.type}>{message.text}</p>
+            }
                 <form onSubmit={submitPost}>
                     <label for="title">Title: </label>
                     <input name='title' required></input>

@@ -1,60 +1,85 @@
 import axios from 'axios';
 import '../App.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {logout} from '../state/slice/userSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import NoPage from './NoPage';
+import { setPosts } from '../state/slice/postsSlice';
+import ProjectCard from '../Components/ProjectCard';
 
 
 const Profile = () =>  {
     const {id} = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [user, setUser] = useState({displayname: "", username: "", major: "", year: "", bio: "", skills: "", photo: ""});
+    const [user, setUser] = useState({user_id: 0, displayname: "", username: "", major: "", year: "", bio: "", skills: "", photo: ""});
     const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(true);
+    const posts = useSelector(state => state.posts.value);
 
-    useEffect(() => {
-        const abortController = new AbortController();
-        console.log(id);
+    const abortController = new AbortController();
 
-        const getUser = async () => {
-            const url = id ? 'http://localhost:8080/profile/' + id : 'http://localhost:8080/profile/';
-            try {
-                axios.get(url, {
-                    signal: abortController.signal,
-                    withCredentials: true,
-                })
-                .then((res) => {
-                    if(res != null) {
-                        if(!res.data.bio) {
-                            res.data.bio = "This user has not added a bio.";
-                        }
-                        setUser(res.data);
-                    }
-                })
-                .catch((error) => {
-                    if (error.name !== "CanceledError") {
-                        console.log(error);
-                    }
-                });
+    const fetchPosts = async () => {
+        try {
+            axios.get('http://localhost:8080/posts', {
+                signal: abortController.signal,
+                withCredentials: true,
+            })
+            .then((res) => {
+                if(res != null) {
+                    dispatch(setPosts(res.data));
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        }
+        catch (error) {
+            if (error.name !== "CanceledError") {
+                console.log(error);
             }
-            catch (error) {
+        }
+    }
+
+    const getUser = async () => {
+        const url = id ? 'http://localhost:8080/profile/' + id : 'http://localhost:8080/profile/';
+        try {
+            axios.get(url, {
+                signal: abortController.signal,
+                withCredentials: true,
+            })
+            .then((res) => {
+                if(res != null) {
+                    if(!res.data.bio) {
+                        res.data.bio = "This user has not added a bio.";
+                    }
+                    setUser(res.data);
+                }
+            })
+            .catch((error) => {
                 if (error.name !== "CanceledError") {
                     console.log(error);
                 }
-            }
-            finally {
-                setLoading(false);
-            }
-            console.log(user);
+            });
         }
+        catch (error) {
+            if (error.name !== "CanceledError") {
+                console.log(error);
+            }
+        }
+        finally {
+            setLoading(false);
+        }
+    }
 
+    useEffect(() => {
+        fetchPosts();
         getUser();
 
         return () => abortController.abort();
-    }, [])
+
+    }, []);
 
     const updateName = (e) => {
         setUser({
@@ -89,6 +114,9 @@ const Profile = () =>  {
         console.log(user);
         axios.post('http://localhost:8080/profile', user, 
         {withCredentials: true})
+        .then(() => {
+            fetchPosts();
+        })
         .catch((err) => {
             console.log(err);
         })
@@ -142,7 +170,14 @@ const Profile = () =>  {
                 </div>
 
                 <div id="user-projects">
-                    <h1 className='heading'></h1>
+                    <h1 className='heading'>{user.username}'s Projects</h1>
+                    {
+                        posts.map((e) => {
+                            return(
+                               (user.user_id == e.user.user_id) && <ProjectCard project={e} loggedIn={!id}/>
+                            )
+                        })
+                    }
 
                 </div>
             </div>

@@ -51,9 +51,7 @@ app.set('views', './views');
 
 //Middleware function
 app.use(async(req, res, next) => {
-    // console.log('Cookies:', req.cookies);
     const { authToken } = req.cookies;
-    // console.log(authToken);
 
     if(!authToken){ //if no authtoken then go to next route 
         return next();
@@ -93,7 +91,7 @@ app.get("/test", async(req,res) =>{
                         id: 1,
                         displayName: "Nimrod",
                         username: "nimrod",
-                        profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
+                        profileIcon: "http://localhost:8080/image/profile/default.jpg"
                     },
                     name: "Tower of Babel",
                     type: "Building",
@@ -111,7 +109,7 @@ app.get("/test", async(req,res) =>{
                         id: 2,
                         displayName: "Tree Lover",
                         username: "arbor",
-                        profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
+                        profileIcon: "http://localhost:8080/image/profile/default.jpg"
                     },
                     name: "Planting a Bunch of Trees",
                     type: "Tree",
@@ -127,7 +125,7 @@ app.get("/test", async(req,res) =>{
                         id: 3,
                         displayName: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
                         username: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                        profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
+                        profileIcon: "http://localhost:8080/image/profile/default.jpg"
                     },
                     name: "AAAAAAAAAAAAAAAAAAAAAAAAA",
                     type: "AAAAAAAAAAAAAAAAAAAAAAAA",
@@ -140,7 +138,7 @@ app.get("/test", async(req,res) =>{
                         id: 4,
                         displayName: "b",
                         username: "b",
-                        profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
+                        profileIcon: "http://localhost:8080/image/profile/default.jpg"
                     },
                     name: "b",
                     type: "b",
@@ -154,12 +152,11 @@ app.get("/test", async(req,res) =>{
                         id: 1,
                         name: "Nimrod",
                         username: "nimrod",
-                        photo: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg",
+                        photo: "http://localhost:8080/image/profile/default.jpg",
                         major: "Hunting",
                         year: "2154",
                         bio: "Woah I really love stuff, big fan of stuff. I also really enjoy long sentences that fill out the about section of the profile so that I can see how stuff looks on the page.",
                         skills: "",
-                        projectIDs: [ 1 ],
                     },
                 }
             ]
@@ -201,8 +198,6 @@ const lookupUserFromAuthToken = async(authToken)=>{
     const db = await dbPromise;
     //Query database to find token 
     const token = await db.get('SELECT * FROM authtokens WHERE token=?;', authToken);
-    // console.log(token);
-    // console.log(authToken);
     //Get username and id based on token 
     const user = await db.get('SELECT user_id, username FROM users WHERE user_id=?;',token.user_id);
     return user;
@@ -215,7 +210,6 @@ app.post("/login", async(req, res)=>{
     const db = await dbPromise;
     const username = req.body.username; //Get username from form
     const password = req.body.password; //Get password from form 
-    console.log(req.body);
 
       //If there is an empty field than return error and render login
       if((!username) || (!password)){
@@ -273,11 +267,11 @@ app.post("/register", async(req, res)=>{
         const createdAccount = await db.get("SELECT * FROM users WHERE username=?;", username);
 
         //Update: Insert default profile for user
-        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year) VALUES (?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "/image/profile/default.jpg", "", "")
+        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year) VALUES (?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "http://localhost:8080/image/profile/default.jpg", "", "")
         .then(res => {
             //logs the number of changes made to the db
             //this is for making sure something was added
-            console.log(res.changes)
+            // console.log(res.changes)
         })
     
         const token = await grantAuthToken(createdAccount.user_id);
@@ -290,7 +284,6 @@ app.post("/register", async(req, res)=>{
 
 //If user clicks logout then redirect to login 
 app.get("/logout", async(req, res) =>{
-    console.log("logout")
     res.clearCookie("authToken");
     res.status(200).send({message: "logged Out"})
 });
@@ -308,7 +301,7 @@ app.get("/profile", async (req, res) => {
         return res.status(404).send("User not found");
     }
     //Get users profile details
-    const profile = await db.get("SELECT name, displayname, bio, skills, photo, major, year FROM profile WHERE user_id = ?", user.user_id);
+    const profile = await db.get("SELECT user_id, name, displayname, bio, skills, photo, major, year FROM profile WHERE user_id = ?", user.user_id);
 
     if (!profile){
         return res.status(404).send("User not found");
@@ -332,7 +325,7 @@ app.get("/profile/:username", async (req, res) => {
         return res.status(404).send("User not found");
     }
     //Get users profile details
-    const profile = await db.get("SELECT name, displayname, bio, skills, photo, major, year FROM profile WHERE user_id = ?", user.user_id);
+    const profile = await db.get("SELECT user_id, name, displayname, bio, skills, photo, major, year FROM profile WHERE user_id = ?", user.user_id);
 
     if (!profile){
         return res.status(404).send("User not found");
@@ -371,7 +364,7 @@ app.post("/profile", async (req, res) => {
 //Creating a new post
 app.post("/createposts", async (req,res) => {
     if(!req.user){
-        return res.status(404).send({message: "User not found"});
+        return res.status(401).send({message: "You do not have permission to perform this action."});
     }
     const db = await dbPromise;
     const user_id = req.user.user_id; //get user_id from logged in user
@@ -379,9 +372,19 @@ app.post("/createposts", async (req,res) => {
     const profile = await db.get("SELECT displayname, photo FROM profile where user_id = ?", user_id);
     const {title, content, photo } = req.body;
 
-    await db.run("INSERT INTO posts (user_id, username, displayname, photo, title, content, photo) VALUES (?, ?, ?, ?, ?, ?, ?)", user_id, username, profile.displayname, profile.photo, title, content, "default.jpg");
-
-    res.status(200).send({message: 'Post added to the database'});
+    //checks to make sure the post was added to the database
+    try {
+        const result = await db.run("INSERT INTO posts (user_id, username, displayname, photo, title, content, photo) VALUES (?, ?, ?, ?, ?, ?, ?)", user_id, username, profile.displayname, null, title, content, null);
+        
+        if (result.changes > 0) {
+            return res.status(200).send({ message: 'Post added to the database' });
+        } else {
+            return res.status(500).send({ message: 'Failed to add post to the database' });
+        }
+    } catch (error) {
+        console.error(err);
+        return res.status(500).send({ message: 'Error adding post to the database', error: err.message });
+    }
 });
 
 app.get("/posts/:post_id", async (req, res) => {
@@ -390,18 +393,32 @@ app.get("/posts/:post_id", async (req, res) => {
 
     //Query database
     const post = await db.get("SELECT * FROM posts where post_id = ?", post_id);
+    const profile = await db.get("SELECT * FROM profile WHERE user_id = ?", post.user_id);
 
     if(!post){
         return res.status(404).send("Post not found");
     }
-    res.send(post);
+    res.send({
+        id: post.post_id,
+        user: {
+            user_id: profile.user_id,
+            displayName: profile.displayname,
+            username: profile.name,
+            profileIcon: profile.photo,
+        },
+        name: post.title,
+        type: "",
+        description: post.content,
+        image: post.photo,
+    });
 
 });
 
 //Edit and update post
-app.get("edit-post/:post_id", async (req, res) => {
+app.post("/edit-post/:post_id", async (req, res) => {
     const db = await dbPromise;
     const post_id = req.params.post_id;
+    const {title, content, photo} = req.body;
 
     //Query database for post details
     const post = await db.get("SELECT * FROM posts WHERE post_id = ?", post_id);
@@ -410,10 +427,9 @@ app.get("edit-post/:post_id", async (req, res) => {
         return res.status(404).send("Post not found");
     }
 
-    await db.run("UPDATE posts SET title = ?, content = ?, photo = ? WHERE post_id = ?",title, content, photo, post_id);
+    await db.run("UPDATE posts SET title = ?, content = ?, photo = ? WHERE post_id = ?", title, content, photo, post_id);
 
-    res.redirect(`/post/${ post_id }`);
-
+    res.status(200).send({message: "yipee"});
 });
 
 //Retrieve all posts
@@ -422,6 +438,27 @@ app.get("/posts", async (req, res) => {
 
     //Get posts from database
     const posts = await db.all("SELECT * FROM posts");
+    const response = [];
 
-    res.send(posts);
+    for (let i = 0; i < posts.length; i++) {
+        const post = posts[i];
+        const profile = await db.get("SELECT * FROM profile WHERE user_id = ?", post.user_id);
+
+        response.push({
+            id: post.post_id,
+            user: {
+                user_id: profile.user_id,
+                displayName: profile.displayname,
+                username: profile.name,
+                profileIcon: profile.photo,
+            },
+            name: post.title,
+            type: "",
+            description: post.content,
+            image: post.photo,
+        });
+        
+    }
+    
+    res.send(response);
 });

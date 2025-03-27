@@ -9,80 +9,52 @@ import { setPosts } from '../state/slice/postsSlice';
 const Home = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [projects, setProjects] = useState([{
-        id: 5,
-        user: {
-            id: 1,
-            displayName: "Nimrod",
-            username: "nimrod",
-            profileIcon: "https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg"
-        },
-        name: "Tower of Babel",
-        type: "",
-        description: `So were going to build this city right? 
-        στο κέντρο της πόλης θα είναι αυτός ο γιγάντιος πύργος. 
-        уый тыххæй хъæудзæн бирæ кусæг. 
-        つまり、本物のチームプレーヤーが何人か必要になるということです。
-        אם אינך יכול לעבוד כחלק מצוות אל תטרח אפילו להגיש מועמדות.
-        Ta wieża prawdopodobnie sięgnie nieba.`,
-        image: '',
-    }]);
     const posts = useSelector(state => state.posts.value);
+    const [filteredPost, setFilteredPosts] = useState(posts);
+    const [searchText, setSearchText] = useState('');  // Track search input separately
+
+    const handleSearchChange = (e) => {
+        const text = e.target.value;
+        setSearchText(text); // Update searchText state
+    };
+
+    // Function to filter posts based on the search text
+    const filterPosts = (search) => {
+        if (!search) return posts;  // If search is empty, return all posts
+        return posts.filter(project => 
+            project.name?.toLowerCase().includes(search.toLowerCase()) ||
+            project.description?.toLowerCase().includes(search.toLowerCase())
+        );
+    };
+
+    const abortController = new AbortController();
+
+    const fetchPosts = async () => {
+        try {
+            const res = await axios.get('http://localhost:8080/posts', {
+                signal: abortController.signal,
+                withCredentials: true,
+            });
+            if (res && res.data) {
+                dispatch(setPosts(res.data));  // Dispatch posts to Redux
+                setFilteredPosts(filterPosts(searchText)); // Filter posts initially based on searchText
+            }
+        } catch (error) {
+            if (error.name !== "CanceledError") {
+                console.log(error);
+            }
+        }
+    };
 
     useEffect(() => {
-        const abortController = new AbortController();
+        fetchPosts();  // Fetch posts on mount
+        return () => abortController.abort();  // Cleanup on unmount
+    }, []);
 
-        const fetchInfo = async () => {
-            try {
-                axios.get('http://localhost:8080/test', {
-                    signal: abortController.signal,
-                    withCredentials: true,
-                })
-                .then((res) => {
-                    if(res != null) {
-                        dispatch(setPosts(res.data.projects));
-                        setProjects(prevProjects => [...prevProjects, ...res.data.projects]);
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            }
-            catch (error) {
-                if (error.name !== "CanceledError") {
-                    console.log(error);
-                }
-            }
-        }
+    useEffect(() => {
+        setFilteredPosts(filterPosts(searchText));  // Update filtered posts whenever searchText changes
+    }, [searchText, posts]);  // Re-run when either searchText or posts change
 
-        const fetchPosts = async () => {
-            try {
-                axios.get('http://localhost:8080/posts', {
-                    signal: abortController.signal,
-                    withCredentials: true,
-                })
-                .then((res) => {
-                    if(res != null) {
-                        console.log(res.data);
-                        dispatch(setPosts(res.data));
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            }
-            catch (error) {
-                if (error.name !== "CanceledError") {
-                    console.log(error);
-                }
-            }
-        }
-
-        fetchInfo();
-        fetchPosts();
-
-        return () => abortController.abort();
-    }, [])
     return (
         <>
             <span className='accent-blue'></span>
@@ -111,22 +83,32 @@ const Home = () => {
                 </div>
             </div>
             <div id='project-container'>
-                <button onClick={() => {navigate('/create-post')}}>Create Post</button>
                 <div id='project-list'>
                     <h1 className='body-header'>
                         CHECK  THESE  OUT!
                     </h1>
-                    {
-                        projects.map((e) => {
-                            return(
-                                <ProjectCard project={e}/>
-                            )
+                    <div className='post-controls'>
+                        <input 
+                            type='text' 
+                            name='post-search' 
+                            className='post-search' 
+                            value={searchText} 
+                            onChange={handleSearchChange}
+                            placeholder="Search for posts..."
+                        />
+                        <button onClick={() => {navigate('/create-post')}} className='create-post'>Create Post</button>
+                    </div>
+                    {filteredPost.length > 0 ? (
+                        filteredPost.map((e) => {
+                            return <ProjectCard key={e.id} project={e} />;
                         })
-                    }
+                    ) : (
+                        <p>No posts found matching your search criteria.</p>
+                    )}
                 </div>
             </div>
         </>
     );
-}
+};
 
 export default Home;

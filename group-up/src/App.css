@@ -176,7 +176,6 @@ h1 {
 /* #region Project */
 #project-list {
   align-items: center;
-  justify-content: center;
 }
 
 #project-container {
@@ -306,6 +305,28 @@ h1 {
 
 .send {
   border: 1px solid yellow;
+}
+
+.post-controls {
+  width: var(--content-width);
+  margin: auto;
+  margin-bottom: 1em;
+}
+
+.post-search {
+  padding: .3em;
+  margin: 8px;
+  width: 80%;
+  font-size: 1.5em;
+}
+
+.create-post {
+  margin: auto;
+  text-align: center;
+  background-color: var(--foreground);
+  font-size: 1.5em;
+  padding: .2em .4em .2em .4em;
+  border-radius: 25px;
 }
 
 /* #endregion */
@@ -531,11 +552,14 @@ h1 {
   color: red;
 }
 
+.success {
+  color: green;
+}
+
 button {
   all: unset;
   margin-right: 15px;
   cursor: pointer;
-  font-size: 3vh;
 }
 
 .button-main {

@@ -71,7 +71,7 @@ export const Login = () => {
         }
 
         {
-          errorMessage && <p className='error'>{errorMessage}</p>
+          errorMessage != "" && <p className='error'>{errorMessage}</p>
         }
 
         <input type ="submit" onClick={() => {
