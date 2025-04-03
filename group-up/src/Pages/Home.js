@@ -81,7 +81,7 @@ const Home = () => {
                             as well as providing them with a space to organize and collaborate with others.
                         </p>
                         <div>
-                            <button className='button-secondary' onClick={() => {navigate('/explore')}}>EXPLORE PROJECTS</button>
+                            <button className='button-secondary' onClick={() => {document.getElementById('project-list')?.scrollIntoView({behavior: 'smooth'})}}>EXPLORE PROJECTS</button>
                             <button className='button-main' onClick={() => {navigate('/login')}}>SIGN IN</button>
                         </div>
                     </div>

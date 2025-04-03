@@ -3,11 +3,14 @@ import '../App.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from '../state/slice/postsSlice';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePost = () =>  {
     const [message, setMessage] = useState({text: "", type: ""});
     const posts = useSelector(state => state.posts.value);
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const submitPost = (e) => {
         e.preventDefault();
 

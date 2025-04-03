@@ -83,7 +83,7 @@ export const NavBar = () => {
             </div>
         </nav>
     }
-        <div className='top hidden' onClick={() => {window.scrollTo(0,0)}} id='scroll-to-top'>
+        <div className='top hidden' onClick={() => {window.scrollTo({top: 0, behavior: 'smooth'})}} id='scroll-to-top'>
             <span className="material-symbols-outlined nav-icon">
                 arrow_upward
             </span>

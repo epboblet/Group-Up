@@ -170,7 +170,7 @@ const Profile = () =>  {
                 </div>
 
                 <div id="user-projects">
-                    <h1 className='heading'>{user.username}'s Projects</h1>
+                    <h1 className='heading'>{user.displayname ?? user.username}'s Projects</h1>
                     {
                         posts.map((e) => {
                             return(
