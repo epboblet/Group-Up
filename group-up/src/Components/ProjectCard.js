@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const ProjectCard = ({project, loggedIn}) => {
+export const ProjectCard = ({project, loggedIn, fetchPosts}) => {
     const [editing, setEditing] = useState(false);
     const [displayProject, setDisplayProject] = useState(project);
     const [updatedProject, setUpdatedProject] = useState({title: project.name, content: project.description, photo: project.image});
@@ -46,7 +46,7 @@ export const ProjectCard = ({project, loggedIn}) => {
         }, 
         {withCredentials: true})
         .then(() => {
-            // fetchPosts();
+            fetchPosts();
         })
         .catch((err) => {
             console.log(err);

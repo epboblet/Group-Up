@@ -28,7 +28,7 @@ const Profile = () =>  {
             })
             .then((res) => {
                 if(res != null) {
-                    dispatch(setPosts(res.data));
+                    dispatch(setPosts(res.data.reverse()));
                 }
             })
             .catch((error) => {
@@ -174,7 +174,7 @@ const Profile = () =>  {
                     {
                         posts.map((e) => {
                             return(
-                               (user.user_id == e.user.user_id) && <ProjectCard project={e} loggedIn={!id}/>
+                               (user.user_id == e.user.user_id) && <ProjectCard project={e} loggedIn={!id} fetchPosts={fetchPosts}/>
                             )
                         })
                     }

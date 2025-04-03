@@ -1,9 +1,13 @@
 import axios from 'axios';
 import '../App.css';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPosts } from '../state/slice/postsSlice';
 
 const CreatePost = () =>  {
     const [message, setMessage] = useState({text: "", type: ""});
+    const posts = useSelector(state => state.posts.value);
+    const dispatch = useDispatch()
     const submitPost = (e) => {
         e.preventDefault();
 
@@ -20,6 +24,7 @@ const CreatePost = () =>  {
         .then((res) => {
             if(res.status == 200) {
                 setMessage({text: res?.data?.message, type: "success"});
+                dispatch(setPosts([res.data.post, ...posts]));
                 e.target.reset();
             }
             else {

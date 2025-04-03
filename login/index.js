@@ -377,11 +377,26 @@ app.post("/createposts", async (req,res) => {
         const result = await db.run("INSERT INTO posts (user_id, username, displayname, photo, title, content, photo) VALUES (?, ?, ?, ?, ?, ?, ?)", user_id, username, profile.displayname, null, title, content, null);
         
         if (result.changes > 0) {
-            return res.status(200).send({ message: 'Post added to the database' });
+            return res.status(200).send({ 
+                message: 'Post added to the database',
+                post: {
+                    id: result.lastID,
+                    user: {
+                        user_id: profile.user_id,
+                        displayName: profile.displayname,
+                        username: profile.name,
+                        profileIcon: profile.photo,
+                    },
+                    name: title,
+                    type: "",
+                    description: content,
+                    image: null,
+                },
+            });
         } else {
             return res.status(500).send({ message: 'Failed to add post to the database' });
         }
-    } catch (error) {
+    } catch (err) {
         console.error(err);
         return res.status(500).send({ message: 'Error adding post to the database', error: err.message });
     }
