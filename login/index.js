@@ -437,7 +437,7 @@ app.post("/createposts", postUpload.single('photo'), async (req,res) => {
 
     //checks to make sure the post was added to the database
     try {
-        const result = await db.run("INSERT INTO posts (user_id, username, displayname, photo, title, content) VALUES (?, ?, ?, ?, ?, ?)", user_id, username, profile.displayname, photo, title, content);
+        const result = await db.run("INSERT INTO posts (user_id, username, primarytag, secondarytag, displayname, photo, title, content) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", user_id, username, primarytag, secondarytag, profile.displayname, photo, title, content);
         
         if (result.changes > 0) {
             return res.status(200).send({ 
@@ -505,7 +505,7 @@ app.post("/edit-post/:post_id", async (req, res) => {
         return res.status(404).send("Post not found");
     }
 
-    await db.run("UPDATE posts SET title = ?, content = ?, photo = ? WHERE post_id = ?", title, content, photo, post_id);
+    await db.run("UPDATE posts SET title = ?, primarytag = ?, secondarytag = ?, content = ?, photo = ? WHERE post_id = ?", title, primarytag, secondarytag, content, photo, post_id);
 
     res.status(200).send({message: "yipee"});
 });
