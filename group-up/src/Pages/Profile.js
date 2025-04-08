@@ -16,6 +16,7 @@ const Profile = () =>  {
     const [user, setUser] = useState({user_id: 0, displayname: "", username: "", major: "", year: "", bio: "", skills: "", photo: ""});
     const [editing, setEditing] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [selectedPhoto, setSelectedPhoto] = useState(null);
     const posts = useSelector(state => state.posts.value);
 
     const abortController = new AbortController();
@@ -28,7 +29,7 @@ const Profile = () =>  {
             })
             .then((res) => {
                 if(res != null) {
-                    dispatch(setPosts(res.data.reverse()));
+                    dispatch(setPosts([...res.data.reverse()]));
                 }
             })
             .catch((error) => {
@@ -81,6 +82,11 @@ const Profile = () =>  {
 
     }, []);
 
+    const clearPhoto = () => {
+        setSelectedPhoto(null); 
+        document.getElementById('photo').value = '';
+    }
+
     const updateName = (e) => {
         setUser({
             ...user,
@@ -111,11 +117,28 @@ const Profile = () =>  {
       }
 
       const editUser = () => {
-        console.log(user);
-        axios.post('http://localhost:8080/profile', user, 
-        {withCredentials: true})
-        .then(() => {
+        const formData = new FormData();
+
+        formData.append('user', JSON.stringify({
+            ...user,
+        }));
+    
+        // Append photo if there's one selected
+        if (selectedPhoto != null) {
+            formData.append('photo', selectedPhoto);
+        }
+
+        axios.post('http://localhost:8080/profile', formData, 
+        {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        })
+        .then((res) => {
+            setUser(res.data.profile);
             fetchPosts();
+            clearPhoto();
         })
         .catch((err) => {
             console.log(err);
@@ -131,7 +154,11 @@ const Profile = () =>  {
         <>
             <div id='header'>
                 <div id='user'>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/Default-Icon.jpg" className='profile-picture'/>
+                    {
+                        editing ? 
+                        <input type="file" name="photo" id='photo' accept="image/*" onChange={(e) => setSelectedPhoto(e.target.files[0])} ></input> :
+                        <img src={user.photo} className='profile-picture'/>
+                    }
                     <div id='user-info'>
                         {
                             editing ?
@@ -174,7 +201,7 @@ const Profile = () =>  {
                     {
                         posts.map((e) => {
                             return(
-                               (user.user_id == e.user.user_id) && <ProjectCard project={e} loggedIn={!id} fetchPosts={fetchPosts}/>
+                               (user.user_id == e.user.user_id) && <ProjectCard key={e.id} project={e} loggedIn={!id} fetchPosts={fetchPosts}/>
                             )
                         })
                     }

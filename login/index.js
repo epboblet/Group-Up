@@ -8,7 +8,7 @@ Description: Group Up Login
 */
 
 
-import express, { json } from 'express';
+import express from 'express';
 import { engine } from 'express-handlebars';
 import cookieParser from 'cookie-parser';
 import sqlite3 from 'sqlite3';
@@ -17,6 +17,43 @@ import bcrypt from 'bcrypt';
 import {v4 as uuidv4} from 'uuid';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import { nanoid } from 'nanoid'
+import multer from 'multer';
+import fs from 'fs';
+
+let postStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, 'Image/Post/')
+    },
+    filename: function (req, file, cb) {
+      let extension = file.mimetype.split("/").at(-1);
+      cb(null, nanoid() + Date.now() + '.' + extension);
+    }
+})
+
+const postUpload = multer({ 
+    storage: postStorage,
+    //25 mb
+    limits: {fileSize: 25000000},
+})
+
+let profileStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'Image/Profile/')
+    },
+    filename: function (req, file, cb) {
+        let extension = file.mimetype.split("/").at(-1);
+        cb(null, nanoid() + '.' + extension);
+    }
+})
+
+const profileUpload = multer({ 
+    storage: profileStorage,
+    //25 mb
+    limits: {fileSize: 25000000},
+})
+
+
 
 
 const app = express();
@@ -164,19 +201,6 @@ app.get("/test", async(req,res) =>{
     )
 })
 
-// recieves data from the website
-app.post("/update", async(req,res) =>{
-    res.status(200);
-})
-
-app.get("/register", (req,res) =>{
-    res.render("register", {layout:false});
-})
-
-app.get("/login", (req,res) =>{
-    res.render("login", {layout:false});
-})
-
 //Start server on port 8080
 app.listen(port, () =>{
     console.log(`Server started on port: ${port}`);
@@ -202,6 +226,22 @@ const lookupUserFromAuthToken = async(authToken)=>{
     const user = await db.get('SELECT user_id, username FROM users WHERE user_id=?;',token.user_id);
     return user;
 
+}
+
+const linkFromPath = (path, type) => {
+    if(path == null && type == "profile"){
+        path = path ?? "Image/Profile/Default/profile-icon.jpg";
+    }
+    else if(path == null && type == "post") {
+        return null;
+    }
+    path = pathFromLink(path);
+    return `http://localhost:${port}/${path}`;
+}
+
+const pathFromLink = (link) => {
+
+    return link.replaceAll(`http://localhost:${port}/`, "");
 }
 
 
@@ -235,8 +275,7 @@ app.post("/login", async(req, res)=>{
         return res.send({ message: e});
     }
 
-    });
-
+});
 
 //Register
 app.post("/register", async(req, res)=>{
@@ -281,7 +320,6 @@ app.post("/register", async(req, res)=>{
 
 });
 
-
 //If user clicks logout then redirect to login 
 app.get("/logout", async(req, res) =>{
     res.clearCookie("authToken");
@@ -308,6 +346,7 @@ app.get("/profile", async (req, res) => {
     }
 
     profile.username = user.username;
+    profile.photo = linkFromPath(profile.photo, "profile");
 
     //Send the retrieved profile data as the response
     return res.send(profile);
@@ -332,13 +371,14 @@ app.get("/profile/:username", async (req, res) => {
     }
 
     profile.username = user.username;
+    profile.photo = linkFromPath(profile.photo, "profile");
 
     //Send the retrieved profile data as the response
     return res.send(profile);
 });
 
 //Edit/Update Profile page
-app.post("/profile", async (req, res) => {
+app.post("/profile", profileUpload.single('photo'), async (req, res) => {
     const db = await dbPromise;
     const username = req.user.username;
 
@@ -351,18 +391,40 @@ app.post("/profile", async (req, res) => {
     }
 
     //Get updated profile details
-    const {name, displayname, bio, skills, photo, major, year } = req.body;
+    const {user_id, name, displayname, bio, skills, photo, major, year } = JSON.parse(req.body.user);
+    const updatedPhoto = req?.file != null ? req.file.path : photo;
+
+    if(req?.file != null && photo != linkFromPath(null, "profile")) {
+        console.log(pathFromLink(photo));
+        fs.unlink(pathFromLink(photo), (err) => {
+            if (err){ 
+                throw err
+            };
+            console.log(`${pathFromLink(photo)} was deleted`);
+          });
+    }
 
     //Update the profile details in the database for the user
-     await db.run("UPDATE profile SET displayname = ?, bio = ?, skills = ?, photo = ?, major = ?, year = ? WHERE user_id = ?",
-      displayname, bio, skills, photo, major, year, user.user_id);
-    
+    await db.run("UPDATE profile SET displayname = ?, bio = ?, skills = ?, photo = ?, major = ?, year = ? WHERE user_id = ?",
+    displayname, bio, skills, updatedPhoto, major, year, user.user_id);
 
-        res.status(200).send("Profile Updated");
+    res.status(200).send({
+        message: "Profile Updated",
+        profile: {
+            user_id: user.user_id, 
+            displayname: displayname, 
+            username: username, 
+            major: major, 
+            year: year, 
+            bio: bio, 
+            skills: skills, 
+            photo: linkFromPath(updatedPhoto, "profile")
+        }
+    });
 });
 
 //Creating a new post
-app.post("/createposts", async (req,res) => {
+app.post("/createposts", postUpload.single('photo'), async (req,res) => {
     if(!req.user){
         return res.status(401).send({message: "You do not have permission to perform this action."});
     }
@@ -370,11 +432,12 @@ app.post("/createposts", async (req,res) => {
     const user_id = req.user.user_id; //get user_id from logged in user
     const username = req.user.username;
     const profile = await db.get("SELECT displayname, photo FROM profile where user_id = ?", user_id);
-    const {title, content, photo } = req.body;
+    const {title, content} = req.body;
+    const photo = req?.file != null ? req.file.path : null;
 
     //checks to make sure the post was added to the database
     try {
-        const result = await db.run("INSERT INTO posts (user_id, username, displayname, photo, title, content, photo) VALUES (?, ?, ?, ?, ?, ?, ?)", user_id, username, profile.displayname, null, title, content, null);
+        const result = await db.run("INSERT INTO posts (user_id, username, displayname, photo, title, content) VALUES (?, ?, ?, ?, ?, ?)", user_id, username, profile.displayname, photo, title, content);
         
         if (result.changes > 0) {
             return res.status(200).send({ 
@@ -385,12 +448,12 @@ app.post("/createposts", async (req,res) => {
                         user_id: profile.user_id,
                         displayName: profile.displayname,
                         username: profile.name,
-                        profileIcon: profile.photo,
+                        profileIcon: linkFromPath(profile.photo, "profile"),
                     },
                     name: title,
                     type: "",
                     description: content,
-                    image: null,
+                    image: linkFromPath(photo, "post"),
                 },
             });
         } else {
@@ -419,12 +482,12 @@ app.get("/posts/:post_id", async (req, res) => {
             user_id: profile.user_id,
             displayName: profile.displayname,
             username: profile.name,
-            profileIcon: profile.photo,
+            profileIcon: linkFromPath(profile.photo, "profile"),
         },
         name: post.title,
         type: "",
         description: post.content,
-        image: post.photo,
+        image: linkFromPath(post.photo, "post"),
     });
 
 });
@@ -465,12 +528,12 @@ app.get("/posts", async (req, res) => {
                 user_id: profile.user_id,
                 displayName: profile.displayname,
                 username: profile.name,
-                profileIcon: profile.photo,
+                profileIcon: linkFromPath(profile.photo, "profile"),
             },
             name: post.title,
             type: "",
             description: post.content,
-            image: post.photo,
+            image: linkFromPath(post.photo, "post"),
         });
         
     }

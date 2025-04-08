@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     value: [],
+    lastUpdate: Date.now(),
 }
 
 const postsSlice = createSlice({
@@ -10,6 +11,7 @@ const postsSlice = createSlice({
     reducers: {
         setPosts: (state, action) => {
             state.value = action.payload;
+            state.lastUpdate = Date.now();
         },
     }
 });

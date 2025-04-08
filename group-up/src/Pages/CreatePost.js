@@ -18,12 +18,9 @@ const CreatePost = () =>  {
 
         const title = formData.get("title");
         const content = formData.get("content");
+        const photo = formData.get("image");
 
-        axios.post('http://localhost:8080/createposts', {
-            title: title,
-            content: content,
-            photo: null,
-        }, {withCredentials: true})
+        axios.post('http://localhost:8080/createposts', formData, {withCredentials: true})
         .then((res) => {
             if(res.status == 200) {
                 setMessage({text: res?.data?.message, type: "success"});
@@ -49,13 +46,16 @@ const CreatePost = () =>  {
             {
                 message.text != "" && <p className={message.type}>{message.text}</p>
             }
-                <form onSubmit={submitPost}>
+                <form onSubmit={submitPost} enctype="multipart/form-data">
                     <label for="title">Title: </label>
                     <input name='title' required></input>
                     <br/>
                     <label for="content">Description:</label>
                     <br/>
                     <textarea name='content' cols={50} rows={10} required></textarea>
+                    <br/>
+                    <label for="photo">Image: </label>
+                    <input type="file" name="photo" accept="image/*"></input>
                     <br/>
                     <button type='submit'>Submit</button>
                 </form>
