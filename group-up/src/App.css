@@ -11,12 +11,19 @@
   --black: #3b3b38;
   --black-darken: #272724;
   --possible-image-border: #262323;
+
+  --bubble-size: 20px;
+  --bubble-top: 0;
+  --bubble-right: 0;
+  --bubble-time: 6s;
+  --bubble-start: 0s;
+  --sway-strength: 20;
 }
 
 :root.light {
   --body-text-color: var(--black);
   --content-text-color: var(--white);
-  --background: var(--white);
+  --background: var(--blue);
   --background2: var(--white-darken);
   --foreground: var(--green);
   --accent: var(--yellow);
@@ -86,6 +93,7 @@ h1 {
 
 /* #region About */
 #about-container {
+  z-index: 2;
   display: flex;
   height: 110vh;
   width: 100vw;
@@ -352,7 +360,7 @@ h1 {
 }
 
 .nav.open {
-  width: 18em;
+  width: 15em;
 }
 
 .nav-item {
@@ -552,6 +560,81 @@ h1 {
   font-size: 2em;
 }
 /* #endregion */
+
+#bubble-container {
+  width: 100vw;
+  height: 110vh;
+  position: absolute;
+  z-index: 1;
+  background-color: var(--blue);
+}
+
+.bubble {
+  content:url(https://static.vecteezy.com/system/resources/thumbnails/020/951/520/small_2x/realistic-transparent-3d-bubbles-underwater-soap-bubbles-vector-illustration-png.png);
+  height: var(--bubble-size);
+  width: var(--bubble-size);
+  bottom: 0;
+  left: var(--bubble-left);
+  display: block;
+  position: absolute;
+  z-index: 1;
+  transform: translatey(0px);
+	animation: float var(--bubble-time) linear infinite,
+  sway calc(var(--bubble-time)/ 5) linear infinite;
+  animation-delay: var(--bubble-start);
+}
+
+/* .bubble {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(46, 104, 232, 0.5);
+  height: var(--bubble-size);
+  width: var(--bubble-size);
+  border-radius: 50%;
+  opacity: 70%;
+  bottom: 0;
+  left: var(--bubble-left);
+  display: block;
+  position: absolute;
+  z-index: 1;
+  transform: translatey(0px);
+	animation: float var(--bubble-time) linear infinite,
+  sway calc(var(--bubble-time)/ 5) linear infinite;
+  animation-delay: var(--bubble-start);
+}
+
+.bubble::before {
+  content: '';
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(#FFF, transparent);
+  transform: scale(0.25) translate(-70%, -70%);
+}
+
+.bubble::after {
+  content: '';
+  background-color: white;
+} */
+
+@keyframes float {
+  0% {
+    bottom: 0;
+  }
+  100% {
+    bottom: 110vh;
+  }
+}
+
+@keyframes sway {
+  0% {
+    transform: translateX(var(--sway-strength));
+  }
+  100% {
+    transform: translateX(var(--sway-strength));
+  }
+}
 
 .error {
   color: red;

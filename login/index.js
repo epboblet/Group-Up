@@ -432,8 +432,11 @@ app.post("/createposts", postUpload.single('photo'), async (req,res) => {
     const user_id = req.user.user_id; //get user_id from logged in user
     const username = req.user.username;
     const profile = await db.get("SELECT displayname, photo FROM profile where user_id = ?", user_id);
-    const {title, content} = req.body;
+    const {title, content, primarytag, secondarytag} = req.body;
     const photo = req?.file != null ? req.file.path : null;
+    console.log(primarytag);
+    console.log(secondarytag);
+    return;
 
     //checks to make sure the post was added to the database
     try {
