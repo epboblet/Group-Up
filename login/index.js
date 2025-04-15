@@ -436,7 +436,6 @@ app.post("/createposts", postUpload.single('photo'), async (req,res) => {
     const photo = req?.file != null ? req.file.path : null;
     console.log(primarytag);
     console.log(secondarytag);
-    return;
 
     //checks to make sure the post was added to the database
     try {
