@@ -18,12 +18,13 @@
   --bubble-time: 6s;
   --bubble-start: 0s;
   --sway-strength: 20;
+  --bubble-height: 100vh;
 }
 
 :root.light {
   --body-text-color: var(--black);
   --content-text-color: var(--white);
-  --background: var(--blue);
+  --background: var(--white);
   --background2: var(--white-darken);
   --foreground: var(--green);
   --accent: var(--yellow);
@@ -83,6 +84,8 @@ h1 {
   width: var(--content-width);
   text-align:center;
   margin: auto;
+  z-index: 2;
+  position: relative;
 }
 
 .heading {
@@ -92,12 +95,22 @@ h1 {
 /* #endregion */
 
 /* #region About */
+#about-logo {
+  position: relative;
+  z-index: 2;
+}
+
+#about-button {
+  position: relative;
+  z-index: 2;
+}
+
 #about-container {
   z-index: 2;
   display: flex;
   height: 110vh;
   width: 100vw;
-  background-image: linear-gradient(var(--background) 90%, var(--background2) 100%);
+  background-image: linear-gradient(var(--blue) 90%, var(--background2) 100%);
   overflow: hidden;
 }
 
@@ -122,14 +135,23 @@ h1 {
   font-size: 3vh;
 }
 
+#about-graphic {
+  padding-top: 5vh;
+  padding-left: 5vw;
+  z-index: 1;
+}
+
 .about-content {
   display: inline-block;
   width: 60%;
+  padding-top: 15vh;
 }
 
 .about-graphic {
   display: inline-block;
+  height: 60vh;
   position: relative;
+  z-index: 1;
 }
 
 .graphic {
@@ -141,26 +163,7 @@ h1 {
   position: absolute;
 }
 
-.graphic.blue {
-  background-color: var(--blue);
-  top: 5vh;
-  z-index: 3;
-}
-
-.graphic.yellow {
-  background-color: var(--yellow);
-  top: 5vh;
-  left: 15vh;
-  z-index: 1;
-}
-
-.graphic.pink {
-  background-color: var(--pink);
-  top: 20vh;
-  z-index: 2;
-}
-
-.accent-blue {
+/* .accent-blue {
   height: 15vh;
   width: 15vw;
   border-radius: 50%;
@@ -180,7 +183,7 @@ h1 {
   z-index: 1;
   top: 70vh;
   left: 90vw;
-}
+} */
 /* #endregion */
 
 /* #region Project */
@@ -443,6 +446,8 @@ h1 {
   height: 10vh;
   cursor: pointer;
   fill: var(--body-text-color);
+  position: relative;
+  z-index: 2;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -561,27 +566,28 @@ h1 {
 }
 /* #endregion */
 
+/* #region Bubbles*/
 #bubble-container {
   width: 100vw;
-  height: 110vh;
+  height: var(--bubble-height);
   position: absolute;
   z-index: 1;
   background-color: var(--blue);
 }
 
 .bubble {
-  content:url(https://static.vecteezy.com/system/resources/thumbnails/020/951/520/small_2x/realistic-transparent-3d-bubbles-underwater-soap-bubbles-vector-illustration-png.png);
+  content: url('../src/images/Bubble.webp');
   height: var(--bubble-size);
   width: var(--bubble-size);
   bottom: 0;
   left: var(--bubble-left);
   display: block;
   position: absolute;
-  z-index: 1;
   transform: translatey(0px);
 	animation: float var(--bubble-time) linear infinite,
   sway calc(var(--bubble-time)/ 5) linear infinite;
   animation-delay: var(--bubble-start);
+  z-index: 3;
 }
 
 /* .bubble {
@@ -623,7 +629,7 @@ h1 {
     bottom: 0;
   }
   100% {
-    bottom: 110vh;
+    bottom: var(--bubble-height);
   }
 }
 
@@ -635,6 +641,96 @@ h1 {
     transform: translateX(var(--sway-strength));
   }
 }
+
+/* #endregion Bubbles*/
+
+/* #region Login*/
+.login-container {
+  display: flex;
+  width: 100vw;
+}
+
+.login {
+  display: flexbox;
+  flex-direction: column;
+  margin: auto;
+  width: 50%;
+  position: relative;
+  z-index: 3;
+}
+
+.login-text {
+  color: var(--black);
+  z-index: 3;
+  margin-top: 0;
+}
+
+.login-info-area {
+  border: 2px solid var(--green);
+  padding: 5vh 5vw;
+  border-radius: 5px;
+  height: 50%;
+  z-index: inherit;
+  position: relative;
+  position: relative;
+  z-index: 3;
+}
+
+.login-label {
+  font-size: 1.25em;
+  font-weight: 400;
+}
+
+.register-login {
+  border: 2px solid var(--green);
+  padding: 5px;
+  width: fit-content;
+  text-align: center;
+  margin: 0;
+  margin-top: 1vh;
+  border-radius: 5px;
+}
+
+.login-submit {
+  all: unset;
+  background-color: var(--green);
+  color: var(--white);
+  width: 15%;
+  text-align: center;
+  padding: 7px;
+  margin-top: 1vh;
+  border-radius: 5px;
+  float: right;
+  width: fit-content;
+}
+
+.login-text-field {
+  border: 1px solid var(--green);
+  font-size: 1.05em;
+  padding: .5em;
+  width: 100%;
+}
+
+.password-text-field {
+  border: 1px solid var(--green);
+  font-size: 1.05em;
+  padding: .5em;
+  padding-right: 4em;
+  width: calc(100% - 4em);
+}
+
+.password-field {
+  position: relative;
+}
+
+.show-password {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  margin-top: calc(0.5em - 1px);
+}
+/* #endregion Login*/
 
 .error {
   color: red;

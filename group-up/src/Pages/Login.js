@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import {login} from '../state/slice/userSlice';
+import Bubbles from '../Components/Bubbles';
+import PasswordField from '../Components/PasswordField';
 
 
 export const Login = () => {
@@ -53,39 +55,50 @@ export const Login = () => {
 
   return (
     <>
-      <h1 className='body-content'>
-        {isRegister ? "Register" : "Login"}
-      </h1>
-      <div className='body-content'>
-        <label>Username: </label>
-        <input type = 'text' name='username' placeholder='user name' id='username'/><br></br>
-        <label>Password: </label>
-        <input type = 'password' name='password' placeholder='password' id='password'/><br></br>
-        {
-          isRegister && (
-            <>
-              <label>Confirm Password: </label>
-              <input type = 'password' name='confirmPassword' placeholder='password' id='confirmPassword'/><br></br>
-            </>
-          )
-        }
+      <Bubbles height='100vh'></Bubbles>
+      <div className='login-container'>
+        <div className='login'>
+          <h1 className='login-text'>Welcome back!</h1>
+          <h3 className='login-text'>Sign in to post projects.</h3>
+          <div className='login-info-area'>
+            <label className='login-label'>Username</label>
+            <br/>
+            <input className='login-text-field' type='text' name='username' placeholder='user name' id='username'/>
+            <br/>
+            <br/>
+            <br/>
+            <label className='login-label'>Password</label>
+            <br/>
+            <PasswordField name='password' />
+            <br/>
+            {
+              isRegister && (
+                <>
+                  <br/>
+                  <br/>
+                  <label>Confirm Password</label>
+                  <br/>
+                  <PasswordField name='confirmPassword' />
+                  <br/>
+                </>
+              )
+            }
+            {errorMessage != "" && <p className='error'>{errorMessage}</p>}
+          </div>
 
-        {
-          errorMessage != "" && <p className='error'>{errorMessage}</p>
-        }
+          <button className='register-login' onClick={() => {
+            setErrorMessage("");
+            setIsRegister(!isRegister)
+            }}>
+              {isRegister ? "LOGIN" : "NEW USER"}
+          </button>
 
-        <input type ="submit" onClick={() => {
+          <input className='login-submit' type ="submit" value={"SIGN IN"} onClick={() => {
           setErrorMessage("");
           isRegister ? registerUser() : loginUser()
           }}/>
 
-        <button className='button-main' onClick={() => {
-          setErrorMessage("");
-          setIsRegister(!isRegister)
-          }}>
-            {isRegister ? "Login" : "Register"}
-        </button>
-
+        </div>
       </div>
     </>
   )

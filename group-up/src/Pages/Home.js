@@ -5,6 +5,9 @@ import axios from 'axios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from '../state/slice/postsSlice';
+import  Coral_image from '../images/Coral_image.png'
+import  coral_logo from '../images/coral_logo.png'
+import Bubbles from '../Components/Bubbles';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -13,7 +16,7 @@ const Home = () => {
     const [filteredPost, setFilteredPosts] = useState(posts);
     const [searchText, setSearchText] = useState('');  // Track search input separately
     const location = useLocation();
-    const bubbleRefs = useRef([]);
+    // const bubbleRefs = useRef([]);
 
     const debug = () => {
         console.log("posts")
@@ -56,42 +59,42 @@ const Home = () => {
         }
     };
 
-    const setBubbleStyles = (bubble) => {
-        const size = Math.random() * 30 + 30;
-        const bubbleX = Math.random() * 100;
-        const time = Math.random() * 6 + 4;
-        const start = Math.random() * time;
+    // const setBubbleStyles = (bubble) => {
+    //     const size = Math.random() * 30 + 30;
+    //     const bubbleX = Math.random() * 100;
+    //     const time = Math.random() * 6 + 4;
+    //     const start = Math.random() * time;
 
-        bubble.style.setProperty('--bubble-size', `${size}px`);
-        bubble.style.setProperty('--bubble-left', `${bubbleX}%`);
-        bubble.style.setProperty('--bubble-time', `${time}s`);
-        bubble.style.setProperty('--bubble-start', `-${start}s`);
-    }
+    //     bubble.style.setProperty('--bubble-size', `${size}px`);
+    //     bubble.style.setProperty('--bubble-left', `${bubbleX}%`);
+    //     bubble.style.setProperty('--bubble-time', `${time}s`);
+    //     bubble.style.setProperty('--bubble-start', `-${start}s`);
+    // }
 
-    const resetBubble = (bubble) => {
-        setBubbleStyles(bubble);
+    // const resetBubble = (bubble) => {
+    //     setBubbleStyles(bubble);
         
-        // Reset animation so it restarts cleanly
-        bubble.style.animation = 'none';
-        void bubble.offsetWidth;
-        bubble.style.animation = `float var(--bubble-time) linear infinite`;
-        // bubble.style.animationDelay = `var(--bubble-start)`;
-        bubble.style.bottom = '-10';
-    };
+    //     // Reset animation so it restarts cleanly
+    //     bubble.style.animation = 'none';
+    //     void bubble.offsetWidth;
+    //     bubble.style.animation = `float var(--bubble-time) linear infinite`;
+    //     // bubble.style.animationDelay = `var(--bubble-start)`;
+    //     bubble.style.bottom = '-10';
+    // };
 
-    const createBubbleStyles = () => {
-        bubbleRefs.current.forEach((bubble) => {
-            if (!bubble) return;
-            setBubbleStyles(bubble);
-            bubble.addEventListener('animationiteration', () => {
-                resetBubble(bubble);
-            });
-        });
-    };
+    // const createBubbleStyles = () => {
+    //     bubbleRefs.current.forEach((bubble) => {
+    //         if (!bubble) return;
+    //         setBubbleStyles(bubble);
+    //         bubble.addEventListener('animationiteration', () => {
+    //             resetBubble(bubble);
+    //         });
+    //     });
+    // };
 
     useEffect(() => {
         fetchPosts();  // Fetch posts only on initial load if no posts exist
-        createBubbleStyles();
+        // createBubbleStyles();
         return () => abortController.abort();  // Cleanup on unmount
     }, []);
 
@@ -102,7 +105,7 @@ const Home = () => {
 
     return (
         <>
-            <div id='bubble-container'>
+            {/* <div id='bubble-container'>
             {[...Array(20)].map((_, i) => (
                 <span
                 key={i}
@@ -110,33 +113,28 @@ const Home = () => {
                 ref={(el) => (bubbleRefs.current[i] = el)}
                 />
             ))}
-            </div>
+            </div> */}
+            <Bubbles height='110vh'></Bubbles>
             {/* <span className='accent-blue'></span> */}
             <div id='about-container'>
                 {/* <span className='accent-pink'></span> */}
                 <div id='about'>
                     <div className='about-content'>
-                        <h1 id='about-heading'>
-                            CULTIVATING COMMUNITY
-                        </h1>
+                        {/* <h1 id='about-heading'>
+                            CREATIVE COLLABORATION
+                        </h1> */}
+                        <img src={coral_logo} id='about-logo'></img>
                         <p id='about-body'>
-                            Group Up is a platform made by creatives, for creatives. 
-                            It brings unique ideas to fruition by allowing people to discover projects in their community, 
-                            as well as providing them with a space to organize and collaborate with others.
+                            A platform by creatives for creatives
                         </p>
-                        <div>
+                        <div id='about-button'>
                             <button className='button-secondary' onClick={() => {document.getElementById('project-list')?.scrollIntoView({behavior: 'smooth'})}}>EXPLORE PROJECTS</button>
                             <button className='button-main' onClick={() => {navigate('/login')}}>SIGN IN</button>
                         </div>
                     </div>
-                    {/* <div className='about-graphic'>
-                        <div className='graphic blue'></div>
-                        <div className='graphic yellow'></div>
-                        <div className='graphic pink'></div>
-                    </div> */}
-                    {/* <div className='tseet'>
-                        <img src='http://localhost:8080/Image/test.png' className='tseet'></img>
-                    </div> */}
+                    <div id='about-graphic'>
+                        <img src={Coral_image} className='about-graphic'></img>
+                    </div>
                 </div>
             </div>
             <div id='project-container'>

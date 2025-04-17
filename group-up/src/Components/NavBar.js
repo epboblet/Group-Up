@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import logo from '../Group-Up Logo.svg';
 import logoLight from '../Group-Up Logo Light.svg';
+import coral_icon from '../images/coral_icon.png';
 
 export const NavBar = () => {
     const [isNavShown, setIsNavShown] = useState(false);
@@ -44,7 +45,7 @@ export const NavBar = () => {
   return (
     <>
             {/* <div className='heading'> */}
-                <img src={isLightMode ? logo : logoLight} className='App-icon' onClick={() => {navigate('/')}}></img>
+                <img src={coral_icon} className='App-icon' onClick={() => {navigate('/')}}></img>
             {/* </div> */}
     {
         <nav id="nav" className={`nav${isNavShown ? " open" : ""}`} classList={["nav"]}>

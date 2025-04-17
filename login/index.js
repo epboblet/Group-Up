@@ -287,11 +287,11 @@ app.post("/register", async(req, res)=>{
 
     //If there is an empty field than return error 
     if((!username) || (!password) || (!confirmPass)){
-        return res.send({ error: "All fields required" });
+        return res.status(401).send({ message: "All fields required" });
     }
 
     if(password !== confirmPass){
-        return res.send({ error: "Passwords must match" });
+        return res.status(401).send({ message: "Passwords must match" });
     }
 
     //Query database to see if username exists
@@ -299,19 +299,20 @@ app.post("/register", async(req, res)=>{
 
     if(result){
         //If username already exists then render to login 
-        return res.send({ error: "Error: user already exists" });
+        return res.status(401).send({ message: "Error: user already exists" });
+
     }else{
         //If username does not exist then insert into database
         db.run("INSERT INTO users (username, password) VALUES(?, ?)", username, passwordHash);
         const createdAccount = await db.get("SELECT * FROM users WHERE username=?;", username);
 
         //Update: Insert default profile for user
-        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year) VALUES (?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "http://localhost:8080/image/profile/default.jpg", "", "")
+        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year, displayname) VALUES (?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "http://localhost:8080/image/profile/default/profile-icon.jpg", "", "", username)
         .then(res => {
             //logs the number of changes made to the db
             //this is for making sure something was added
             // console.log(res.changes)
-        })
+        });
     
         const token = await grantAuthToken(createdAccount.user_id);
         res.cookie('authToken', token);
