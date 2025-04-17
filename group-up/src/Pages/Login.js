@@ -76,7 +76,7 @@ export const Login = () => {
                 <>
                   <br/>
                   <br/>
-                  <label>Confirm Password</label>
+                  <label className='login-label'>Confirm Password</label>
                   <br/>
                   <PasswordField name='confirmPassword' />
                   <br/>

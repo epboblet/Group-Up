@@ -131,6 +131,7 @@ h1 {
 
 #about-body {
   position: relative;
+  color: var(--black);
   z-index: 3;
   font-size: 3vh;
 }
@@ -679,6 +680,7 @@ h1 {
 .login-label {
   font-size: 1.25em;
   font-weight: 400;
+  color: var(--black);
 }
 
 .register-login {
@@ -689,6 +691,8 @@ h1 {
   margin: 0;
   margin-top: 1vh;
   border-radius: 5px;
+  color: var(--black);
+  font-weight: 500;
 }
 
 .login-submit {
@@ -702,6 +706,7 @@ h1 {
   border-radius: 5px;
   float: right;
   width: fit-content;
+  font-weight: 500;
 }
 
 .login-text-field {
@@ -754,10 +759,10 @@ button {
 }
 
 .button-secondary {
-  border: 5px solid var(--headings);
+  border: 5px solid var(--green);
   padding: 20px;
   border-radius: 25px;
-  color: var(--headings);
+  color: var(--green);
 }
 
 .button-logout {

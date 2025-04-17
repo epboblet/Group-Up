@@ -106,6 +106,12 @@ const Profile = () =>  {
         }, {withCredentials: true})
         .then((res) => {
           if(res.status == 200) {
+            let allCookies = document.cookie.split(';');
+
+            for (let i = 0; i < allCookies.length; i++){
+                document.cookie = allCookies[i] + "=;expires=" + new Date(0).toUTCString();
+            }
+
             dispatch(logout());
             navigate('/');
             console.log(res.data?.message);

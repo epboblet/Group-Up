@@ -311,7 +311,7 @@ app.post("/register", async(req, res)=>{
         const createdAccount = await db.get("SELECT * FROM users WHERE username=?;", username);
 
         //Update: Insert default profile for user
-        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year, displayname) VALUES (?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "http://localhost:8080/image/profile/default/profile-icon.jpg", "", "", username)
+        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "http://localhost:8080/image/profile/default/profile-icon.jpg", "", "", username)
         .then(res => {
             //logs the number of changes made to the db
             //this is for making sure something was added
