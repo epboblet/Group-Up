@@ -523,10 +523,14 @@ app.get("/posts", async (req, res) => {
 
     //Get posts from database
     const posts = await db.all("SELECT * FROM posts");
+    console.log(posts);
     const response = [];
 
     for (let i = 0; i < posts.length; i++) {
         const post = posts[i];
+        if(post.user_id == null) {
+            continue;
+        }
         const profile = await db.get("SELECT * FROM profile WHERE user_id = ?", post.user_id);
 
         response.push({
@@ -541,6 +545,8 @@ app.get("/posts", async (req, res) => {
             type: "",
             description: post.content,
             image: linkFromPath(post.photo, "post"),
+            primarytag: post.primarytag,
+            secondarytag: post.secondarytag,
         });
         
     }

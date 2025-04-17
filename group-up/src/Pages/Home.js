@@ -59,42 +59,9 @@ const Home = () => {
         }
     };
 
-    // const setBubbleStyles = (bubble) => {
-    //     const size = Math.random() * 30 + 30;
-    //     const bubbleX = Math.random() * 100;
-    //     const time = Math.random() * 6 + 4;
-    //     const start = Math.random() * time;
-
-    //     bubble.style.setProperty('--bubble-size', `${size}px`);
-    //     bubble.style.setProperty('--bubble-left', `${bubbleX}%`);
-    //     bubble.style.setProperty('--bubble-time', `${time}s`);
-    //     bubble.style.setProperty('--bubble-start', `-${start}s`);
-    // }
-
-    // const resetBubble = (bubble) => {
-    //     setBubbleStyles(bubble);
-        
-    //     // Reset animation so it restarts cleanly
-    //     bubble.style.animation = 'none';
-    //     void bubble.offsetWidth;
-    //     bubble.style.animation = `float var(--bubble-time) linear infinite`;
-    //     // bubble.style.animationDelay = `var(--bubble-start)`;
-    //     bubble.style.bottom = '-10';
-    // };
-
-    // const createBubbleStyles = () => {
-    //     bubbleRefs.current.forEach((bubble) => {
-    //         if (!bubble) return;
-    //         setBubbleStyles(bubble);
-    //         bubble.addEventListener('animationiteration', () => {
-    //             resetBubble(bubble);
-    //         });
-    //     });
-    // };
-
     useEffect(() => {
         fetchPosts();  // Fetch posts only on initial load if no posts exist
-        // createBubbleStyles();
+        console.log(posts)
         return () => abortController.abort();  // Cleanup on unmount
     }, []);
 
@@ -105,24 +72,12 @@ const Home = () => {
 
     return (
         <>
-            {/* <div id='bubble-container'>
-            {[...Array(20)].map((_, i) => (
-                <span
-                key={i}
-                className="bubble"
-                ref={(el) => (bubbleRefs.current[i] = el)}
-                />
-            ))}
-            </div> */}
             <Bubbles height='110vh'></Bubbles>
             {/* <span className='accent-blue'></span> */}
             <div id='about-container'>
                 {/* <span className='accent-pink'></span> */}
                 <div id='about'>
                     <div className='about-content'>
-                        {/* <h1 id='about-heading'>
-                            CREATIVE COLLABORATION
-                        </h1> */}
                         <img src={coral_logo} id='about-logo'></img>
                         <p id='about-body'>
                             A platform by creatives for creatives

@@ -64,18 +64,18 @@ export const NavBar = () => {
                 </span>
                 <Link to="/profile" className={`nav-link ${isNavShown ? "" : "hidden"}`}>Profile</Link>
             </div>
-            <div className='nav-item' title='Explore' onClick={() => {navigate('/explore')}}>
+            <div className='nav-item' title='Explore' onClick={() => {navigate('/create-post')}}>
                 <span className="material-symbols-outlined nav-icon">
-                    search
+                    add_circle
                 </span>
-                <Link to="/explore" className={`nav-link ${isNavShown ? "" : "hidden"}`}>Explore</Link>
+                <Link to="/explore" className={`nav-link ${isNavShown ? "" : "hidden"}`}>New Post</Link>
             </div>
-            <div className='nav-item' title='Messages' onClick={() => {navigate('/messages')}}>
+            {/* <div className='nav-item' title='Messages' onClick={() => {navigate('/messages')}}>
                 <span className="material-symbols-outlined nav-icon">
                     mail
                 </span>
                 <Link to="/messages" className={`nav-link ${isNavShown ? "" : "hidden"}`}>Messages</Link>
-            </div>
+            </div> */}
             <div className='nav-item' title='Theme' onClick={() => {changeTheme()}}>
                 <span className="material-symbols-outlined nav-icon light-dark">
                 {isLightMode ? "dark_mode" : "light_mode"}

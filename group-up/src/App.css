@@ -371,7 +371,7 @@ h1 {
   display: flex;
   width: auto;
   align-items: center;
-  margin-top: 1em;
+  margin-top: 3em;
   height: 4em;
   cursor: pointer;
   white-space: nowrap;
@@ -785,6 +785,10 @@ button {
 .sticky {
   position: sticky;
   top: 0;
+}
+
+.required {
+  color:red;
 }
 
 .debug {
