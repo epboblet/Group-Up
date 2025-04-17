@@ -35,7 +35,9 @@ const Home = () => {
         if (!search) return posts;  // If search is empty, return all posts
         return posts.filter(project => 
             project.name?.toLowerCase().includes(search.toLowerCase()) ||
-            project.description?.toLowerCase().includes(search.toLowerCase())
+            project.description?.toLowerCase().includes(search.toLowerCase()) ||
+            project.primarytag?.toLowerCase().includes(search.toLowerCase()) ||
+            project.secondarytag?.toLowerCase().includes(search.toLowerCase())
         );
     };
 
