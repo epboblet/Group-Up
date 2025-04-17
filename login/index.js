@@ -223,9 +223,13 @@ const lookupUserFromAuthToken = async(authToken)=>{
     //Query database to find token 
     const token = await db.get('SELECT * FROM authtokens WHERE token=?;', authToken);
     //Get username and id based on token 
-    const user = await db.get('SELECT user_id, username FROM users WHERE user_id=?;',token.user_id);
-    return user;
-
+    if(token) {
+        const user = await db.get('SELECT user_id, username FROM users WHERE user_id=?;',token.user_id);
+        return user;
+    }
+    else {
+        return null;
+    }
 }
 
 const linkFromPath = (path, type) => {
@@ -299,7 +303,7 @@ app.post("/register", async(req, res)=>{
 
     if(result){
         //If username already exists then render to login 
-        return res.status(401).send({ message: "Error: user already exists" });
+        return res.status(401).send({ message: "User already exists" });
 
     }else{
         //If username does not exist then insert into database
