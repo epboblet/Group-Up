@@ -244,7 +244,6 @@ const linkFromPath = (path, type) => {
 }
 
 const pathFromLink = (link) => {
-
     return link.replaceAll(`http://localhost:${port}/`, "");
 }
 
@@ -523,7 +522,6 @@ app.get("/posts", async (req, res) => {
 
     //Get posts from database
     const posts = await db.all("SELECT * FROM posts");
-    console.log(posts);
     const response = [];
 
     for (let i = 0; i < posts.length; i++) {
