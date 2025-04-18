@@ -234,7 +234,7 @@ const lookupUserFromAuthToken = async(authToken)=>{
 
 const linkFromPath = (path, type) => {
     if(path == null && type == "profile"){
-        path = path ?? "Image/Profile/Default/profile-icon.jpg";
+        path = path ?? "image/profile/default/profile-icon.jpg";
     }
     else if(path == null && type == "post") {
         return null;
@@ -310,7 +310,7 @@ app.post("/register", async(req, res)=>{
         const createdAccount = await db.get("SELECT * FROM users WHERE username=?;", username);
 
         //Update: Insert default profile for user
-        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "http://localhost:8080/image/profile/default/profile-icon.jpg", "", "", username)
+        await db.run("INSERT INTO profile (user_id, name, bio, skills, photo, major, year, displayname) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",createdAccount.user_id, username,"", "", "Image/Profile/Default/profile-icon.jpg", "", "", username)
         .then(res => {
             //logs the number of changes made to the db
             //this is for making sure something was added
@@ -387,7 +387,8 @@ app.post("/profile", profileUpload.single('photo'), async (req, res) => {
     const username = req.user.username;
 
     //Retrieve user based on username
-    const user = await db.get("SELECT user_id, username FROM users where username = ?", username);
+    const user = await db.get("SELECT user_id, username FROM users where username = ?", username); 
+    const profilePhoto = await db.get("SELECT photo FROM profile WHERE user_id = ?", user.user_id);
     
     //If user not found return 404
     if(!user){
@@ -396,21 +397,31 @@ app.post("/profile", profileUpload.single('photo'), async (req, res) => {
 
     //Get updated profile details
     const {user_id, name, displayname, bio, skills, photo, major, year } = JSON.parse(req.body.user);
-    const updatedPhoto = req?.file != null ? req.file.path : photo;
+    const updatedPhoto = req?.file?.path;
+    // return;
 
-    if(req?.file != null && photo != linkFromPath(null, "profile")) {
-        console.log(pathFromLink(photo));
-        fs.unlink(pathFromLink(photo), (err) => {
+    if(updatedPhoto != null && profilePhoto.photo != 'Image/Profile/Default/profile-icon.jpg') {
+        fs.unlink(profilePhoto.photo, (err) => {
             if (err){ 
                 throw err
             };
-            console.log(`${pathFromLink(photo)} was deleted`);
-          });
+            console.log(`${photo} was deleted`);
+        });
     }
+
+    // if(req?.file != null && photo != linkFromPath(null, "profile")) {
+    //     console.log(pathFromLink(photo));
+    //     fs.unlink(pathFromLink(photo), (err) => {
+    //         if (err){ 
+    //             throw err
+    //         };
+    //         console.log(`${pathFromLink(photo)} was deleted`);
+    //       });
+    // }
 
     //Update the profile details in the database for the user
     await db.run("UPDATE profile SET displayname = ?, bio = ?, skills = ?, photo = ?, major = ?, year = ? WHERE user_id = ?",
-    displayname, bio, skills, updatedPhoto, major, year, user.user_id);
+    displayname, bio, skills, updatedPhoto ?? profilePhoto.photo, major, year, user.user_id);
 
     res.status(200).send({
         message: "Profile Updated",
@@ -422,7 +433,7 @@ app.post("/profile", profileUpload.single('photo'), async (req, res) => {
             year: year, 
             bio: bio, 
             skills: skills, 
-            photo: linkFromPath(updatedPhoto, "profile")
+            photo: linkFromPath(updatedPhoto ?? profilePhoto.photo, "profile")
         }
     });
 });

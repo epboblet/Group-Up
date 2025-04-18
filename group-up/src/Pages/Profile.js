@@ -83,8 +83,7 @@ const Profile = () =>  {
     }, []);
 
     const clearPhoto = () => {
-        setSelectedPhoto(null); 
-        document.getElementById('photo').value = '';
+        setSelectedPhoto(null);
     }
 
     const updateName = (e) => {
