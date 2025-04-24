@@ -307,11 +307,11 @@ h1 {
 }
 
 .project-image {
-  height: 30vh;
-  width: 30vw;
-  max-width: 90%;
+  height: 20vh;
+  width: 20vw;
+  max-width: 80%;
   min-width: 0%;
-  max-height: 70vh;
+  max-height: 60vh;
   min-height: 0%;
   border: 1px solid var(--background2);
   border-radius: 4px;
@@ -321,7 +321,7 @@ h1 {
 
 .project-description {
   width: 90%;
-  height: 20vh;
+  height: 30vh;
   margin: auto;
   padding-bottom: 1em;
   padding-top: 1em;
