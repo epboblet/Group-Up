@@ -87,7 +87,14 @@ export const ProjectCard = ({project, loggedIn, fetchPosts}) => {
                     <h2 className='project-title' onClick={() => navigate('/project/'+displayProject.id)}>{displayProject.name}</h2>
                 }
                 {displayProject?.image && <img src={displayProject.image} className='project-image'/>}
-                {displayProject.primarytag && <><br/><h3 className='project-type'>{displayProject?.primarytag}</h3></>}
+                {displayProject.primarytag && <><br/><h3 className='project-type'>{displayProject?.primarytag}</h3><br/></>}
+                {displayProject.secondarytag && displayProject.secondarytag.split(',').map((e) => {
+                    return (
+                        <>
+                            <h3 className='secondary-project-type'>{e}</h3>
+                        </>
+                    )
+                })}
                 {
                     editing ?
                     <textarea defaultValue={displayProject.description} onChange={updateDescription}></textarea> :

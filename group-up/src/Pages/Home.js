@@ -58,6 +58,7 @@ const Home = () => {
                     console.log(error);
                 }
             }
+            console.log(posts);
         }
     };
 
@@ -90,7 +91,7 @@ const Home = () => {
                             people that have a diverse set of skills to bring your ideas to fruition.
                         </p>
                         <div id='about-button'>
-                            <button className='button-secondary' onClick={() => {document.getElementById('project-list')?.scrollIntoView({behavior: 'smooth'})}}>EXPLORE PROJECTS</button>
+                            <button className='button-secondary' onClick={() => {document.getElementById('project-container')?.scrollIntoView({behavior: 'smooth'})}}>EXPLORE PROJECTS</button>
                             <button className='button-main' onClick={() => {navigate('/login')}}>SIGN IN</button>
                         </div>
                     </div>
