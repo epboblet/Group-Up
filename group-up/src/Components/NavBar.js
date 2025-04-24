@@ -49,9 +49,11 @@ export const NavBar = () => {
             {/* </div> */}
     {
         <nav id="nav" className={`nav${isNavShown ? " open" : ""}`} classList={["nav"]}>
-            <span className="material-symbols-outlined nav-icon" onClick={() => {setIsNavShown(!isNavShown)}}>
-                menu
-            </span>
+            <div className='nav-item'>
+                <span className="material-symbols-outlined nav-icon" onClick={() => {setIsNavShown(!isNavShown)}}>
+                    menu
+                </span>
+            </div>
             <div className='nav-item' title='Home' onClick={() => {navigate('/')}}>
                 <span className="material-symbols-outlined nav-icon">
                     home
@@ -76,11 +78,11 @@ export const NavBar = () => {
                 </span>
                 <Link to="/messages" className={`nav-link ${isNavShown ? "" : "hidden"}`}>Messages</Link>
             </div> */}
-            <div className='nav-item' title='Theme' onClick={() => {changeTheme()}}>
+            <div className='nav-item theme' title='Theme' onClick={() => {changeTheme()}}>
                 <span className="material-symbols-outlined nav-icon light-dark">
-                {isLightMode ? "dark_mode" : "light_mode"}
+                {isLightMode ? "light_mode" : "dark_mode"}
                 </span>
-                <a className={`nav-link ${isNavShown ? "" : "hidden"}`}>{isLightMode ? "Dark Mode" : "Light Mode"}</a>
+                <a className={`nav-link ${isNavShown ? "" : "hidden"}`}>{isLightMode ? "Light" : "Dark"}</a>
             </div>
         </nav>
     }

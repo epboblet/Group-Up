@@ -1,9 +1,11 @@
 import axios from 'axios';
 import '../App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from '../state/slice/postsSlice';
 import { useNavigate } from 'react-router-dom';
+import Bubbles from '../Components/Bubbles';
+import test from '../images/test.png'
 
 const CreatePost = () =>  {
     const [message, setMessage] = useState({text: "", type: ""});
@@ -40,8 +42,18 @@ const CreatePost = () =>  {
         })
     }
 
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+    
+        return () => {
+          // Re-enable scrolling when component unmounts
+          document.body.style.overflow = 'auto';
+        };
+      }, []);
+
     return (
         <>
+        <Bubbles height='100vh'/>
             <h1 className='body-content'>
                 Create Post
             </h1>
@@ -50,28 +62,34 @@ const CreatePost = () =>  {
                 message.text != "" && <p className={message.type}>{message.text}</p>
             }
                 <form onSubmit={submitPost} enctype="multipart/form-data">
-                    <label for="title"><strong className='required'>*</strong>Title: </label>
-                    <input name='title' required></input>
-                    <br/>
-                    <label for="content"><strong className='required'>*</strong>Description:</label>
-                    <br/>
-                    <textarea name='content' cols={50} rows={10} required></textarea>
+                    {/* <label for="title"><strong className='required'>*</strong>Title: </label> */}
+                    <input id='create-title' name='title' placeholder='PROJECT TITLE...' required></input>
+                    <div id='project-pitch'>
+                        <label id='project-pitch-title' for="content">PROJECT PITCH</label>
+                        <br/>
+                        <textarea id='project-pitch-content' 
+                        placeholder='Describe your project and leave your contact information :)'
+                        name='content' cols={50} rows={15} required></textarea>
+                    </div>
                     <br/>
                     <label for="photo">Image: </label>
                     <input type="file" name="photo" accept="image/*"></input>
-                    <br/>
                     <label for="primarytag"><strong className='required'>*</strong>Main Tag: </label>
-                    <input name='primarytag' required placeholder='Music'></input>
+                    <input className='tag' name='primarytag' required placeholder='Music'></input>
                     <br/>
-                    <label for="secondarytag">Secondary Tags: </label><br/>
-                    <input name='secondarytag' placeholder='Jazz'></input><br/>
-                    <input name='secondarytag' placeholder='Electronic'></input><br/>
-                    <input name='secondarytag' placeholder='Rap'></input><br/>
-                    <input name='secondarytag' placeholder='Funk'></input><br/>
-                    <input name='secondarytag' placeholder='Pop'></input><br/>
                     <br/>
-                    <button type='submit'>Submit</button>
+                    <br/>
+                    <label for="secondarytag">Secondary Tags: </label>
+                    <input className='tag' name='secondarytag' placeholder='Jazz'></input>
+                    <input className='tag' name='secondarytag' placeholder='Electronic'></input>
+                    <input className='tag' name='secondarytag' placeholder='Rap'></input>
+                    <input className='tag' name='secondarytag' placeholder='Funk'></input>
+                    {/* <input className='tag' name='secondarytag' placeholder='Pop'></input><br/> */}
+                    <br/>
+                    <br/>
+                    <button type='submit' id='submit-post'>Submit</button>
                 </form>
+                <img src={test} id='footer' />
             </div>
         </>
     );

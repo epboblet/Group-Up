@@ -75,14 +75,19 @@ const Home = () => {
     return (
         <>
             <Bubbles height='110vh'></Bubbles>
-            {/* <span className='accent-blue'></span> */}
+            {/* <span className='accent-pink'></span> */}
             <div id='about-container'>
                 {/* <span className='accent-pink'></span> */}
                 <div id='about'>
                     <div className='about-content'>
                         <img src={coral_logo} id='about-logo'></img>
-                        <p id='about-body'>
+                        {/* <p id='about-body'>
                             A platform by creatives for creatives
+                        </p> */}
+                        <p  id='about-body'>
+                            Coral is a platform made by creatives, for creatives, to help people
+                            find and create portfolio projects. Upload project pitches and connect with
+                            people that have a diverse set of skills to bring your ideas to fruition.
                         </p>
                         <div id='about-button'>
                             <button className='button-secondary' onClick={() => {document.getElementById('project-list')?.scrollIntoView({behavior: 'smooth'})}}>EXPLORE PROJECTS</button>
@@ -95,28 +100,30 @@ const Home = () => {
                 </div>
             </div>
             <div id='project-container'>
-                <div id='project-list'>
-                    <h1 className='body-header'>
-                        CHECK  THESE  OUT!
-                    </h1>
-                    <div className='post-controls'>
-                        <input 
-                            type='text' 
-                            name='post-search' 
-                            className='post-search' 
-                            value={searchText} 
-                            onChange={handleSearchChange}
-                            placeholder="Search for posts..."
-                        />
-                        <button onClick={() => {navigate('/create-post')}} className='create-post'>Create Post</button>
+                <h1 className='body-header'>
+                    CHECK  THESE  OUT!
+                </h1>
+                <div className='post-controls'>
+                    <input 
+                        type='text' 
+                        name='post-search' 
+                        className='post-search' 
+                        value={searchText} 
+                        onChange={handleSearchChange}
+                        placeholder="Search for posts..."
+                    />
+                    <button onClick={() => {navigate('/create-post')}} className='create-post'>Create Post</button>
+                </div>
+                <div id='project-area'>
+                    <div id='project-list'>
+                        {filteredPost.length > 0 ? (
+                            filteredPost.map((e) => {
+                                return <ProjectCard key={e.id} project={e} />;
+                            })
+                        ) : (
+                            <p className='no-posts'>No posts found matching your search criteria.</p>
+                        )}
                     </div>
-                    {filteredPost.length > 0 ? (
-                        filteredPost.map((e) => {
-                            return <ProjectCard key={e.id} project={e} />;
-                        })
-                    ) : (
-                        <p>No posts found matching your search criteria.</p>
-                    )}
                 </div>
             </div>
         </>

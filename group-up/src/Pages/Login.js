@@ -63,7 +63,7 @@ export const Login = () => {
           <div className='login-info-area'>
             <label className='login-label'>Username</label>
             <br/>
-            <input className='login-text-field' type='text' name='username' placeholder='user name' id='username'/>
+            <input className='login-text-field' type='text' name='username' placeholder='username' id='username'/>
             <br/>
             <br/>
             <br/>
@@ -93,7 +93,7 @@ export const Login = () => {
               {isRegister ? "LOGIN" : "NEW USER"}
           </button>
 
-          <input className='login-submit' type ="submit" value={"SIGN IN"} onClick={() => {
+          <input className='login-submit' type ="submit" value={isRegister ? "SIGN UP" : "SIGN IN"} onClick={() => {
           setErrorMessage("");
           isRegister ? registerUser() : loginUser()
           }}/>

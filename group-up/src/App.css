@@ -78,8 +78,8 @@ h1 {
 }
 
 .body-content {
-  background-color: var(--foreground);
-  color: var(--content-text-color);
+  background-color: transparent;
+  color: var(--black);
   padding: 1em;
   width: var(--content-width);
   text-align:center;
@@ -94,10 +94,64 @@ h1 {
 }
 /* #endregion */
 
+/* #region Create Post */
+#create-title {
+  border: unset;
+  border-bottom: 1px solid var(--black);
+  width: 35vw;
+  padding-bottom: 1vh;
+  background-color: transparent;
+  color: var(--black);
+  margin-bottom: 2vh;
+  outline: none;
+}
+
+#project-pitch {
+  background-color: var(--white);
+  width: 40vw;
+  margin: auto;
+  text-align: left;
+  padding: 0.8em;
+}
+
+#project-pitch-content {
+  border: unset;
+  background-color: var(--white);
+  width: 100%;
+  outline: none;
+  resize: none;
+}
+
+.tag {
+  width: 10ch;
+  margin: 0.5em;
+}
+
+#image {
+  width: 50%;
+  height: 30vh;
+  background-color: white;
+  margin: auto;
+}
+
+#submit-post {
+  all: unset;
+}
+
+#footer {
+  width: 100vw;
+  position: fixed;
+  bottom: -12vh;
+  left: 0;
+  z-index: -1;
+}
+/* #endregion */
+
 /* #region About */
 #about-logo {
   position: relative;
   z-index: 2;
+  height: 8vh;
 }
 
 #about-button {
@@ -138,19 +192,19 @@ h1 {
 
 #about-graphic {
   padding-top: 5vh;
-  padding-left: 5vw;
+  /* padding-left: 5vw; */
   z-index: 1;
 }
 
 .about-content {
   display: inline-block;
   width: 60%;
-  padding-top: 15vh;
+  padding-top: 10vh;
 }
 
 .about-graphic {
   display: inline-block;
-  height: 60vh;
+  height: 55vh;
   position: relative;
   z-index: 1;
 }
@@ -189,7 +243,13 @@ h1 {
 
 /* #region Project */
 #project-list {
-  align-items: center;
+  padding: 0 20%;
+  width: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  gap: 1em; /* Adjust spacing between cards */
+  align-items: start;
+  justify-items: center;
 }
 
 #project-container {
@@ -198,12 +258,17 @@ h1 {
   padding-top: 1vh;
 }
 
+.no-posts {
+  width: 80%;
+  margin: auto;
+}
+
 .project-card {
   background-color: var(--background);
   color: var(--body-text-color);
-  padding: 0.5em;
+  padding: 0;
   padding-top: 0;
-  width: var(--content-width);
+  width: 80%;
   text-align:center;
   margin: auto;
   margin-bottom: 5vh;
@@ -238,8 +303,8 @@ h1 {
 }
 
 .project-image {
-  height: auto;
-  width: auto;
+  height: 30vh;
+  width: 30vw;
   max-width: 90%;
   min-width: 0%;
   max-height: 70vh;
@@ -247,11 +312,12 @@ h1 {
   border: 1px solid var(--background2);
   border-radius: 4px;
   padding: 5px;
-  object-fit: contain;
+  object-fit:contain;
 }
 
 .project-description {
   width: 90%;
+  height: 20vh;
   margin: auto;
   padding-bottom: 1em;
   padding-top: 1em;
@@ -268,7 +334,7 @@ h1 {
 }
 
 .project-type {
-  background-color: var(--blue);
+  background-color: var(--pink);
   display: inline-block;
   font-size: 1.25em;
   border-radius: 5px;
@@ -358,7 +424,7 @@ h1 {
 
 .nav {
   background-color: var(--foreground);
-  width: 4em;
+  width: 5em;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -366,14 +432,15 @@ h1 {
 }
 
 .nav.open {
-  width: 15em;
+  width: 18em;
 }
 
 .nav-item {
   display: flex;
   width: auto;
   align-items: center;
-  margin-top: 3em;
+  margin-bottom: 3em;
+  padding-left: 0.5em;
   height: 4em;
   cursor: pointer;
   white-space: nowrap;
@@ -401,6 +468,10 @@ h1 {
   cursor: pointer;
   padding-bottom: 5px;
   text-overflow: clip;
+}
+
+.theme {
+  margin-bottom: unset;
 }
 
 .nav-link {
@@ -660,6 +731,7 @@ h1 {
   width: 50%;
   position: relative;
   z-index: 3;
+  padding-top: 10vh;
 }
 
 .login-text {
@@ -716,6 +788,7 @@ h1 {
   font-size: 1.05em;
   padding: .5em;
   width: 100%;
+  border-radius: 5px;
 }
 
 .password-text-field {
@@ -723,7 +796,8 @@ h1 {
   font-size: 1.05em;
   padding: .5em;
   padding-right: 4em;
-  width: calc(100% - 4em);
+  width: calc(100% - 3.5em);
+  border-radius: 5px;
 }
 
 .password-field {
@@ -736,6 +810,7 @@ h1 {
   right: 0;
   margin: 0;
   margin-top: calc(0.5em - 1px);
+  color: var(--black);
 }
 /* #endregion Login*/
 
