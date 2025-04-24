@@ -272,7 +272,7 @@ h1 {
   color: var(--body-text-color);
   padding: 0;
   padding-top: 0;
-  width: 80%;
+  width: 95%;
   text-align:center;
   margin: auto;
   margin-bottom: 5vh;
@@ -295,6 +295,7 @@ h1 {
   object-fit: cover;
   vertical-align: middle;
   line-height: normal;
+  border: 1px solid lightgray;
 }
 
 .card-head {
@@ -316,7 +317,7 @@ h1 {
   border: 1px solid var(--background2);
   border-radius: 4px;
   padding: 5px;
-  object-fit:contain;
+  object-fit: contain;
 }
 
 .project-description {
@@ -712,7 +713,7 @@ h1 {
   width: 50%;
   position: relative;
   z-index: 3;
-  padding-top: 10vh;
+  /* padding-top: 10vh; */
 }
 
 .login-text {
@@ -793,6 +794,46 @@ h1 {
   margin-top: calc(0.5em - 1px);
   color: var(--black);
 }
+
+#fish-footer {
+  width: 100vw;
+  position: fixed;
+  bottom: 12vh;
+  left: 0;
+  z-index: 4;
+}
+
+#fish-1 {
+  width: 12vw;
+  transform: scaleX(-1);
+  position: fixed;
+  right: 5vw;
+  bottom: 6vh;
+}
+
+#fish-2 {
+  width: 12vw;
+  transform: scaleX(-1);
+  position: fixed;
+  right: 30vw;
+  bottom: 10vh;
+}
+
+#fish-3 {
+  width: 12vw;
+  transform: scaleX(-1);
+  position: fixed;
+  right: 55vw;
+  bottom: 5vh;
+}
+
+#fish-4 {
+  width: 12vw;
+  transform: scaleX(-1);
+  position: fixed;
+  right: 80vw;
+  bottom: 8vh;
+}
 /* #endregion Login*/
 
 .error {
@@ -815,6 +856,8 @@ button {
   border-radius: 40px;
   color: var(--white);
   font-size: x-large;
+  width: fit-content;
+  text-wrap: nowrap;
 }
 
 .button-main:hover {
@@ -833,6 +876,8 @@ button {
   border-radius: 40px;
   color: var(--green);
   font-size: x-large;
+  width: fit-content;
+  text-wrap: nowrap;
 }
 
 .button-secondary:hover {

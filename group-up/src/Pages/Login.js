@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import {login} from '../state/slice/userSlice';
 import Bubbles from '../Components/Bubbles';
 import PasswordField from '../Components/PasswordField';
+import clownfish from '../images/clownfish.png'
 
 
 export const Login = () => {
@@ -53,13 +54,22 @@ export const Login = () => {
     })
   }
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      // Re-enable scrolling when component unmounts
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   return (
     <>
       <Bubbles height='100vh'></Bubbles>
       <div className='login-container'>
         <div className='login'>
           <h1 className='login-text'>Welcome back!</h1>
-          <h3 className='login-text'>Sign in to post projects.</h3>
+          <h3 className='login-text'>Sign in to post projects</h3>
           <div className='login-info-area'>
             <label className='login-label'>Username</label>
             <br/>
@@ -99,6 +109,12 @@ export const Login = () => {
           }}/>
 
         </div>
+      </div>
+      <div id='fish-footer'>
+          <img src={clownfish} id='fish-1' />
+          <img src={clownfish} id='fish-2' />
+          <img src={clownfish} id='fish-3' />
+          <img src={clownfish} id='fish-4' />
       </div>
     </>
   )

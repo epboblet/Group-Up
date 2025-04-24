@@ -42,6 +42,7 @@ const CreatePost = () =>  {
         })
     }
 
+    //stop scroll
     useEffect(() => {
         document.body.style.overflow = 'hidden';
     
