@@ -52,7 +52,7 @@ html {
 
 #root {
   background-color: var(--background);
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 body {
@@ -607,6 +607,7 @@ h1 {
 /* #region Profie */
 .profile-picture {
   border-radius: 50%;
+  border: 1px solid lightgray;
   object-fit: cover;
   vertical-align: middle;
   line-height: normal;
