@@ -76,9 +76,11 @@ const Home = () => {
     return (
         <>
             <Bubbles height='110vh'></Bubbles>
-            {/* <span className='accent-pink'></span> */}
+            <span className='accent-pink'></span>
+            <span className='accent-pink accent-1'></span>
+            <span className='accent-pink accent-2'></span>
+            <span className='accent-pink accent-3'></span>
             <div id='about-container'>
-                {/* <span className='accent-pink'></span> */}
                 <div id='about'>
                     <div className='about-content'>
                         <img src={coral_logo} id='about-logo'></img>

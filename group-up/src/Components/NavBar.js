@@ -11,6 +11,13 @@ export const NavBar = () => {
     theme ??= "light";
     const [isLightMode, setIsLightMode] = useState((theme == "light") ? true : false);
     const navigate = useNavigate();
+    const [paused, setPaused] = useState(false);
+
+    const toggleBubbles = () => {
+        setPaused((prev) => !prev);
+        const playState = paused ? 'running' : 'paused';
+        document.documentElement.style.setProperty('--playstate', playState);
+    };
 
     const changeTheme = () => {
         let theme = document.documentElement.className;
@@ -78,6 +85,12 @@ export const NavBar = () => {
                 </span>
                 <Link to="/messages" className={`nav-link ${isNavShown ? "" : "hidden"}`}>Messages</Link>
             </div> */}
+            <div className='nav-item' title={paused ? 'Play Animations' : "Pause Animations"} onClick={() => {toggleBubbles()}}>
+                <span className="material-symbols-outlined nav-icon">
+                {paused ? "play_circle" : "pause_circle"}
+                </span>
+                <a className={`nav-link ${isNavShown ? "" : "hidden"}`}>{paused ? "Play" : "Pause"}</a>
+            </div>
             <div className='nav-item theme' title='Theme' onClick={() => {changeTheme()}}>
                 <span className="material-symbols-outlined nav-icon light-dark">
                 {isLightMode ? "light_mode" : "dark_mode"}

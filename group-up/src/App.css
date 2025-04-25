@@ -19,6 +19,7 @@
   --bubble-start: 0s;
   --sway-strength: 20;
   --bubble-height: 100vh;
+  --playstate: 'running';
 }
 
 :root.light {
@@ -135,7 +136,13 @@ h1 {
 }
 
 #submit-post {
-  all: unset;
+  background-color: var(--foreground);
+  padding: 15px;
+  border-radius: 40px;
+  color: var(--white);
+  font-size: 1em;
+  width: fit-content;
+  text-wrap: nowrap;
 }
 
 #footer {
@@ -222,7 +229,7 @@ h1 {
   position: absolute;
 }
 
-/* .accent-blue {
+.accent-blue {
   height: 15vh;
   width: 15vw;
   border-radius: 50%;
@@ -236,13 +243,37 @@ h1 {
   height: 15vh;
   width: 15vw;
   border-radius: 50%;
-  position: relative;
-  filter: blur(60px);
+  position: absolute;
+  filter: blur(90px);
   background-color: var(--pink);
   z-index: 1;
+  top: 75vh;
+  left: 80vw;
+}
+
+.accent-1 {
+  height: 15vh;
+  width: 10vw;
+  top: 80vh;
+  left: 20vh;
+  filter: blur(80px);
+}
+
+.accent-2 {
+  height: 10vh;
+  width: 10vw;
+  top: 0vh;
+  left: 50vh;
+  filter: blur(80px);
+}
+
+.accent-3 {
+  height: 10vh;
+  width: 10vw;
   top: 70vh;
-  left: 90vw;
-} */
+  left: 80vh;
+  filter: blur(80px);
+}
 /* #endregion */
 
 /* #region Project */
@@ -278,6 +309,7 @@ h1 {
   margin-bottom: 5vh;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 15px;
+  height: 70vh;
 }
 
 .project-card.fullscreen {
@@ -462,7 +494,7 @@ h1 {
   white-space: nowrap;
 }
 
-.nav-item:last-child {
+.nav-item:nth-last-child(2) {
   margin-top: auto;
 }
 
@@ -674,10 +706,10 @@ h1 {
   display: block;
   position: absolute;
   transform: translatey(0px);
-	animation: float var(--bubble-time) linear infinite,
-  sway calc(var(--bubble-time)/ 5) linear infinite;
+	animation: float var(--bubble-time) linear infinite;
   animation-delay: var(--bubble-start);
   z-index: 3;
+  animation-play-state: var(--playstate);
 }
 
 @keyframes float {
@@ -686,15 +718,6 @@ h1 {
   }
   100% {
     bottom: var(--bubble-height);
-  }
-}
-
-@keyframes sway {
-  0% {
-    transform: translateX(var(--sway-strength));
-  }
-  100% {
-    transform: translateX(var(--sway-strength));
   }
 }
 
@@ -741,12 +764,12 @@ h1 {
 
 .register-login {
   border: 2px solid var(--green);
-  padding: 5px;
+  padding: 10px;
   width: fit-content;
   text-align: center;
   margin: 0;
   margin-top: 1vh;
-  border-radius: 5px;
+  border-radius: 40px;
   color: var(--black);
   font-weight: 500;
 }
@@ -757,9 +780,9 @@ h1 {
   color: var(--white);
   width: 15%;
   text-align: center;
-  padding: 7px;
+  padding: 12px;
   margin-top: 1vh;
-  border-radius: 5px;
+  border-radius: 40px;
   float: right;
   width: fit-content;
   font-weight: 500;

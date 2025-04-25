@@ -22,7 +22,7 @@ export default function Bubbles({height}) {
         bubble.style.animation = 'none';
         void bubble.offsetWidth;
         bubble.style.animation = `float var(--bubble-time) linear infinite`;
-        // bubble.style.animationDelay = `var(--bubble-start)`;
+        bubble.style.animationPlayState =  `var(--playstate)`;
         bubble.style.bottom = '-10';
     };
 
