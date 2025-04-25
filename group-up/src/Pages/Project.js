@@ -54,9 +54,9 @@ const Project = () =>  {
     return (
         <>
             <div className='body-content'>
-                <h1>{project.name}</h1>
+                <h1 id='project-title'>{project.name}</h1>
                 {project?.image && <img src={project.image} className='project-image'/>}
-                <p>{project.description}</p>
+                <p id='project-content'>{project.description}</p>
             </div>
         </>
     );

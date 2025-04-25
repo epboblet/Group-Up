@@ -59,6 +59,8 @@ body {
   color: var(--body-text-color);
   font-family: 'Prompt', sans-serif;
   user-select: none;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -75,6 +77,8 @@ h1 {
   margin: auto;
   padding: 0.5em;
   font-size: 3em;
+  z-index: 2;
+  position: relative;
 
 }
 
@@ -87,6 +91,7 @@ h1 {
   margin: auto;
   z-index: 2;
   position: relative;
+  font-size: 2vh;
 }
 
 .heading {
@@ -116,6 +121,7 @@ h1 {
 }
 
 #project-pitch-content {
+  font-size: 1.5vh;
   border: unset;
   background-color: var(--white);
   width: 100%;
@@ -293,6 +299,10 @@ h1 {
   padding-top: 1vh;
 }
 
+#project-title, #project-content {
+  color: var(--body-text-color);
+}
+
 .no-posts {
   width: 80%;
   margin: auto;
@@ -310,6 +320,7 @@ h1 {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 15px;
   height: 70vh;
+  font-size: 1.5vh;
 }
 
 .project-card.fullscreen {
@@ -731,13 +742,11 @@ h1 {
 }
 
 .login {
-  display: flexbox;
-  flex-direction: column;
   margin: auto;
   width: 50%;
   position: relative;
   z-index: 3;
-  /* padding-top: 10vh; */
+  font-size: 2vh;
 }
 
 .login-text {
@@ -795,6 +804,7 @@ h1 {
   padding: .5em;
   width: 100%;
   border-radius: 5px;
+  margin-bottom: 1vh;
 }
 
 .password-text-field {
@@ -804,6 +814,7 @@ h1 {
   padding-right: 4em;
   width: calc(100% - 3.5em);
   border-radius: 5px;
+  margin-bottom: 1vh;
 }
 
 .password-field {
@@ -827,38 +838,38 @@ h1 {
   z-index: 4;
 }
 
-#fish-1 {
+.fish {
   width: 12vw;
   transform: scaleX(-1);
   position: fixed;
+}
+
+#fish-1 {
   right: 5vw;
   bottom: 6vh;
 }
 
 #fish-2 {
-  width: 12vw;
-  transform: scaleX(-1);
-  position: fixed;
   right: 30vw;
   bottom: 10vh;
 }
 
 #fish-3 {
-  width: 12vw;
-  transform: scaleX(-1);
-  position: fixed;
   right: 55vw;
   bottom: 5vh;
 }
 
 #fish-4 {
-  width: 12vw;
-  transform: scaleX(-1);
-  position: fixed;
   right: 80vw;
   bottom: 8vh;
 }
 /* #endregion Login*/
+
+/* #region NoPage */
+.switch-text-color {
+  color: var(--body-text-color);
+}
+/* #endregion */
 
 .error {
   color: red;
@@ -882,6 +893,7 @@ button {
   font-size: x-large;
   width: fit-content;
   text-wrap: nowrap;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .button-main:hover {
@@ -890,8 +902,9 @@ button {
   border-radius: 40px;
   color: var(--green);
   font-size: x-large;
-  background: transparent;
-  transition: all 0.4s ease-in-out;
+  background-color: transparent;
+  width: fit-content;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .button-secondary {
@@ -902,6 +915,8 @@ button {
   font-size: x-large;
   width: fit-content;
   text-wrap: nowrap;
+  background: transparent;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .button-secondary:hover {
@@ -910,7 +925,7 @@ button {
   border-radius: 40px;
   color: var(--white);
   font-size: x-large;
-  transition: all 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .button-logout {

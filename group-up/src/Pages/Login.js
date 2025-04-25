@@ -72,24 +72,14 @@ export const Login = () => {
           <h3 className='login-text'>Sign in to post projects</h3>
           <div className='login-info-area'>
             <label className='login-label'>Username</label>
-            <br/>
             <input className='login-text-field' type='text' name='username' placeholder='username' id='username'/>
-            <br/>
-            <br/>
-            <br/>
             <label className='login-label'>Password</label>
-            <br/>
             <PasswordField name='password' />
-            <br/>
             {
               isRegister && (
                 <>
-                  <br/>
-                  <br/>
                   <label className='login-label'>Confirm Password</label>
-                  <br/>
                   <PasswordField name='confirmPassword' />
-                  <br/>
                 </>
               )
             }
@@ -111,10 +101,10 @@ export const Login = () => {
         </div>
       </div>
       <div id='fish-footer'>
-          <img src={clownfish} id='fish-1' />
-          <img src={clownfish} id='fish-2' />
-          <img src={clownfish} id='fish-3' />
-          <img src={clownfish} id='fish-4' />
+          <img src={clownfish} className='fish' id='fish-1' />
+          <img src={clownfish} className='fish' id='fish-2' />
+          <img src={clownfish} className='fish' id='fish-3' />
+          <img src={clownfish} className='fish' id='fish-4' />
       </div>
     </>
   )
