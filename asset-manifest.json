@@ -1,17 +1,22 @@
 {
   "files": {
-    "main.css": "/Group-Up/static/css/main.f6d124a8.css",
-    "main.js": "/Group-Up/static/js/main.f0e7c43e.js",
+    "main.css": "/Group-Up/static/css/main.76e5607c.css",
+    "main.js": "/Group-Up/static/js/main.5ed3ec02.js",
     "static/js/453.66bb3d9a.chunk.js": "/Group-Up/static/js/453.66bb3d9a.chunk.js",
-    "static/media/Group-Up Logo Light.svg": "/Group-Up/static/media/Group-Up Logo Light.5607b2fc3405c1da501ca1ab140124aa.svg",
-    "static/media/Group-Up Logo.svg": "/Group-Up/static/media/Group-Up Logo.1536ea24faf9b8bb3164781946b7a66f.svg",
+    "static/media/Coral_image.png": "/Group-Up/static/media/Coral_image.7e04e021a4e0b3264f7e.png",
+    "static/media/Bubble.webp": "/Group-Up/static/media/Bubble.20b65ce80b56852e8d7b.webp",
+    "static/media/test.png": "/Group-Up/static/media/test.8bb5e2faf36590797391.png",
+    "static/media/clownfish.png": "/Group-Up/static/media/clownfish.774082c92930778e6046.png",
+    "static/media/coral_logo.png": "/Group-Up/static/media/coral_logo.81bb0cd731e799d9e34b.png",
+    "static/media/Group-Up Logo Light.svg": "/Group-Up/static/media/Group-Up Logo Light.547e49d79469b7de053b2ad892d67ac1.svg",
+    "static/media/Group-Up Logo.svg": "/Group-Up/static/media/Group-Up Logo.f9f048330ecca0b522b0834cc8103859.svg",
     "index.html": "/Group-Up/index.html",
-    "main.f6d124a8.css.map": "/Group-Up/static/css/main.f6d124a8.css.map",
-    "main.f0e7c43e.js.map": "/Group-Up/static/js/main.f0e7c43e.js.map",
+    "main.76e5607c.css.map": "/Group-Up/static/css/main.76e5607c.css.map",
+    "main.5ed3ec02.js.map": "/Group-Up/static/js/main.5ed3ec02.js.map",
     "453.66bb3d9a.chunk.js.map": "/Group-Up/static/js/453.66bb3d9a.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f6d124a8.css",
-    "static/js/main.f0e7c43e.js"
+    "static/css/main.76e5607c.css",
+    "static/js/main.5ed3ec02.js"
   ]
 }
