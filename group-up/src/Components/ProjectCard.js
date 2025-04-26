@@ -98,7 +98,7 @@ export const ProjectCard = ({project, loggedIn, fetchPosts}) => {
                 {
                     editing ?
                     <textarea defaultValue={displayProject.description} onChange={updateDescription}></textarea> :
-                    <pre className='project-description'>{truncate(displayProject.description)}</pre>
+                    <p className='project-description'>{truncate(displayProject.description)}</p>
                 }
             </div>
         </div>

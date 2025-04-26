@@ -55,6 +55,14 @@ const Project = () =>  {
         <>
             <div className='body-content'>
                 <h1 id='project-title'>{project.name}</h1>
+                {project.primarytag && <><br/><h3 className='project-type'>{project?.primarytag}</h3><br/></>}
+                {project.secondarytag && project.secondarytag.split(',').map((e) => {
+                    return (
+                        <>
+                            <h3 className='secondary-project-type'>{e}</h3>
+                        </>
+                    )
+                })}
                 {project?.image && <img src={project.image} className='project-image'/>}
                 <p id='project-content'>{project.description}</p>
             </div>

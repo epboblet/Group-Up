@@ -52,7 +52,6 @@ html {
 
 #root {
   background-color: var(--background);
-  /* height: 100vh; */
 }
 
 body {
@@ -132,6 +131,7 @@ h1 {
 .tag {
   width: 10ch;
   margin: 0.5em;
+  font-family: "Inter", sans-serif;
 }
 
 #image {
@@ -158,6 +158,24 @@ h1 {
   left: 0;
   z-index: -1;
 }
+
+#file-upload-button {
+  font-family: "Inter", sans-serif;
+}
+
+input::file-selector-button {
+  all: unset;
+  border: 2px solid var(--green);
+  background-color: transparent;
+  padding: 8px;
+  border-radius: 40px;
+  color: var(--green);
+  font-size: 1em;
+  width: fit-content;
+  text-wrap: nowrap;
+  margin: 0.5em;
+  font-family: "Inter", sans-serif;
+}
 /* #endregion */
 
 /* #region About */
@@ -173,7 +191,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 70%; /* or a fixed width like 400px if needed */
+  width: 60%;
   padding: 0 0.5rem;
 }
 
@@ -373,6 +391,8 @@ h1 {
   white-space: pre-wrap;
   text-align: left;
   text-overflow: ellipsis;
+  white-space: pre-wrap;
+  font-family: 'Source Code Pro', sans-serif;
 }
 
 .project-title {
@@ -458,6 +478,7 @@ h1 {
   padding: .3em;
   margin: 8px;
   width: 80%;
+  font-family: "Inter", sans-serif;
   font-size: 1.5em;
 }
 
@@ -467,7 +488,7 @@ h1 {
   color: var(--content-text-color);
   background-color: var(--foreground);
   font-size: 1.5em;
-  padding: .2em .4em .2em .4em;
+  padding: .2em .6em;
   border-radius: 25px;
 }
 
@@ -805,6 +826,7 @@ h1 {
   width: 100%;
   border-radius: 5px;
   margin-bottom: 1vh;
+  font-family: "Inter", sans-serif;
 }
 
 .password-text-field {
@@ -815,6 +837,7 @@ h1 {
   width: calc(100% - 3.5em);
   border-radius: 5px;
   margin-bottom: 1vh;
+  font-family: "Inter", sans-serif;
 }
 
 .password-field {

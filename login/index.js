@@ -502,7 +502,8 @@ app.get("/posts/:post_id", async (req, res) => {
             profileIcon: linkFromPath(profile.photo, "profile"),
         },
         name: post.title,
-        type: "",
+        primarytag: post.primarytag,
+        secondarytag: post.secondarytag,
         description: post.content,
         image: linkFromPath(post.photo, "post"),
     });
