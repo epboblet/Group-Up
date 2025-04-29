@@ -25,3 +25,4 @@ yarn-error.log*
 /login/node_modules
 login/.DS_Store
 login/database/.DS_Store
+login/database/.DS_Store
