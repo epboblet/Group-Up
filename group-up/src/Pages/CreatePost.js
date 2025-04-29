@@ -75,7 +75,7 @@ const CreatePost = () =>  {
                     <br/>
                     <label for="photo">Image: </label>
                     <input type="file" name="photo" accept="image/*" id='file-upload-button'></input>
-                    <label for="primarytag"><strong className='required'>*</strong>Main Tag: </label>
+                    <label for="primarytag">Main Tag: </label>
                     <input className='tag' name='primarytag' required placeholder='Music'></input>
                     <br/>
                     <br/>

@@ -143,12 +143,25 @@ h1 {
 
 #submit-post {
   background-color: var(--foreground);
+  border: 2px solid var(--green);
   padding: 15px;
   border-radius: 40px;
   color: var(--white);
   font-size: 1em;
   width: fit-content;
   text-wrap: nowrap;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+#submit-post:hover {
+  background-color: transparent;
+  padding: 15px;
+  border-radius: 40px;
+  color: var(--green);
+  font-size: 1em;
+  width: fit-content;
+  text-wrap: nowrap;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 #footer {
@@ -157,6 +170,7 @@ h1 {
   bottom: -12vh;
   left: 0;
   z-index: -1;
+  transform: scaleY(0.75);
 }
 
 #file-upload-button {
@@ -165,6 +179,7 @@ h1 {
 
 input::file-selector-button {
   all: unset;
+  cursor: pointer;
   border: 2px solid var(--green);
   background-color: transparent;
   padding: 8px;
@@ -175,6 +190,23 @@ input::file-selector-button {
   text-wrap: nowrap;
   margin: 0.5em;
   font-family: "Inter", sans-serif;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+input::file-selector-button:hover {
+  all: unset;
+  cursor: pointer;
+  border: 2px solid var(--green);
+  background-color: var(--green);
+  padding: 8px;
+  border-radius: 40px;
+  color: var(--white);
+  font-size: 1em;
+  width: fit-content;
+  text-wrap: nowrap;
+  margin: 0.5em;
+  font-family: "Inter", sans-serif;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 /* #endregion */
 
@@ -472,24 +504,37 @@ input::file-selector-button {
   width: var(--content-width);
   margin: auto;
   margin-bottom: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .post-search {
   padding: .3em;
   margin: 8px;
-  width: 80%;
+  width:auto;
   font-family: "Inter", sans-serif;
   font-size: 1.5em;
+  flex-grow: 1;
 }
 
 .create-post {
+  border: 2px solid var(--green);
   margin: auto;
   text-align: center;
-  color: var(--content-text-color);
-  background-color: var(--foreground);
+  width: fit-content;
+  color: var(--white);
+  background-color: var(--green);
   font-size: 1.5em;
   padding: .2em .6em;
   border-radius: 25px;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.create-post:hover {
+  border-color: var(--green);
+  color: var(--green);
+  background-color: transparent;
 }
 
 /* #endregion */
@@ -728,6 +773,7 @@ input::file-selector-button {
   position: absolute;
   z-index: 1;
   background-color: var(--blue);
+  overflow-x: hidden;
 }
 
 .bubble {
@@ -795,18 +841,36 @@ input::file-selector-button {
 
 .register-login {
   border: 2px solid var(--green);
+  background-color: transparent;
   padding: 10px;
   width: fit-content;
   text-align: center;
   margin: 0;
   margin-top: 1vh;
   border-radius: 40px;
-  color: var(--black);
+  color: var(--green);
   font-weight: 500;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.register-login:hover {
+  all: unset;
+  cursor: pointer;
+  background-color: var(--green);
+  color: var(--white);
+  width: 15%;
+  text-align: center;
+  padding: 12px;
+  margin-top: 1vh;
+  border-radius: 40px;
+  width: fit-content;
+  font-weight: 500;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .login-submit {
   all: unset;
+  cursor: pointer;
   background-color: var(--green);
   color: var(--white);
   width: 15%;
@@ -817,6 +881,21 @@ input::file-selector-button {
   float: right;
   width: fit-content;
   font-weight: 500;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.login-submit:hover {
+  border: 2px solid var(--green);
+  background-color: transparent;
+  padding: 10px;
+  width: fit-content;
+  text-align: center;
+  margin: 0;
+  margin-top: 1vh;
+  border-radius: 40px;
+  color: var(--green);
+  font-weight: 500;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .login-text-field {
@@ -869,22 +948,43 @@ input::file-selector-button {
 
 #fish-1 {
   right: 5vw;
-  bottom: 6vh;
+  animation: bob 2.5s ease-in-out infinite;
+  animation-direction: alternate;
+  animation-delay: -2.3s;
+  animation-play-state: var(--playstate);
 }
 
 #fish-2 {
   right: 30vw;
-  bottom: 10vh;
+  animation: bob 2.5s ease-in-out infinite;
+  animation-direction: alternate;
+  animation-delay: -1s;
+  animation-play-state: var(--playstate);
 }
 
 #fish-3 {
   right: 55vw;
-  bottom: 5vh;
+  animation: bob 2.5s ease-in-out infinite;
+  animation-direction: alternate;
+  animation-delay: -2s;
+  animation-play-state: var(--playstate);
 }
 
 #fish-4 {
   right: 80vw;
-  bottom: 8vh;
+  animation: bob 2.5s ease-in-out infinite;
+  animation-direction: alternate;
+  animation-delay: -1.3s;
+  animation-play-state: var(--playstate);
+}
+
+@keyframes bob {
+  0% {
+    bottom: 0vh;
+  }
+  100% {
+    bottom: 10vh;
+  }
 }
 /* #endregion Login*/
 
