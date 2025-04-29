@@ -22,3 +22,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 /login/node_modules
+/login/node_modules
+login/.DS_Store
+login/database/.DS_Store
