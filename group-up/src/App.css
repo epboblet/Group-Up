@@ -50,10 +50,6 @@ html {
   background-color: var(--background2);
 }
 
-#root {
-  background-color: var(--background);
-}
-
 body {
   color: var(--body-text-color);
   font-family: 'Prompt', sans-serif;
@@ -353,9 +349,38 @@ input::file-selector-button:hover {
   color: var(--body-text-color);
 }
 
+#project-content {
+  width: 90%;
+  height: 30vh;
+  margin: auto;
+  padding-bottom: 1em;
+  padding-top: 1em;
+  text-align: left;
+  white-space: pre-wrap;
+  font-family: 'Source Code Pro', sans-serif;
+}
+
+#back-button {
+  font-weight: bold;
+  cursor: pointer;
+  position: absolute;
+}
+
 .no-posts {
   width: 80%;
   margin: auto;
+}
+
+.project-body {
+  background-color: transparent;
+  color: var(--black);
+  padding: 1em;
+  width: var(--content-width);
+  text-align:center;
+  margin: auto;
+  z-index: 2;
+  position: relative;
+  font-size: 2vh;
 }
 
 .project-card {
@@ -366,11 +391,16 @@ input::file-selector-button:hover {
   width: 95%;
   text-align:center;
   margin: auto;
-  margin-bottom: 5vh;
+  margin-bottom: 3vh;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 15px;
   height: 70vh;
   font-size: 1.5vh;
+  transition: transform 0.3s ease-in-out;
+}
+
+.project-card:hover {
+  transform: scale(105%);
 }
 
 .project-card.fullscreen {
@@ -400,6 +430,11 @@ input::file-selector-button:hover {
   padding-right: 8px;
 }
 
+.card-text {
+  display: flex;
+  flex-direction: column;
+}
+
 .project-image {
   height: 20vh;
   width: 20vw;
@@ -411,20 +446,21 @@ input::file-selector-button:hover {
   border-radius: 4px;
   padding: 5px;
   object-fit: contain;
+  margin: auto;
 }
 
 .project-description {
   width: 90%;
-  height: 30vh;
+  height: auto;
   margin: auto;
   padding-bottom: 1em;
   padding-top: 1em;
   border-top: 1px solid var(--body-text-color);
-  white-space: pre-wrap;
   text-align: left;
   text-overflow: ellipsis;
   white-space: pre-wrap;
   font-family: 'Source Code Pro', sans-serif;
+  overflow-y: hidden;
 }
 
 .project-title {

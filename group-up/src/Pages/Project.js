@@ -1,4 +1,4 @@
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import '../App.css';
 import { useEffect, useState } from 'react';
 import ProjectCard from '../Components/ProjectCard';
@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const Project = () =>  {
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [project, setProject] = useState({
         id: "",
@@ -53,8 +54,11 @@ const Project = () =>  {
 
     return (
         <>
-            <div className='body-content'>
-                <h1 id='project-title'>{project.name}</h1>
+            <div className='project-body'>
+                <div>
+                    <p id='back-button' onClick={() => {navigate(-1)}}>{'< back'}</p>
+                    <h1 id='project-title'>{project.name}</h1>
+                </div>
                 {project.primarytag && <><br/><h3 className='project-type'>{project?.primarytag}</h3><br/></>}
                 {project.secondarytag && project.secondarytag.split(',').map((e) => {
                     return (
@@ -63,7 +67,7 @@ const Project = () =>  {
                         </>
                     )
                 })}
-                {project?.image && <img src={project.image} className='project-image'/>}
+                {project?.image && <><br/><img src={project.image} className='project-image-full'/></>}
                 <p id='project-content'>{project.description}</p>
             </div>
         </>

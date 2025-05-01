@@ -80,13 +80,14 @@ export const ProjectCard = ({project, loggedIn, fetchPosts}) => {
             </span>
         </div>
         <div className='card-content'>
-            <div className='card-text'>
+            <div className='card-text' onClick={() => navigate('/project/'+displayProject.id)}>
                 {
                     editing ?
                     <input type='text' defaultValue={displayProject.name} onChange={updateName}></input> :
-                    <h2 className='project-title' onClick={() => navigate('/project/'+displayProject.id)}>{displayProject.name}</h2>
+                    <h2 className='project-title'>{displayProject.name}</h2>
                 }
                 {displayProject?.image && <img src={displayProject.image} className='project-image'/>}
+                <div className='tags'>
                 {displayProject.primarytag && <><br/><h3 className='project-type'>{displayProject?.primarytag}</h3><br/></>}
                 {displayProject.secondarytag && displayProject.secondarytag.split(',').map((e) => {
                     return (
@@ -95,10 +96,11 @@ export const ProjectCard = ({project, loggedIn, fetchPosts}) => {
                         </>
                     )
                 })}
+                </div>
                 {
                     editing ?
                     <textarea defaultValue={displayProject.description} onChange={updateDescription}></textarea> :
-                    <p className='project-description'>{truncate(displayProject.description)}</p>
+                    <pre className='project-description'>{truncate(displayProject.description)}</pre>
                 }
             </div>
         </div>
